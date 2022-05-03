@@ -1,0 +1,8 @@
+
+
+        body, form
+        {
+            height: 100%; /*Height 100% or the outer box (divMainBox) will not expand */
+        }
+ 
+    

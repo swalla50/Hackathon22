@@ -1,0 +1,44 @@
+<div class="edit-user">
+    <h3 class="edit-user-heading"> Edit User </h3>
+    <div class="row1-edit-user">
+        <div class="row1-left">
+            <div class="container">
+                <h4>Upload a profile image
+                </h4>
+                <div class="avatar-upload">
+                    <div class="avatar-edit">
+                        <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg">
+                        <label for="imageUpload"></label>
+                    </div>
+                    <div class="avatar-preview">
+                        <div id="imagePreview" style="background-image: url('http://i.pravatar.cc/500?img=7');">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row1-right">
+            <div class="left-rightside">
+                <h4>Reminder selection: </h4>
+                <select class='Select-state'matNativeControl required [formControl]="selectFormControl">
+                    <option> </option>
+                    <option>Georgia</option>
+                    <option>New York</option>
+                    <option>Chicago</option>
+                    <option>Florida</option>
+                    <option>Idaho</option>
+                    <option>California</option>
+                    <option>Pittsburgh</option>
+                    <option>Nebraska</option>
+                    <option>Oregon</option>
+                    <option>Virginia</option>
+                    <option>Nevada</option>
+                    <option>Texas</option>
+                </select>
+            </div>
+            <div class="right-rightside">
+                <h4>Reminder selection: </h4>
+            </div>
+        </div>
+    </div>
+</div>

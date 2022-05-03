@@ -1,0 +1,34 @@
+<mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+        <p>Settings</p>
+        <ul class="user-nav" *ngFor="let navItem of nav" id="myTab" role="tablist">
+            <button routerLink="{{navItem.url}}" mat-raised-button color="primary"
+                (click)="showFiller = !showFiller">
+                {{navItem.title}}
+
+                
+
+            </button>
+            <div *ngIf="navItem.title === 'Assign Modules'" class="dropdown-content">
+                <button mat-raised-button color="primary">
+                    User modules
+                </button>
+            </div>
+
+        </ul>
+    </mat-drawer>
+
+    <div class="example-sidenav-content">
+        <button type="button" mat-button *ngFor="let item of menuItems; let i = index"
+            (click)="drawer.toggle();menuClick(i)">
+            <fa-icon *ngIf="item.state" class='menu-toggle' [icon]="faCaretRight" size='2x'></fa-icon>
+            <fa-icon *ngIf="!item.state" class='menu-toggle' [icon]="faCaretLeft" size='2x'></fa-icon>
+        </button>
+    </div>
+    <div class="setting-content">
+        <router-outlet></router-outlet>
+    </div>
+
+
+
+</mat-drawer-container>
