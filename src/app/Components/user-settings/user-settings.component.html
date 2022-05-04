@@ -2,7 +2,7 @@
     <mat-drawer #drawer class="example-sidenav" mode="side">
         <p>Settings</p>
         <ul class="user-nav" *ngFor="let navItem of nav" id="myTab" role="tablist">
-            <button routerLink="{{navItem.url}}" mat-raised-button color="primary"
+            <button routerLink="{{navItem.url}}" mat-raised-button color="blue"
                 (click)="showFiller = !showFiller">
                 {{navItem.title}}
 
@@ -10,7 +10,7 @@
 
             </button>
             <div *ngIf="navItem.title === 'Assign Modules'" class="dropdown-content">
-                <button mat-raised-button color="primary">
+                <button mat-raised-button color="blue">
                     User modules
                 </button>
             </div>

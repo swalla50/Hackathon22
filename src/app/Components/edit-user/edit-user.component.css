@@ -111,13 +111,24 @@ h4 {
     width: 50%;
 }
 
-select.Select-state{
-    width: 60%;
-    height: 35px;
-    border-radius: 5px;
-    border: solid rgb(74, 74, 245) 1px;
+
+
+.reminder-inputs{
+    padding-inline: 10px;
+    height: 250px;    
+    overflow-y: scroll;
 }
-select.Select-state.ng-dirty.ng-valid.ng-touched {
-    background-color: #89caff;
-    border: solid rgb(74, 74, 245) 1px;
+
+.ng-select {
+    position: relative;
+    display: block;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+textarea{
+    margin-bottom: 15px;
+    height: 200px;
+}
+input{
+    margin-bottom: 15px;
 }

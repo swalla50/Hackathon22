@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   }
 
   gotoSettings(){
-    this.router.navigateByUrl('/settings')
+    this.router.navigateByUrl('/settings/editUser')
     
   }
 }
