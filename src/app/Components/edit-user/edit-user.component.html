@@ -22,21 +22,25 @@
                 <h4>Reminder selection: </h4>
                 <div class="reminder-inputs" >
 
-                    <ng-select *ngIf="optiontype" [items]="optiontype" bindLabel="tickleDescription" placeholder="Select an Option Type" appendTo="body"
+                    <ng-select *ngIf="optiontype" (change)="changeOT(selectedOptionType)" [(ngModel)]="selectedOptionType" [items]="optiontype" bindLabel="tickleDescription" placeholder="Select an Option Type" appendTo="body"
                         [multiple]="true" >
                     </ng-select>
 
-                    <ng-select *ngIf="hierarchy" [items]="hierarchy" bindLabel="companyHierarchyLabelDesc" placeholder="Select a Hierarchy" appendTo="body"
+                    <ng-select (change)="changeH(selectedHierarchy)" [(ngModel)]="selectedHierarchy" *ngIf="hierarchy" [items]="hierarchy" bindLabel="companyHierarchyLabelDesc" placeholder="Select a Hierarchy" appendTo="body"
                         [multiple]="true" >
                     </ng-select>
 
                     <input type="text" class="form-control" placeholder="Days Out" aria-label="DaysOut" aria-describedby="basic-addon1">
                     <input type="text" class="form-control" placeholder="Frequency" aria-label="Frequency" aria-describedby="basic-addon1">
                     <textarea type="text" class="form-control" placeholder="Email Message" aria-label="EmailMessage" aria-describedby="basic-addon1"></textarea>
+                    <button mat-raised-button color="blue">
+                        Save
+                    </button>
                 </div>
             </div>
             <div class="right-rightside">
-                <h4>Reminder selection: </h4>
+                <h4>Scheduled Reminders: </h4>
+                <div></div>
             </div>
         </div>
     </div>

@@ -127,3 +127,8 @@ ul.user-nav {
   .user-nav:hover .dropdown-content {display: block;}
   
   .user-nav:hover .dropbtn {background-color: #3e8e41;}
+
+  button.mat-focus-indicator.mat-raised-button.mat-button-base.mat-blue {
+    color: white;
+    background: linear-gradient(0deg, rgba(5,64,125,1) 0%, rgba(19,136,218,1) 100%);
+}
