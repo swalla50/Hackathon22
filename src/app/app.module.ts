@@ -21,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from "@ng-select/ng-select";
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; 
+import {MatExpansionModule} from '@angular/material/expansion'
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     NgSelectModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
