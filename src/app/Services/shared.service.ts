@@ -20,4 +20,17 @@ export class SharedService {
   getOptionType():Observable<any[]>{
     return this.http.get<any>(this.APIUrl+'GetOptionType/getoptiontypedata');
   }
+
+  getCompanyList():Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'company/getcompany');
+  }
+  getBuildingReminders():Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'getbuildingreminders/reminders');
+  }
+
+  getCompanyReminders():Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'getcompanyreminders/reminders');
+  }
 }
+
+

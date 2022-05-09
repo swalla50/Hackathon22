@@ -22,6 +22,7 @@ import { NgSelectModule } from "@ng-select/ng-select";
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; 
 import {MatExpansionModule} from '@angular/material/expansion'
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import {MatExpansionModule} from '@angular/material/expansion'
     HomeComponent,
     EditUserComponent,
     UserRightsComponent,
-    UserModulesComponent
+    UserModulesComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +49,8 @@ import {MatExpansionModule} from '@angular/material/expansion'
     NgSelectModule,
     FormsModule,
     HttpClientModule,
-    MatExpansionModule
+    MatExpansionModule,
+    Ng2SearchPipeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

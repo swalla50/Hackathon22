@@ -193,6 +193,10 @@ table.reminder-schedule-table {
     width: 100%;
 }
 
+table.company-reminder-schedule-table{
+    width: 100%;
+}
+
 thead.reminder-thead {
     background: #323232;
     color: white;
@@ -203,3 +207,13 @@ tr.reminder-schedule-table-row {
     border-bottom: solid 1px #8080807d;
 }
 
+input.company-reminder-schedule-search{
+    width: 100%;
+    border-radius: 5px;
+    border: solid gray 1px
+}
+input.building-reminder-schedule-search{
+    width: 100%;
+    border-radius: 5px;
+    border: solid gray 1px
+}

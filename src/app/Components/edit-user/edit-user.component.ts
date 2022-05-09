@@ -12,71 +12,125 @@ export class EditUserComponent implements OnInit {
 
   hierarchy: any;
   optiontype: any;
+  buildingreminders: any;
+  companyname: any;
+  companyreminders: any;
   panelOpenState!: boolean;
   buildingrowtotal: any;
   optionrowtotal: any;
+  companyrowtotal: any;
 
- 
+  //for filter
+  searchTerm = '';
+  Companyterm = '';
+  Buildingterm = '';
 
-  Hierarchy:any = (i :any,n: any) => [
+
+  showCompanyDrop!: boolean;
+
+
+
+  Hierarchy: any = (i: any, n: any) => [
     { id: i, name: n }
   ]
 
   selectedOptionType: any = [];
-  selectedHierarchy:any = [];
+  selectedHierarchy: any = [];
+  selectedCompany: any = [];
 
-  displayreminder:any = [
-    {date: '2/13/2022', frequency: 3, reminderType: 'User Defined'},
-    {date: '4/13/2022', frequency: 4, reminderType: 'User Defined'},
-    {date: '5/04/2022', frequency: 30, reminderType: 'User Defined'},
-    {date: '1/20/2022', frequency: 7, reminderType: 'User Defined'},
-    {date: '5/13/2022', frequency: 60, reminderType: 'User Defined'},
-    {date: '3/15/2022', frequency: 120, reminderType: 'User Defined'},
+  displayreminder: any = [
+    { date: '2/13/2022', frequency: 3, reminderType: 'User Defined' },
+    { date: '4/13/2022', frequency: 4, reminderType: 'User Defined' },
+    { date: '5/04/2022', frequency: 30, reminderType: 'User Defined' },
+    { date: '1/20/2022', frequency: 7, reminderType: 'User Defined' },
+    { date: '5/13/2022', frequency: 60, reminderType: 'User Defined' },
+    { date: '3/15/2022', frequency: 120, reminderType: 'User Defined' },
   ]
 
-  displayreminderbuilding:any = [
-    {date: '2/13/2022', frequency: 20, BuildingID: '2984'},
-    {date: '4/13/2022', frequency: 1, BuildingID: '0043'},
-    {date: '5/04/2022', frequency: 35, BuildingID: '4534'},
-    {date: '3/15/2022', frequency: 100, BuildingID: '1884'},
-  ]
-  
-  constructor( public service:SharedService) { }
+
+  constructor(public service: SharedService) { }
 
   ngOnInit(): void {
 
-    this.service.getHierarchy().subscribe(data =>{
-      this.hierarchy = data.map((nd:any) => nd.companyHierarchyLabelDesc);
+
+    this.service.getHierarchy().subscribe(data => {
+      this.hierarchy = data.map((nd: any) => nd.companyHierarchyLabelDesc);
 
       console.log("Hierarchy:", this.hierarchy)
     })
 
-    this.service.getOptionType().subscribe(data =>{
-      this.optiontype = data.map((ndot:any) => ndot.tickleDescription);
+    this.service.getOptionType().subscribe(data => {
+      this.optiontype = data.map((ndot: any) => ndot.tickleDescription);
 
       console.log("OptionType:", this.optiontype)
     })
 
-    this.buildingrowtotal = this.displayreminder.length;
+    this.service.getCompanyList().subscribe(data => {
+      this.companyname = data.map((ndcl: any) => ndcl.companyName);
 
-    this.optionrowtotal = this.displayreminderbuilding.length;
-    
+      console.log("CompanyName:", this.companyname)
+    })
+
+    this.service.getCompanyReminders().subscribe(data => {
+
+      this.companyreminders = data;
+      this.companyrowtotal = this.companyreminders.length;
+
+      for (let i = 0; i < this.companyreminders.length; i++) {
+        this.companyreminders[i].startDate = new Date(this.companyreminders[i].startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
+      }
+
+      console.log("CompanyReminders:", this.companyreminders)
+    })
+
+    this.service.getBuildingReminders().subscribe(data => {
+      this.buildingreminders = data;
+      this.buildingrowtotal = this.buildingreminders.length;
+
+      for (let i = 0; i < this.buildingreminders.length; i++) {
+        this.buildingreminders[i].startDate = new Date(this.buildingreminders[i].startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
+      }
+      console.log("BuildingReminders:", this.buildingreminders)
+    })
+
+
+
+
   }
 
 
-  changeH(val:any) {
+
+  //functionality of getting the selected values of dropdown
+  changeH(val: any) {
     console.log("Hierarchy selection:", val);
   }
-  changeOT(val:any) {
-    console.log("OptionType selection:", val);
+  changeCompany(val: any) {
+    console.log("Company selection:", val);
   }
-  
+  changeOT(val: any) {
+    console.log("OptionType selection:", val);
+    if (val == "Company - User Defined") {
+      this.showCompanyDrop = true;
+
+      this.ngOnInit()
+
+    }
+    else {
+      this.showCompanyDrop = false;
+      this.ngOnInit()
+      this.selectedCompany = [];
+    }
+
+    console.log("show:", this.showCompanyDrop)
+  }
 
 
 
 
 
 
-  
+
+
+
 
 }

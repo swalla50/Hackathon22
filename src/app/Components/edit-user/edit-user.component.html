@@ -21,7 +21,7 @@
         <!-- row contains user picture and the contact reminders -->
         <div class="row1-right">
             <div class="left-rightside">
-                <h4>Reminder selection: </h4>
+                <h4>Contact Reminder Selection: </h4>
                 <div class="reminder-inputs">
                     <form>
                         <!-- pulls in list of option types -->
@@ -37,8 +37,8 @@
 
                         <!-- Pulls in list of Hierachies -->
                         <ng-select aria-required="true" (change)="changeH(selectedHierarchy)"
-                            [(ngModel)]="selectedHierarchy" *ngIf="hierarchy" [items]="hierarchy"
-                            name="selectedHierarchy" bindLabel="companyHierarchyLabelDesc"
+                            [(ngModel)]="selectedHierarchy" *ngIf="hierarchy  && showCompanyDrop !== true"
+                            [items]="hierarchy" name="selectedHierarchy" bindLabel="companyHierarchyLabelDesc"
                             placeholder="Select a Hierarchy" appendTo="body" [multiple]="true" [closeOnSelect]="false">
                             <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                                 <input id="item-{{index}}" type="checkbox" name="item-{{index}}"
@@ -47,9 +47,9 @@
                         </ng-select>
 
                         <!-- Company routes need to be added to grab data -->
-                        <ng-select aria-required="true" (change)="changeH(selectedHierarchy)"
-                            [(ngModel)]="selectedHierarchy" *ngIf="hierarchy" [items]="hierarchy"
-                            name="selectedHierarchy" bindLabel="companyHierarchyLabelDesc"
+                        <ng-select aria-required="true" (change)="changeCompany(selectedCompany)"
+                            [(ngModel)]="selectedCompany" *ngIf="companyname && showCompanyDrop === true"
+                            [items]="companyname" name="selectedCompany" bindLabel="companyHierarchyLabelDesc"
                             placeholder="Select a Company" appendTo="body" [multiple]="true" [closeOnSelect]="false">
                             <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                                 <input id="item-{{index}}" type="checkbox" name="item-{{index}}"
@@ -78,8 +78,8 @@
                         <!-- shows user's user defined reminders -->
                         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                             <mat-expansion-panel-header>
-                                <mat-panel-title *ngIf="optionrowtotal">
-                                    User Defined ({{optionrowtotal}})
+                                <mat-panel-title>
+                                    User Defined (6)
                                 </mat-panel-title>
                                 <!-- <mat-panel-description>
                                     Reminders
@@ -100,13 +100,13 @@
                                 <tbody>
                                     <tr class="reminder-schedule-table-row" *ngFor="let display of displayreminder">
                                         <td>
-                                           {{display.date}}
+                                            {{display.date}}
                                         </td>
                                         <td>
                                             every {{display.frequency}} days
                                         </td>
                                         <td>
-                                           {{display.reminderType}}
+                                            {{display.reminderType}}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -115,14 +115,15 @@
                         <!-- shows user's building reminders -->
                         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                             <mat-expansion-panel-header>
-                                <mat-panel-title *ngIf="buildingrowtotal">
-                                    Building ({{buildingrowtotal}})
+                                <mat-panel-title *ngIf="buildingreminders">
+                                    Building ({{(buildingreminders | filter:Buildingterm)?.length}})
                                 </mat-panel-title>
                                 <!-- <mat-panel-description>
                                     Reminders
                                 </mat-panel-description> -->
                             </mat-expansion-panel-header>
-                            <input type="text" ng-model="displayreminderbuilding">
+                            <input type="text" class="building-reminder-schedule-search"
+                                placeholder="Search Building Reminders" [(ngModel)]="Buildingterm">
                             <table class="reminder-schedule-table" table-striped>
                                 <thead class="reminder-thead">
                                     <td>
@@ -132,19 +133,72 @@
                                         Frequency
                                     </td>
                                     <td>
-                                        Building Id
+                                        Building ID
+                                    </td>
+                                    <td>
+                                        Building Name
                                     </td>
                                 </thead>
                                 <tbody>
-                                    <tr class="reminder-schedule-table-row" *ngFor="let display of displayreminderbuilding">
-                                        <td >
-                                           {{display.date}}
+                                    <tr class="reminder-schedule-table-row"
+                                        *ngFor="let display of buildingreminders | filter: Buildingterm">
+                                        <td>
+                                            {{display.startDate}}
                                         </td>
                                         <td>
-                                            every {{display.frequency}} days
+                                            every {{display.ticklerFreq}} days
                                         </td>
                                         <td>
-                                           {{display.BuildingID}}
+                                            {{display.buildingID}}
+                                        </td>
+                                        <td>
+                                            {{display.buildingName}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </mat-expansion-panel>
+                        <!-- shows user's company reminders -->
+                        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title *ngIf="companyreminders">
+                                    Company ({{(companyreminders | filter:Companyterm)?.length}})
+                                </mat-panel-title>
+                                <!-- <mat-panel-description>
+                                    Reminders
+                                </mat-panel-description> -->
+                            </mat-expansion-panel-header>
+                            <input type="text" class="company-reminder-schedule-search"
+                                placeholder="Search Company Reminders" [(ngModel)]="Companyterm">
+                            <table class="company-reminder-schedule-table" table-striped>
+                                <thead class="reminder-thead">
+                                    <td>
+                                        Date
+                                    </td>
+                                    <td>
+                                        Frequency
+                                    </td>
+                                    <td>
+                                        Company ID
+                                    </td>
+                                    <td>
+                                        Company Name
+                                    </td>
+                                </thead>
+                                <tbody>
+                                    <tr class="reminder-schedule-table-row"
+                                        *ngFor="let display of companyreminders | filter: Companyterm; let i = index">
+                                        <td>
+                                            {{display.startDate}}
+                                        </td>
+                                        <td>
+                                            every {{display.ticklerFreq}} days
+                                        </td>
+                                        <td>
+                                            {{display.companyID}}
+                                        </td>
+                                        <td>
+                                            {{display.companyName}}
                                         </td>
                                     </tr>
                                 </tbody>
