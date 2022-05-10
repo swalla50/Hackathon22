@@ -36,12 +36,26 @@
                                 </ng-template>
                             </ng-select>
 
+
+
                             <!-- Pulls in list of Hierachies -->
                             <ng-select aria-required="true" (change)="changeH(selectedHierarchy)"
                                 [(ngModel)]="selectedHierarchy" *ngIf="hierarchy  && showCompanyDrop !== true"
                                 [items]="hierarchy" name="selectedHierarchy" bindLabel="companyHierarchyLabelDesc"
                                 placeholder="Select a Hierarchy" appendTo="body" [multiple]="true"
                                 [closeOnSelect]="false">
+                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                    <input id="item-{{index}}" type="checkbox" name="item-{{index}}"
+                                        [ngModel]="item$.selected" /> {{item}}
+                                </ng-template>
+                            </ng-select>
+
+                            
+                            <!-- Building DropDown -->
+                            <ng-select aria-required="true" *ngIf="optiontype" (change)="changeOT(selectedOptionType)"
+                                [(ngModel)]="selectedOptionType" name="selectedOptionType" [items]="optiontype"
+                                bindLabel="tickleDescription" placeholder="Select a Building" appendTo="body"
+                                [multiple]="true" [closeOnSelect]="false">
                                 <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                                     <input id="item-{{index}}" type="checkbox" name="item-{{index}}"
                                         [ngModel]="item$.selected" /> {{item}}
@@ -281,11 +295,11 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">
-                                <fa-icon [icon]="faFingerprint" size='sm'></fa-icon> &nbsp;System Contact ID: 
+                                <fa-icon [icon]="faFingerprint" size='sm'></fa-icon> &nbsp;System Contact ID:
                             </span>
                         </div>
-                        <input disabled type="text" class="form-control disabled" placeholder="2" aria-label="SystemContactID"
-                            aria-describedby="basic-addon1">
+                        <input disabled type="text" class="form-control disabled" placeholder="2"
+                            aria-label="SystemContactID" aria-describedby="basic-addon1">
 
                     </div>
                     <div class="input-group mb-3">
@@ -621,16 +635,17 @@
                         <div class="form-check form-check-inline">
                             <label class="form-check-label" for="inlineCheckbox1">Allow Log On: </label>
                             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                            
+
                         </div>
                         <div class="form-check form-check-inline">
                             <label class="form-check-label" for="inlineCheckbox2">Contact Active: </label>
                             <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
                         </div>
                         <div class="form-check form-check-inline">
-                            <label class="form-check-label" for="inlineCheckbox3">Hide Default login when using Profiles: </label>
+                            <label class="form-check-label" for="inlineCheckbox3">Hide Default login when using
+                                Profiles: </label>
                             <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
-                            
+
                         </div>
 
                     </div>
@@ -647,8 +662,8 @@
                         Reminders
                     </mat-panel-description> -->
                     </mat-expansion-panel-header>
-                    <input type="text" class="all-reminder-schedule-search"
-                        placeholder="Search All Reminders" [(ngModel)]="Allterm">
+                    <input type="text" class="all-reminder-schedule-search" placeholder="Search All Reminders"
+                        [(ngModel)]="Allterm">
                     <table class="reminder-schedule-table" table-striped>
                         <thead class="reminder-thead">
                             <td>
@@ -676,10 +691,10 @@
                                 <td>
                                     {{display.tickleDescription}}
                                 </td>
-                               
+
                                 <td>
                                     {{display.ticklerMessage}}
-                                </td> 
+                                </td>
                                 <td>
                                     every {{display.ticklerFreq}} days
                                 </td>

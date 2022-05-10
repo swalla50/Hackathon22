@@ -48,6 +48,8 @@ export class EditUserComponent implements OnInit {
   selectedOptionType: any = [];
   selectedHierarchy: any = [];
   selectedCompany: any = [];
+  selectedBuilding: any = [];
+
 
   displayreminder: any = [
     { date: '2/13/2022', frequency: 3, reminderType: 'User Defined' },
@@ -150,6 +152,10 @@ export class EditUserComponent implements OnInit {
   }
   changeCompany(val: any) {
     console.log("Company selection:", val);
+  }
+
+  changeBuilding(val: any) {
+    console.log("Building selection:", val);
   }
   changeOT(val: any) {
     console.log("OptionType selection:", val);
