@@ -28,7 +28,7 @@
 .mat-button, .mat-icon-button, .mat-stroked-button, .mat-flat-button {
     height: 100%;
     border-radius: 0px 10px 10px 0px;
-    background: linear-gradient(0deg, rgba(5,64,125,1) 0%, rgba(19,136,218,1) 100%);
+    background: linear-gradient(0deg, rgba(5,64,125,1) 0%, rgb(36 51 90) 100%);
     color:white;
     box-shadow: 0.5px 25px 15px 0 rgb(0 0 0 / 39%);
 }
@@ -130,5 +130,14 @@ ul.user-nav {
 
   button.mat-focus-indicator.mat-raised-button.mat-button-base.mat-blue {
     color: white;
-    background: linear-gradient(0deg, rgba(5,64,125,1) 0%, rgba(19,136,218,1) 100%);
+    background: linear-gradient(0deg, rgba(5,64,125,1) 0%, rgb(36 51 90) 100%);
+}
+
+mat-drawer-content.mat-drawer-content{
+  margin-top: 10px !important;
+}
+
+button.mat-focus-indicator.mat-button.mat-button-base.ng-star-inserted {
+  position: fixed;
+  transform: translateX(30px);
 }

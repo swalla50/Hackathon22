@@ -1,0 +1,71 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="row1-nav">
+        <div class="row1-left">
+            <a class="navbar-brand" href="#"><img src='assets/Images/CoStar.svg' /></a>
+            <h1 class="appText" id="REMTitle">Real Estate Manager</h1>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="row1-right">
+            <form class="form-inline my-2 my-lg-0">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">
+                            <fa-icon [icon]="faMagnifyingGlass" size='sm'></fa-icon>
+                        </span>
+                    </div>
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <div class="input-group-append">
+
+                        <select class="custom-select" id="inputGroupSelect02">
+                            <option selected="selected" value="99">All</option>
+                            <option value="1">Project</option>
+                            <option value="300">Building</option>
+                            <option value="1100">Company</option>
+                            <option value="500">Contact</option>
+                            <option value="402">Equipment Lease</option>
+                            <option value="401">Land Parcel</option>
+                            <option value="400">Lease</option>
+                            <option value="302">Short Form</option>
+                            <option value="301">Supplier</option>
+                            <option value="7005">ZCE Testing</option>
+                        </select>
+
+                    </div>
+                </div>
+            </form>
+
+            <button class="user-profile">
+                <p class="user-initials">VS</p>
+            </button>
+        </div>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="row2-nav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Strategy</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Portfolio <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contacts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Reports</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Admin</a>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+</nav>

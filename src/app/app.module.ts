@@ -23,6 +23,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; 
 import {MatExpansionModule} from '@angular/material/expansion'
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NavbarComponent } from './Components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     EditUserComponent,
     UserRightsComponent,
     UserModulesComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

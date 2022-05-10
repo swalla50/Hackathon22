@@ -31,6 +31,10 @@ export class SharedService {
   getCompanyReminders():Observable<any[]>{
     return this.http.get<any>(this.APIUrl+'getcompanyreminders/reminders');
   }
+
+  getAllReminders():Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'getallreminders/reminders');
+  }
 }
 
 

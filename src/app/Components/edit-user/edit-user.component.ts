@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/Services/shared.service';
+import { faBuilding,faUser, faFingerprint,faPeopleGroup, faFolderTree, faEnvelopeCircleCheck} from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -10,9 +11,18 @@ import { SharedService } from 'src/app/Services/shared.service';
 })
 export class EditUserComponent implements OnInit {
 
+  //Icons
+  faBuilding = faBuilding;
+  faUser = faUser;
+  faFingerprint = faFingerprint;
+  faPeopleGroup = faPeopleGroup;
+  faFolderTree = faFolderTree;
+  faEnvelopeCircleCheck = faEnvelopeCircleCheck;
+  //arrays
   hierarchy: any;
   optiontype: any;
   buildingreminders: any;
+  allreminders: any;
   companyname: any;
   companyreminders: any;
   panelOpenState!: boolean;
@@ -24,6 +34,7 @@ export class EditUserComponent implements OnInit {
   searchTerm = '';
   Companyterm = '';
   Buildingterm = '';
+  Allterm = '';
 
 
   showCompanyDrop!: boolean;
@@ -62,7 +73,38 @@ export class EditUserComponent implements OnInit {
     this.service.getOptionType().subscribe(data => {
       this.optiontype = data.map((ndot: any) => ndot.tickleDescription);
 
+        if(this.selectedOptionType == "Company - User Defined" ){
+     
+
+           let test= this.optiontype.filter((obj:any) => obj === "Company - User Defined")
+
+           this.optiontype = test;
+            this.ngOnInit
+            console.log("test", test)
+      
+        }
+        if(this.selectedOptionType.length > 0 ){
+     
+
+          let test1= this.optiontype.filter((obj:any) => obj !== 'Company - User Defined')
+
+          this.optiontype = test1;
+           this.ngOnInit
+           console.log("test", test1)
+     
+       }
+      
       console.log("OptionType:", this.optiontype)
+    })
+
+    this.service.getAllReminders().subscribe(data => {
+      this.allreminders = data;
+
+      for (let i = 0; i < this.allreminders.length; i++) {
+        this.allreminders[i].startDate = new Date(this.allreminders[i].startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
+      }
+
+      console.log("allreminders:", this.allreminders)
     })
 
     this.service.getCompanyList().subscribe(data => {
@@ -92,6 +134,8 @@ export class EditUserComponent implements OnInit {
       }
       console.log("BuildingReminders:", this.buildingreminders)
     })
+
+    console.log("selected",this.selectedHierarchy)
 
 
 
