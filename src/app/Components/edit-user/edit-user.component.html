@@ -52,9 +52,9 @@
 
                             
                             <!-- Building DropDown -->
-                            <ng-select aria-required="true" *ngIf="optiontype" (change)="changeOT(selectedOptionType)"
-                                [(ngModel)]="selectedOptionType" name="selectedOptionType" [items]="optiontype"
-                                bindLabel="tickleDescription" placeholder="Select a Building" appendTo="body"
+                            <ng-select aria-required="true" *ngIf="buildingName && showBuildingDrop === true" (change)="changeBuilding(selectedBuilding)"
+                                [(ngModel)]="selectedBuilding" name="selectedBuilding" [items]="buildingName"
+                                bindLabel="buildingName" placeholder="Select a Building" appendTo="body"
                                 [multiple]="true" [closeOnSelect]="false">
                                 <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                                     <input id="item-{{index}}" type="checkbox" name="item-{{index}}"

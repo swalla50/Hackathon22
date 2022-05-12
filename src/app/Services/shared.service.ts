@@ -35,6 +35,10 @@ export class SharedService {
   getAllReminders():Observable<any[]>{
     return this.http.get<any>(this.APIUrl+'getallreminders/reminders');
   }
+  getAllBuildings():Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'getbuildings/buildings');
+  }
+  getBH():Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'getbuildingandhierarchy/buildinghierarchy');
+  }
 }
-
-
