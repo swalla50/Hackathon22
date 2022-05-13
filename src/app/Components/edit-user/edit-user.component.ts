@@ -62,7 +62,7 @@ export class EditUserComponent implements OnInit {
         this.optiontype = test;
         this.ngOnInit
       }
-      if (this.selectedOptionType.length > 0) {
+      if (this.selectedOptionType.length > 0 || this.selectedHierarchy.length > 0) {
         let test1 = this.optiontype.filter((obj: any) => obj !== 'Company - User Defined')
         this.optiontype = test1;
         this.ngOnInit
@@ -70,7 +70,7 @@ export class EditUserComponent implements OnInit {
     })
     this.service.getHierarchy().subscribe(datah => {
       this.hierarchy = datah.map((nd: any) => nd.hierarchy);
-      if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2) {
+      if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType.length !== 0) {
         this.service.getBH().subscribe(data => {
           this.allbuildings = data;
           this.buildingName = this.allbuildings.map((obj: any) => obj.buildingName)
@@ -121,22 +121,38 @@ export class EditUserComponent implements OnInit {
       this.showBuildingDrop = true;
       this.ngOnInit()
     }
+
     if (this.selectedHierarchy.length > 1) {
       this.showBuildingDrop = false;
+      this.selectedBuilding = []
+      this.ngOnInit()
+    }
+    if (this.selectedHierarchy.length > 0) {
       this.ngOnInit()
     }
     if (this.selectedHierarchy.length === 0) {
       this.showBuildingDrop = false;
-      this.ngOnInit()
+
       this.selectedHierarchy = [];
       this.listobuildings = []
       this.buildingName = []
+      this.selectedBuilding = []
+      this.ngOnInit()
     }
   }
   changeCompany(val: any) {
+    if (val.length === 0) {
+      this.showCompanyDrop = false;
+      this.ngOnInit()
+      this.selectedCompany = [];
+    }
     this.ngOnInit()
   }
   changeBuilding(val: any) {
+    if (this.selectedOptionType.length === 0) {
+      val = []
+      this.ngOnInit()
+    }
     this.ngOnInit()
   }
   changeOT(val: any) {
@@ -146,14 +162,27 @@ export class EditUserComponent implements OnInit {
       this.ngOnInit()
     }
     if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType == "Building - Option Reminder") {
+
       this.showBuildingDrop = true;
       this.ngOnInit()
+      console.log("buildingshow", this.showBuildingDrop)
     }
-    if (val === 0) {
+    if (val.length === 0) {
       this.showCompanyDrop = false;
       this.ngOnInit()
       this.selectedCompany = [];
     }
+    if (this.selectedOptionType.length > 0 && this.selectedOptionType != "Building - Option Reminder") {
+      this.showCompanyDrop = false;
+      this.selectedBuilding = [];
+      this.showBuildingDrop = false;
+
+      this.selectedCompany = [];
+      console.log("buildingshow2", this.showBuildingDrop, this.selectedOptionType)
+    }
+
+    console.log("hierarchy", this.selectedHierarchy)
+    console.log("thisoption", this.selectedOptionType)
   }
 
 }
