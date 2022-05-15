@@ -63,9 +63,10 @@ export class EditUserComponent implements OnInit {
         this.ngOnInit
       }
       if (this.selectedOptionType.length > 0 || this.selectedHierarchy.length > 0) {
-        let test1 = this.optiontype.filter((obj: any) => obj !== 'Company - User Defined')
+        let test1 = this.optiontype.filter((obj: any) => obj != 'Company - User Defined')
         this.optiontype = test1;
         this.ngOnInit
+
       }
     })
     this.service.getHierarchy().subscribe(datah => {
@@ -169,6 +170,8 @@ export class EditUserComponent implements OnInit {
     }
     if (val.length === 0) {
       this.showCompanyDrop = false;
+      this.selectedBuilding = [];
+      this.showBuildingDrop= false;
       this.ngOnInit()
       this.selectedCompany = [];
     }
@@ -180,7 +183,7 @@ export class EditUserComponent implements OnInit {
       this.selectedCompany = [];
       console.log("buildingshow2", this.showBuildingDrop, this.selectedOptionType)
     }
-
+    this.ngOnInit();
     console.log("hierarchy", this.selectedHierarchy)
     console.log("thisoption", this.selectedOptionType)
   }
