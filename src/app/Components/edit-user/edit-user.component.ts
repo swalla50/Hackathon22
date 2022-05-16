@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/Services/shared.service';
-import { faBuilding, faUser, faFingerprint, faPeopleGroup, faFolderTree, faEnvelopeCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faUser, faFingerprint, faPeopleGroup, faFolderTree, faEnvelopeCircleCheck, faXmark} from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
@@ -15,6 +17,7 @@ export class EditUserComponent implements OnInit {
   faFingerprint = faFingerprint;
   faPeopleGroup = faPeopleGroup;
   faFolderTree = faFolderTree;
+  faXmark = faXmark;
   faEnvelopeCircleCheck = faEnvelopeCircleCheck;
   //arrays
   hierarchy: any;
@@ -56,9 +59,11 @@ export class EditUserComponent implements OnInit {
     { date: '5/13/2022', frequency: 60, reminderType: 'User Defined' },
     { date: '3/15/2022', frequency: 120, reminderType: 'User Defined' },
   ]
-  constructor(public service: SharedService, private toastr: ToastrService) { }
+  constructor(public service: SharedService, private toastr: ToastrService, private modalService: NgbModal) { }
 
-
+  openVerticallyCentered(content:any) {
+    this.modalService.open(content, { centered: true });
+  }
   ngOnInit(): void {
 
     this.service.getOptionType().subscribe(data => {

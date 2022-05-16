@@ -242,3 +242,14 @@ input.all-reminder-schedule-search{
 input.form-control.disabled {
     text-align: center;
 }
+
+button.btn.btn-dark {
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+}
+
+.modal-dialog {
+    max-width: 100% !important;
+    margin: 1.75rem auto;
+}
