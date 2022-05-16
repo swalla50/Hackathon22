@@ -141,3 +141,9 @@ button.mat-focus-indicator.mat-button.mat-button-base.ng-star-inserted {
   position: fixed;
   transform: translateX(30px);
 }
+
+.mat-drawer-container {
+
+  z-index: 4000;
+
+}

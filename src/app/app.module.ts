@@ -24,7 +24,8 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatExpansionModule} from '@angular/material/expansion'
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NavbarComponent } from './Components/navbar/navbar.component';
-
+import { ToastrModule } from 'ngx-toastr';
+import {MatDialogModule} from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +53,9 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
     FormsModule,
     HttpClientModule,
     MatExpansionModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    ToastrModule.forRoot(),
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

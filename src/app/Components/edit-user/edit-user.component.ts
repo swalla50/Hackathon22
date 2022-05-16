@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/Services/shared.service';
 import { faBuilding, faUser, faFingerprint, faPeopleGroup, faFolderTree, faEnvelopeCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
@@ -42,6 +43,9 @@ export class EditUserComponent implements OnInit {
   selectedHierarchy: any = [];
   selectedCompany: any = [];
   selectedBuilding: any = [];
+  daysOut!: string;
+  Frequency!: string;
+  Message!: string;
   listobuildings: any = []
   showBuildingDrop!: boolean;
   displayreminder: any = [
@@ -52,7 +56,9 @@ export class EditUserComponent implements OnInit {
     { date: '5/13/2022', frequency: 60, reminderType: 'User Defined' },
     { date: '3/15/2022', frequency: 120, reminderType: 'User Defined' },
   ]
-  constructor(public service: SharedService) { }
+  constructor(public service: SharedService, private toastr: ToastrService) { }
+
+
   ngOnInit(): void {
 
     this.service.getOptionType().subscribe(data => {
@@ -171,7 +177,7 @@ export class EditUserComponent implements OnInit {
     if (val.length === 0) {
       this.showCompanyDrop = false;
       this.selectedBuilding = [];
-      this.showBuildingDrop= false;
+      this.showBuildingDrop = false;
       this.ngOnInit()
       this.selectedCompany = [];
     }
@@ -186,6 +192,58 @@ export class EditUserComponent implements OnInit {
     this.ngOnInit();
     console.log("hierarchy", this.selectedHierarchy)
     console.log("thisoption", this.selectedOptionType)
+  }
+
+  reminderobj: any = [];
+  onSubmit() {
+    for (let i = 0; i < this.selectedOptionType.length; i++) {
+      this.reminderobj[i] = {
+        optionType: this.selectedOptionType[i],
+        hierarchy: this.selectedHierarchy,
+        company: this.selectedCompany,
+        building: this.selectedBuilding,
+        daysOut: this.daysOut,
+        Frequency: this.Frequency,
+        Message: this.Message
+      }
+    }
+    
+    // console.log("Option Type Submit: ", this.selectedOptionType)
+    // console.log("Hierarchy Submit: ", this.selectedHierarchy)
+    // console.log("Buiilding Submit: ", this.selectedBuilding)
+    // console.log("Company Submit: ", this.selectedCompany)
+    // console.log("Days Out Submit: ", this.daysOut)
+    // console.log("Frequency Submit: ", this.Frequency)
+    // console.log("Message: ", this.Message)
+
+    if (this.selectedOptionType.length > 1) {
+      for (let i = 0; i < this.selectedOptionType.length; i++) {
+        console.log()
+        if (this.reminderobj[i].optionType == "Contact - User Defined") {
+          console.log("CONTACT: ",this.reminderobj[i])
+        }
+        if (this.reminderobj[i].optionType == "Lease - User Defined") {
+          console.log("LEASE: ", this.reminderobj[i])
+            for (let k = 0; k < this.reminderobj[i].hierarchy.length; k++){
+              if(this.reminderobj[i].hierarchy[k] === "Costar Group --> Costar-Dev"){
+                console.log("Dev hierarhcy: ", this.reminderobj[i])
+              }
+            }
+        }
+      }
+      this.toastr.success(this.selectedOptionType + ' reminders added successfully', 'Sucess!')
+    }
+    if (this.selectedOptionType.length < 2 && this.selectedOptionType != 0) {
+      this.toastr.success(this.selectedOptionType + ' reminders added successfully', 'Sucess!')
+      if (this.selectedOptionType == "Company - User Defined") {
+        console.log("Goes to company")
+      }
+      if (this.selectedOptionType == "Building - Option Reminder") {
+        console.log("Goes to Building")
+      }
+    }
+
+
   }
 
 }
