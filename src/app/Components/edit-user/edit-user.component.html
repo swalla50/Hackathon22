@@ -88,9 +88,202 @@
                 </div>
 
                 <!-- used to show the user's current reminders that are set and for which object (report, lease,building,user defined) -->
-                <button class="right-rightside" data-toggle="modal" data-target="#exampleModalCenter">
-                    
-                </button>
+                <div class="right-rightside">
+                    <h4>Scheduled Reminders: </h4>
+                    <div class="scheduled-reminder-list-container">
+                        <mat-accordion>
+                            <!-- shows user's user defined reminders -->
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        User Defined (6)
+                                    </mat-panel-title>
+                                    <!-- <mat-panel-description>
+                                    Reminders
+                                </mat-panel-description> -->
+                                </mat-expansion-panel-header>
+                                <table class="reminder-schedule-table" table-striped>
+                                    <thead class="reminder-thead">
+                                        <td>
+                                            Date
+                                        </td>
+                                        <td>
+                                            Frequency
+                                        </td>
+                                        <td>
+                                            Object Type
+                                        </td>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="reminder-schedule-table-row" *ngFor="let display of displayreminder">
+                                            <td>
+                                                {{display.date}}
+                                            </td>
+                                            <td>
+                                                every {{display.frequency}} days
+                                            </td>
+                                            <td>
+                                                {{display.reminderType}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </mat-expansion-panel>
+                            <!-- shows user's building reminders -->
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title *ngIf="buildingreminders">
+                                        Building ({{(buildingreminders | filter:Buildingterm)?.length}})
+                                    </mat-panel-title>
+                                    <!-- <mat-panel-description>
+                                    Reminders
+                                </mat-panel-description> -->
+                                </mat-expansion-panel-header>
+                                <input type="text" class="building-reminder-schedule-search"
+                                    placeholder="Search Building Reminders" [(ngModel)]="Buildingterm">
+                                <table class="reminder-schedule-table" table-striped>
+                                    <thead class="reminder-thead">
+                                        <td>
+                                            Date
+                                        </td>
+                                        <td>
+                                            Frequency
+                                        </td>
+                                        <td>
+                                            Building ID
+                                        </td>
+                                        <td>
+                                            Building Name
+                                        </td>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="reminder-schedule-table-row"
+                                            *ngFor="let display of buildingreminders | filter: Buildingterm">
+                                            <td>
+                                                {{display.startDate}}
+                                            </td>
+                                            <td>
+                                                every {{display.ticklerFreq}} days
+                                            </td>
+                                            <td>
+                                                {{display.buildingID}}
+                                            </td>
+                                            <td>
+                                                {{display.buildingName}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </mat-expansion-panel>
+                            <!-- shows user's company reminders -->
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title *ngIf="companyreminders">
+                                        Company ({{(companyreminders | filter:Companyterm)?.length}})
+                                    </mat-panel-title>
+                                    <!-- <mat-panel-description>
+                                    Reminders
+                                </mat-panel-description> -->
+                                </mat-expansion-panel-header>
+                                <input type="text" class="company-reminder-schedule-search"
+                                    placeholder="Search Company Reminders" [(ngModel)]="Companyterm">
+                                <table class="company-reminder-schedule-table" table-striped>
+                                    <thead class="reminder-thead">
+                                        <td>
+                                            Date
+                                        </td>
+                                        <td>
+                                            Frequency
+                                        </td>
+                                        <td>
+                                            Company ID
+                                        </td>
+                                        <td>
+                                            Company Name
+                                        </td>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="reminder-schedule-table-row"
+                                            *ngFor="let display of companyreminders | filter: Companyterm; let i = index">
+                                            <td>
+                                                {{display.startDate}}
+                                            </td>
+                                            <td>
+                                                every {{display.ticklerFreq}} days
+                                            </td>
+                                            <td>
+                                                {{display.companyID}}
+                                            </td>
+                                            <td>
+                                                {{display.companyName}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </mat-expansion-panel>
+                            <!-- shows user's lease reminders -->
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Lease
+                                    </mat-panel-title>
+                                    <!-- <mat-panel-description>
+                                    Reminders
+                                </mat-panel-description> -->
+                                </mat-expansion-panel-header>
+                                <ul class="scheduled-reminder-list">
+                                    <li class="Scheduled-reminder"> dummy data</li>
+                                    <li class="Scheduled-reminder"> dummy data</li>
+                                    <li class="Scheduled-reminder"> dummy data</li>
+                                    <li class="Scheduled-reminder"> dummy data</li>
+                                    <li class="Scheduled-reminder"> dummy data</li>
+                                    <li class="Scheduled-reminder"> dummy data</li>
+
+                                </ul>
+                            </mat-expansion-panel>
+                            <!-- Shows user's Report reminders -->
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Report
+                                    </mat-panel-title>
+                                    <!-- <mat-panel-description>
+                                    Reminders
+                                </mat-panel-description> -->
+                                </mat-expansion-panel-header>
+                                <ul class="scheduled-reminder-list">
+                                    <li class="Scheduled-reminder"> dummy data</li>
+                                    <li class="Scheduled-reminder"> dummy data</li>
+                                    <li class="Scheduled-reminder"> dummy data</li>
+                                    <li class="Scheduled-reminder"> dummy data</li>
+                                    <li class="Scheduled-reminder"> dummy data</li>
+                                    <li class="Scheduled-reminder"> dummy data</li>
+
+                                </ul>
+                            </mat-expansion-panel>
+                            <!-- Shows User's project Reminders -->
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Projects
+                                    </mat-panel-title>
+                                    <!-- <mat-panel-description>
+                                    Reminders
+                                </mat-panel-description> -->
+                                </mat-expansion-panel-header>
+                                <ul class="scheduled-reminder-list">
+                                    <li class="Scheduled-reminder"> dummy data</li>
+                                    <li class="Scheduled-reminder"> dummy data</li>
+                                    <li class="Scheduled-reminder"> dummy data</li>
+                                    <li class="Scheduled-reminder"> dummy data</li>
+                                    <li class="Scheduled-reminder"> dummy data</li>
+                                    <li class="Scheduled-reminder"> dummy data</li>
+
+                                </ul>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -518,208 +711,3 @@
 </div>
 
 <!-- [(ngModel)]="selectedHierarchy" -->
-
-<div class="modal" id="exampleModalCenter" tabindex="1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="z-index: 1000000;"  role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-            <h4>Scheduled Reminders: </h4>
-            <div class="scheduled-reminder-list-container">
-                <mat-accordion>
-                    <!-- shows user's user defined reminders -->
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                User Defined (6)
-                            </mat-panel-title>
-                            <!-- <mat-panel-description>
-                            Reminders
-                        </mat-panel-description> -->
-                        </mat-expansion-panel-header>
-                        <table class="reminder-schedule-table" table-striped>
-                            <thead class="reminder-thead">
-                                <td>
-                                    Date
-                                </td>
-                                <td>
-                                    Frequency
-                                </td>
-                                <td>
-                                    Object Type
-                                </td>
-                            </thead>
-                            <tbody>
-                                <tr class="reminder-schedule-table-row" *ngFor="let display of displayreminder">
-                                    <td>
-                                        {{display.date}}
-                                    </td>
-                                    <td>
-                                        every {{display.frequency}} days
-                                    </td>
-                                    <td>
-                                        {{display.reminderType}}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </mat-expansion-panel>
-                    <!-- shows user's building reminders -->
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title *ngIf="buildingreminders">
-                                Building ({{(buildingreminders | filter:Buildingterm)?.length}})
-                            </mat-panel-title>
-                            <!-- <mat-panel-description>
-                            Reminders
-                        </mat-panel-description> -->
-                        </mat-expansion-panel-header>
-                        <input type="text" class="building-reminder-schedule-search"
-                            placeholder="Search Building Reminders" [(ngModel)]="Buildingterm">
-                        <table class="reminder-schedule-table" table-striped>
-                            <thead class="reminder-thead">
-                                <td>
-                                    Date
-                                </td>
-                                <td>
-                                    Frequency
-                                </td>
-                                <td>
-                                    Building ID
-                                </td>
-                                <td>
-                                    Building Name
-                                </td>
-                            </thead>
-                            <tbody>
-                                <tr class="reminder-schedule-table-row"
-                                    *ngFor="let display of buildingreminders | filter: Buildingterm">
-                                    <td>
-                                        {{display.startDate}}
-                                    </td>
-                                    <td>
-                                        every {{display.ticklerFreq}} days
-                                    </td>
-                                    <td>
-                                        {{display.buildingID}}
-                                    </td>
-                                    <td>
-                                        {{display.buildingName}}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </mat-expansion-panel>
-                    <!-- shows user's company reminders -->
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title *ngIf="companyreminders">
-                                Company ({{(companyreminders | filter:Companyterm)?.length}})
-                            </mat-panel-title>
-                            <!-- <mat-panel-description>
-                            Reminders
-                        </mat-panel-description> -->
-                        </mat-expansion-panel-header>
-                        <input type="text" class="company-reminder-schedule-search"
-                            placeholder="Search Company Reminders" [(ngModel)]="Companyterm">
-                        <table class="company-reminder-schedule-table" table-striped>
-                            <thead class="reminder-thead">
-                                <td>
-                                    Date
-                                </td>
-                                <td>
-                                    Frequency
-                                </td>
-                                <td>
-                                    Company ID
-                                </td>
-                                <td>
-                                    Company Name
-                                </td>
-                            </thead>
-                            <tbody>
-                                <tr class="reminder-schedule-table-row"
-                                    *ngFor="let display of companyreminders | filter: Companyterm; let i = index">
-                                    <td>
-                                        {{display.startDate}}
-                                    </td>
-                                    <td>
-                                        every {{display.ticklerFreq}} days
-                                    </td>
-                                    <td>
-                                        {{display.companyID}}
-                                    </td>
-                                    <td>
-                                        {{display.companyName}}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </mat-expansion-panel>
-                    <!-- shows user's lease reminders -->
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Lease
-                            </mat-panel-title>
-                            <!-- <mat-panel-description>
-                            Reminders
-                        </mat-panel-description> -->
-                        </mat-expansion-panel-header>
-                        <ul class="scheduled-reminder-list">
-                            <li class="Scheduled-reminder"> dummy data</li>
-                            <li class="Scheduled-reminder"> dummy data</li>
-                            <li class="Scheduled-reminder"> dummy data</li>
-                            <li class="Scheduled-reminder"> dummy data</li>
-                            <li class="Scheduled-reminder"> dummy data</li>
-                            <li class="Scheduled-reminder"> dummy data</li>
-
-                        </ul>
-                    </mat-expansion-panel>
-                    <!-- Shows user's Report reminders -->
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Report
-                            </mat-panel-title>
-                            <!-- <mat-panel-description>
-                            Reminders
-                        </mat-panel-description> -->
-                        </mat-expansion-panel-header>
-                        <ul class="scheduled-reminder-list">
-                            <li class="Scheduled-reminder"> dummy data</li>
-                            <li class="Scheduled-reminder"> dummy data</li>
-                            <li class="Scheduled-reminder"> dummy data</li>
-                            <li class="Scheduled-reminder"> dummy data</li>
-                            <li class="Scheduled-reminder"> dummy data</li>
-                            <li class="Scheduled-reminder"> dummy data</li>
-
-                        </ul>
-                    </mat-expansion-panel>
-                    <!-- Shows User's project Reminders -->
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Projects
-                            </mat-panel-title>
-                            <!-- <mat-panel-description>
-                            Reminders
-                        </mat-panel-description> -->
-                        </mat-expansion-panel-header>
-                        <ul class="scheduled-reminder-list">
-                            <li class="Scheduled-reminder"> dummy data</li>
-                            <li class="Scheduled-reminder"> dummy data</li>
-                            <li class="Scheduled-reminder"> dummy data</li>
-                            <li class="Scheduled-reminder"> dummy data</li>
-                            <li class="Scheduled-reminder"> dummy data</li>
-                            <li class="Scheduled-reminder"> dummy data</li>
-
-                        </ul>
-                    </mat-expansion-panel>
-                </mat-accordion>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
- 
-  

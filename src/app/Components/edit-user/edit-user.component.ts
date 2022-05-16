@@ -207,32 +207,25 @@ export class EditUserComponent implements OnInit {
         Message: this.Message
       }
     }
-    
-    // console.log("Option Type Submit: ", this.selectedOptionType)
-    // console.log("Hierarchy Submit: ", this.selectedHierarchy)
-    // console.log("Buiilding Submit: ", this.selectedBuilding)
-    // console.log("Company Submit: ", this.selectedCompany)
-    // console.log("Days Out Submit: ", this.daysOut)
-    // console.log("Frequency Submit: ", this.Frequency)
-    // console.log("Message: ", this.Message)
-
+    //More than 1 hierarchy selected
     if (this.selectedOptionType.length > 1) {
       for (let i = 0; i < this.selectedOptionType.length; i++) {
         console.log()
         if (this.reminderobj[i].optionType == "Contact - User Defined") {
-          console.log("CONTACT: ",this.reminderobj[i])
+          console.log("CONTACT: ", this.reminderobj[i])
         }
         if (this.reminderobj[i].optionType == "Lease - User Defined") {
           console.log("LEASE: ", this.reminderobj[i])
-            for (let k = 0; k < this.reminderobj[i].hierarchy.length; k++){
-              if(this.reminderobj[i].hierarchy[k] === "Costar Group --> Costar-Dev"){
-                console.log("Dev hierarhcy: ", this.reminderobj[i])
-              }
+          for (let k = 0; k < this.reminderobj[i].hierarchy.length; k++) {
+            if (this.reminderobj[i].hierarchy[k] === "Costar Group --> Costar-Dev") {
+              console.log("Dev hierarhcy: ", this.reminderobj[i])
             }
+          }
         }
       }
       this.toastr.success(this.selectedOptionType + ' reminders added successfully', 'Sucess!')
     }
+    //Only 1 hierarchy selected
     if (this.selectedOptionType.length < 2 && this.selectedOptionType != 0) {
       this.toastr.success(this.selectedOptionType + ' reminders added successfully', 'Sucess!')
       if (this.selectedOptionType == "Company - User Defined") {
