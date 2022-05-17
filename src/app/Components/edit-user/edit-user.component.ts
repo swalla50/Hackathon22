@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/Services/shared.service';
-import { faBuilding, faUser, faFingerprint, faPeopleGroup, faFolderTree, faEnvelopeCircleCheck, faXmark} from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faUser, faFingerprint, faPeopleGroup, faFolderTree, faEnvelopeCircleCheck, faXmark, faBell, faCalendarPlus} from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -18,7 +18,9 @@ export class EditUserComponent implements OnInit {
   faPeopleGroup = faPeopleGroup;
   faFolderTree = faFolderTree;
   faXmark = faXmark;
+  faBell = faBell;
   faEnvelopeCircleCheck = faEnvelopeCircleCheck;
+  faCalendarPlus = faCalendarPlus;
   //arrays
   hierarchy: any;
   optiontype: any;
@@ -31,11 +33,16 @@ export class EditUserComponent implements OnInit {
   buildingrowtotal: any;
   optionrowtotal: any;
   companyrowtotal: any;
+  contacts: any;
+  allreminderscid:any;
+  contactsid: any;
+  allreminderlist: any;
   //for filter
   searchTerm = '';
   Companyterm = '';
   Buildingterm = '';
   Allterm = '';
+  AllContacts = ''
   buildingName: any;
   buildingHierearchy: any;
   showCompanyDrop!: boolean;
@@ -62,9 +69,10 @@ export class EditUserComponent implements OnInit {
   constructor(public service: SharedService, private toastr: ToastrService, private modalService: NgbModal) { }
 
   openVerticallyCentered(content:any) {
-    this.modalService.open(content, { centered: true });
+    this.modalService.open(content, { centered: true,backdrop:false, size:'lg',fullscreen:true});
   }
   ngOnInit(): void {
+    
 
     this.service.getOptionType().subscribe(data => {
       this.optiontype = data.map((ndot: any) => ndot.tickleDescription);
@@ -103,12 +111,28 @@ export class EditUserComponent implements OnInit {
         })
       }
     })
-    this.service.getAllReminders().subscribe(data => {
-      this.allreminders = data;
+    this.service.getContacts().subscribe(data => {
+          
+      this.contacts = data;
+      this.contactsid= data.map((obj:any) => obj.contactID)
+    this.service.getAllReminders().subscribe(datar => {
+      this.allreminders = datar;
+      this.allreminderscid = datar.map((obj:any) => obj.contactID)
       for (let i = 0; i < this.allreminders.length; i++) {
         this.allreminders[i].startDate = new Date(this.allreminders[i].startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
+        for(let j=0; j< this.contacts.length; j++){
+
+          if(this.contacts[j].contactID === this.allreminders[i].contactID)
+          console.log("contacts: ", this.allreminders[j])
+          this.Allterm = this.allreminders[i].length
+          this.allreminderlist = this.allreminders
+        }
       }
+      console.log(this.allreminders)
     })
+  
+          
+})
     this.service.getCompanyList().subscribe(data => {
       this.companyname = data.map((ndcl: any) => ndcl.companyName);
     })
@@ -125,6 +149,7 @@ export class EditUserComponent implements OnInit {
       for (let i = 0; i < this.buildingreminders.length; i++) {
         this.buildingreminders[i].startDate = new Date(this.buildingreminders[i].startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
       }
+      console.log("buildingr",this.buildingreminders)
     })
   }
   //functionality of getting the selected values of dropdown

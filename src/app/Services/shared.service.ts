@@ -41,4 +41,7 @@ export class SharedService {
   getBH():Observable<any[]>{
     return this.http.get<any>(this.APIUrl+'getbuildingandhierarchy/buildinghierarchy');
   }
+  getContacts():Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'getcontacts/getcontactlist');
+  }
 }

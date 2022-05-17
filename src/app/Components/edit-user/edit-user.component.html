@@ -22,75 +22,22 @@
             <!-- row contains user picture and the contact reminders -->
             <div class="row1-right">
                 <div class="left-rightside">
-                    <h4>Contact Reminder Selection: </h4>
-                    <div class="reminder-inputs">
-                        <form (ngSubmit)="onSubmit()">
-                            <!-- pulls in list of option types -->
-                            <ng-select aria-required="true" *ngIf="optiontype" (change)="changeOT(selectedOptionType)"
-                                [(ngModel)]="selectedOptionType" name="selectedOptionType" [items]="optiontype"
-                                bindLabel="tickleDescription" placeholder="Select an Option Type" appendTo="body"
-                                [multiple]="true" [closeOnSelect]="false">
-                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                    <input id="item-{{index}}" type="checkbox" name="item-{{index}}"
-                                        [ngModel]="item$.selected" /> {{item}}
-                                </ng-template>
-                            </ng-select>
-
-
-
-                            <!-- Pulls in list of Hierachies -->
-                            <ng-select aria-required="true" (change)="changeH(selectedHierarchy)"
-                                [(ngModel)]="selectedHierarchy" *ngIf="hierarchy  && showCompanyDrop !== true"
-                                [items]="hierarchy" name="selectedHierarchy" bindLabel="companyHierarchyLabelDesc"
-                                placeholder="Select a Hierarchy" appendTo="body" [multiple]="true"
-                                [closeOnSelect]="false">
-                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                    <input id="item-{{index}}" type="checkbox" name="item-{{index}}"
-                                        [ngModel]="item$.selected" /> {{item}}
-                                </ng-template>
-                            </ng-select>
-
-
-                            <!-- Building DropDown -->
-                            <ng-select aria-required="true" *ngIf="buildingName && showBuildingDrop === true" (change)="changeBuilding(selectedBuilding)"
-                                [(ngModel)]="selectedBuilding" name="selectedBuilding" [items]="buildingName"
-                                bindLabel="buildingName" placeholder="Select a Building" appendTo="body"
-                                [multiple]="true" [closeOnSelect]="false">
-                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                    <input id="item-{{index}}" type="checkbox" name="item-{{index}}"
-                                        [ngModel]="item$.selected" /> {{item}}
-                                </ng-template>
-                            </ng-select>
-
-                            <!-- Company routes need to be added to grab data -->
-                            <ng-select aria-required="true" (change)="changeCompany(selectedCompany)"
-                                [(ngModel)]="selectedCompany" *ngIf="companyname && showCompanyDrop === true"
-                                [items]="companyname" name="selectedCompany" bindLabel="companyHierarchyLabelDesc"
-                                placeholder="Select a Company" appendTo="body" [multiple]="true"
-                                [closeOnSelect]="false">
-                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                    <input id="item-{{index}}" type="checkbox" name="item-{{index}}"
-                                        [ngModel]="item$.selected" /> {{item}}
-                                </ng-template>
-                            </ng-select>
-
-                            <input [(ngModel)]="daysOut" name="daysOut" type="number" class="form-control" placeholder="Days Out" aria-label="DaysOut"
-                                aria-describedby="basic-addon1">
-                            <input [(ngModel)]="Frequency" name="Frequency" type="number" class="form-control" placeholder="Frequency" aria-label="Frequency"
-                                aria-describedby="basic-addon1">
-                            <textarea [(ngModel)]="Message" name="Message" type="text" class="form-control" placeholder="Email Message"
-                                aria-label="EmailMessage" aria-describedby="basic-addon1"></textarea>
-                            <button type="submit" mat-raised-button color="blue">
-                                Add Reminder
-                            </button>
-                        </form>
-                    </div>
+                    <button type="button" class='myReminder-btn' (click)="openVerticallyCentered(content1)">
+                        <fa-icon [icon]="faCalendarPlus" size='8x' style="color: #033871; transform: rotate(17deg);">
+                        </fa-icon>
+                        <br />
+                        <h4>Add a Reminder</h4>
+                    </button>
                 </div>
 
                 <!-- used to show the user's current reminders that are set and for which object (report, lease,building,user defined) -->
                 <div class="right-rightside">
-                    <button (click)="openVerticallyCentered(content)"></button>
-                    
+                    <button type="button" class='myReminder-btn' (click)="openVerticallyCentered(content)">
+                        <fa-icon [icon]="faBell" size='8x' style="color: #033871; transform: rotate(17deg);"></fa-icon>
+                        <br />
+                        <h4>View Your Reminders</h4>
+                    </button>
+
                 </div>
             </div>
         </div>
@@ -461,10 +408,16 @@
             </div>
             <div class="row2-container-right">
                 <h4>All Reminders By Contact: </h4>
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <div class="allreminder-contactlist-search-container">
+                    <h4 class="contact-filterd-number">({{(contacts | filter:AllContacts)?.length}})</h4>
+                    <input type="text" class="all-reminder-contact-search" placeholder="Search Contacts"
+                        [(ngModel)]="AllContacts">
+                </div>
+                <mat-expansion-panel *ngFor="let contact of contacts| filter: AllContacts"
+                    (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                     <mat-expansion-panel-header>
                         <mat-panel-title *ngIf="allreminders">
-                            ({{(allreminders | filter:Allterm)?.length}})
+                            {{contact.contactFirstName}} {{contact.contactLastName}}
                         </mat-panel-title>
                         <!-- <mat-panel-description>
                         Reminders
@@ -492,22 +445,27 @@
                         </thead>
                         <tbody>
                             <tr class="reminder-schedule-table-row"
-                                *ngFor="let display of allreminders | filter: Allterm">
-                                <td>
-                                    {{display.contactName}}
+                                *ngFor="let allreminders of allreminders| filter: Allterm">
+                                <td
+                                    *ngIf="allreminders.contactID == contact.contactID && allreminders.isDeleted == false">
+                                    {{allreminders.contactName}}
                                 </td>
-                                <td>
-                                    {{display.tickleDescription}}
+                                <td
+                                    *ngIf="allreminders.contactID == contact.contactID && allreminders.isDeleted == false">
+                                    {{allreminders.tickleDescription}}
                                 </td>
 
-                                <td>
-                                    {{display.ticklerMessage}}
+                                <td
+                                    *ngIf="allreminders.contactID == contact.contactID && allreminders.isDeleted == false">
+                                    {{allreminders.ticklerMessage}}
                                 </td>
-                                <td>
-                                    every {{display.ticklerFreq}} days
+                                <td
+                                    *ngIf="allreminders.contactID == contact.contactID && allreminders.isDeleted == false">
+                                    every {{allreminders.ticklerFreq}} days
                                 </td>
-                                <td>
-                                    {{display.startDate}}
+                                <td
+                                    *ngIf="allreminders.contactID == contact.contactID && allreminders.isDeleted == false">
+                                    {{allreminders.startDate}}
                                 </td>
                             </tr>
                         </tbody>
@@ -520,167 +478,251 @@
 
 <!-- [(ngModel)]="selectedHierarchy" -->
 
-<ng-template #content let-modal>
+<ng-template #content let-modal style="z-index: 1000;">
     <div class="modal-header">
-      <button type="button" class="btn btn-dark" (click)="modal.close('Close click')"><fa-icon [icon]="faXmark" size='sm'></fa-icon></button>
+        <button type="button" class="btn btn-dark" (click)="modal.close('Close click')">
+            <fa-icon [icon]="faXmark" size='sm'></fa-icon>
+        </button>
     </div>
-    <div class="modal-body">
-        <h4>Scheduled Reminders: </h4>
-        <div class="scheduled-reminder-list-container">
-            <mat-accordion>
-                <!-- shows user's building reminders -->
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title *ngIf="buildingreminders">
-                            Building ({{(buildingreminders | filter:Buildingterm)?.length}})
-                        </mat-panel-title>
-                        <!-- <mat-panel-description>
-                        Reminders
-                    </mat-panel-description> -->
-                    </mat-expansion-panel-header>
-                    <input type="text" class="building-reminder-schedule-search"
-                        placeholder="Search Building Reminders" [(ngModel)]="Buildingterm">
-                    <table class="reminder-schedule-table" table-striped>
-                        <thead class="reminder-thead">
-                            <td>
-                                Date
-                            </td>
-                            <td>
-                                Frequency
-                            </td>
-                            <td>
-                                Building ID
-                            </td>
-                            <td>
-                                Building Name
-                            </td>
-                        </thead>
-                        <tbody>
-                            <tr class="reminder-schedule-table-row"
-                                *ngFor="let display of buildingreminders | filter: Buildingterm">
-                                <td>
-                                    {{display.startDate}}
-                                </td>
-                                <td>
-                                    every {{display.ticklerFreq}} days
-                                </td>
-                                <td>
-                                    {{display.buildingID}}
-                                </td>
-                                <td>
-                                    {{display.buildingName}}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </mat-expansion-panel>
-                <!-- shows user's company reminders -->
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title *ngIf="companyreminders">
-                            Company ({{(companyreminders | filter:Companyterm)?.length}})
-                        </mat-panel-title>
-                        <!-- <mat-panel-description>
-                        Reminders
-                    </mat-panel-description> -->
-                    </mat-expansion-panel-header>
-                    <input type="text" class="company-reminder-schedule-search"
-                        placeholder="Search Company Reminders" [(ngModel)]="Companyterm">
-                    <table class="company-reminder-schedule-table" table-striped>
-                        <thead class="reminder-thead">
-                            <td>
-                                Date
-                            </td>
-                            <td>
-                                Frequency
-                            </td>
-                            <td>
-                                Company ID
-                            </td>
-                            <td>
-                                Company Name
-                            </td>
-                        </thead>
-                        <tbody>
-                            <tr class="reminder-schedule-table-row"
-                                *ngFor="let display of companyreminders | filter: Companyterm; let i = index">
-                                <td>
-                                    {{display.startDate}}
-                                </td>
-                                <td>
-                                    every {{display.ticklerFreq}} days
-                                </td>
-                                <td>
-                                    {{display.companyID}}
-                                </td>
-                                <td>
-                                    {{display.companyName}}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </mat-expansion-panel>
-                <!-- shows user's lease reminders -->
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Lease
-                        </mat-panel-title>
-                        <!-- <mat-panel-description>
-                        Reminders
-                    </mat-panel-description> -->
-                    </mat-expansion-panel-header>
-                    <ul class="scheduled-reminder-list">
-                        <li class="Scheduled-reminder"> dummy data</li>
-                        <li class="Scheduled-reminder"> dummy data</li>
-                        <li class="Scheduled-reminder"> dummy data</li>
-                        <li class="Scheduled-reminder"> dummy data</li>
-                        <li class="Scheduled-reminder"> dummy data</li>
-                        <li class="Scheduled-reminder"> dummy data</li>
 
-                    </ul>
-                </mat-expansion-panel>
-                <!-- Shows user's Report reminders -->
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Report
-                        </mat-panel-title>
-                        <!-- <mat-panel-description>
+    <h4>Scheduled Reminders: </h4>
+    <div class="scheduled-reminder-list-container">
+        <mat-accordion>
+            <!-- shows user's building reminders -->
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title *ngIf="buildingreminders">
+                        Building <h4 class="mycompany-filterd-number">({{(buildingreminders |
+                            filter:Buildingterm)?.length}})</h4>
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
                         Reminders
                     </mat-panel-description> -->
-                    </mat-expansion-panel-header>
-                    <ul class="scheduled-reminder-list">
-                        <li class="Scheduled-reminder"> dummy data</li>
-                        <li class="Scheduled-reminder"> dummy data</li>
-                        <li class="Scheduled-reminder"> dummy data</li>
-                        <li class="Scheduled-reminder"> dummy data</li>
-                        <li class="Scheduled-reminder"> dummy data</li>
-                        <li class="Scheduled-reminder"> dummy data</li>
+                </mat-expansion-panel-header>
+                <input type="text" class="building-reminder-schedule-search" placeholder="Search Building Reminders"
+                    [(ngModel)]="Buildingterm">
+                <table class="reminder-schedule-table" table-striped>
+                    <thead class="reminder-thead">
+                        <td>
+                            Date
+                        </td>
+                        <td>
+                            Frequency
+                        </td>
+                        <td>
+                            Building ID
+                        </td>
+                        <td>
+                            Building Name
+                        </td>
+                        <td>
 
-                    </ul>
-                </mat-expansion-panel>
-                <!-- Shows User's project Reminders -->
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Projects
-                        </mat-panel-title>
-                        <!-- <mat-panel-description>
+                        </td>
+                    </thead>
+                    <tbody>
+                        <tr class="reminder-schedule-table-row"
+                            *ngFor="let display of buildingreminders | filter: Buildingterm">
+                            <td *ngIf="display.isDeleted == true">
+                                {{display.startDate}}
+                            </td>
+                            <td *ngIf="display.isDeleted == false">
+                                every {{display.ticklerFreq}} days
+                            </td>
+                            <td *ngIf="display.isDeleted == false">
+                                {{display.buildingID}}
+                            </td>
+                            <td *ngIf="display.isDeleted == false">
+                                {{display.buildingName}}
+                            </td>
+                            <td *ngIf="display.isDeleted == true">
+                                <button class="delete-reminder-btn">Delete Reminder</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </mat-expansion-panel>
+            <!-- shows user's company reminders -->
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title *ngIf="companyreminders">
+                        Company <h4 class="mycompany-filterd-number">({{(companyreminders |
+                            filter:Companyterm)?.length}})</h4>
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
                         Reminders
                     </mat-panel-description> -->
-                    </mat-expansion-panel-header>
-                    <ul class="scheduled-reminder-list">
-                        <li class="Scheduled-reminder"> dummy data</li>
-                        <li class="Scheduled-reminder"> dummy data</li>
-                        <li class="Scheduled-reminder"> dummy data</li>
-                        <li class="Scheduled-reminder"> dummy data</li>
-                        <li class="Scheduled-reminder"> dummy data</li>
-                        <li class="Scheduled-reminder"> dummy data</li>
+                </mat-expansion-panel-header>
+                <input type="text" class="company-reminder-schedule-search" placeholder="Search Company Reminders"
+                    [(ngModel)]="Companyterm">
+                <table class="company-reminder-schedule-table" table-striped>
+                    <thead class="reminder-thead">
+                        <td>
+                            Date
+                        </td>
+                        <td>
+                            Frequency
+                        </td>
+                        <td>
+                            Company ID
+                        </td>
+                        <td>
+                            Company Name
+                        </td>
+                        <td>
 
-                    </ul>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </div>
+                        </td>
+                    </thead>
+                    <tbody>
+                        <tr class="reminder-schedule-table-row"
+                            *ngFor="let display of companyreminders | filter: Companyterm; let i = index">
+                            <td *ngIf="display.isDeleted == false">
+                                {{display.startDate}}
+                            </td>
+                            <td *ngIf="display.isDeleted == false">
+                                every {{display.ticklerFreq}} days
+                            </td>
+                            <td *ngIf="display.isDeleted == false">
+                                {{display.companyID}}
+                            </td>
+                            <td *ngIf="display.isDeleted == false">
+                                {{display.companyName}}
+                            </td>
+                            <td *ngIf="display.isDeleted == false">
+                                <button class="delete-reminder-btn">Delete Reminder</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </mat-expansion-panel>
+            <!-- shows user's lease reminders -->
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Lease
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
+                        Reminders
+                    </mat-panel-description> -->
+                </mat-expansion-panel-header>
+                <ul class="scheduled-reminder-list">
+                    <li class="Scheduled-reminder"> dummy data</li>
+                    <li class="Scheduled-reminder"> dummy data</li>
+                    <li class="Scheduled-reminder"> dummy data</li>
+                    <li class="Scheduled-reminder"> dummy data</li>
+                    <li class="Scheduled-reminder"> dummy data</li>
+                    <li class="Scheduled-reminder"> dummy data</li>
+
+                </ul>
+            </mat-expansion-panel>
+            <!-- Shows user's Report reminders -->
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Report
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
+                        Reminders
+                    </mat-panel-description> -->
+                </mat-expansion-panel-header>
+                <ul class="scheduled-reminder-list">
+                    <li class="Scheduled-reminder"> dummy data</li>
+                    <li class="Scheduled-reminder"> dummy data</li>
+                    <li class="Scheduled-reminder"> dummy data</li>
+                    <li class="Scheduled-reminder"> dummy data</li>
+                    <li class="Scheduled-reminder"> dummy data</li>
+                    <li class="Scheduled-reminder"> dummy data</li>
+
+                </ul>
+            </mat-expansion-panel>
+            <!-- Shows User's project Reminders -->
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Projects
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
+                        Reminders
+                    </mat-panel-description> -->
+                </mat-expansion-panel-header>
+                <ul class="scheduled-reminder-list">
+                    <li class="Scheduled-reminder"> dummy data</li>
+                    <li class="Scheduled-reminder"> dummy data</li>
+                    <li class="Scheduled-reminder"> dummy data</li>
+                    <li class="Scheduled-reminder"> dummy data</li>
+                    <li class="Scheduled-reminder"> dummy data</li>
+                    <li class="Scheduled-reminder"> dummy data</li>
+
+                </ul>
+            </mat-expansion-panel>
+        </mat-accordion>
     </div>
-  </ng-template>
+</ng-template>
+<ng-template #content1 let-modal style="z-index: 1000;">
+    <div class="modal-header">
+        <button type="button" class="btn btn-dark" (click)="modal.close('Close click')">
+            <fa-icon [icon]="faXmark" size='sm'></fa-icon>
+        </button>
+    </div>
+
+    <h4>Contact Reminder Selection: </h4>
+    <div class="reminder-inputs">
+        <form (ngSubmit)="onSubmit()">
+            <!-- pulls in list of option types -->
+            <ng-select aria-required="true" *ngIf="optiontype" (change)="changeOT(selectedOptionType)"
+                [(ngModel)]="selectedOptionType" name="selectedOptionType" [items]="optiontype"
+                bindLabel="tickleDescription" placeholder="Select an Option Type" appendTo="body" [multiple]="true"
+                [closeOnSelect]="false">
+                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                    <input id="item-{{index}}" type="checkbox" name="item-{{index}}" [ngModel]="item$.selected" />
+                    {{item}}
+                </ng-template>
+            </ng-select>
+
+
+
+            <!-- Pulls in list of Hierachies -->
+            <ng-select aria-required="true" (change)="changeH(selectedHierarchy)" [(ngModel)]="selectedHierarchy"
+                *ngIf="hierarchy  && showCompanyDrop !== true" [items]="hierarchy" name="selectedHierarchy"
+                bindLabel="companyHierarchyLabelDesc" placeholder="Select a Hierarchy" appendTo="body" [multiple]="true"
+                [closeOnSelect]="false">
+                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                    <input id="item-{{index}}" type="checkbox" name="item-{{index}}" [ngModel]="item$.selected" />
+                    {{item}}
+                </ng-template>
+            </ng-select>
+
+
+            <!-- Building DropDown -->
+            <ng-select aria-required="true" *ngIf="buildingName && showBuildingDrop === true"
+                (change)="changeBuilding(selectedBuilding)" [(ngModel)]="selectedBuilding" name="selectedBuilding"
+                [items]="buildingName" bindLabel="buildingName" placeholder="Select a Building" appendTo="body"
+                [multiple]="true" [closeOnSelect]="false">
+                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                    <input id="item-{{index}}" type="checkbox" name="item-{{index}}" [ngModel]="item$.selected" />
+                    {{item}}
+                </ng-template>
+            </ng-select>
+
+            <!-- Company routes need to be added to grab data -->
+            <ng-select aria-required="true" (change)="changeCompany(selectedCompany)" [(ngModel)]="selectedCompany"
+                *ngIf="companyname && showCompanyDrop === true" [items]="companyname" name="selectedCompany"
+                bindLabel="companyHierarchyLabelDesc" placeholder="Select a Company" appendTo="body" [multiple]="true"
+                [closeOnSelect]="false">
+                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                    <input id="item-{{index}}" type="checkbox" name="item-{{index}}" [ngModel]="item$.selected" />
+                    {{item}}
+                </ng-template>
+            </ng-select>
+
+            <input [(ngModel)]="daysOut" name="daysOut" type="number" class="form-control" placeholder="Days Out"
+                aria-label="DaysOut" aria-describedby="basic-addon1">
+            <input [(ngModel)]="Frequency" name="Frequency" type="number" class="form-control" placeholder="Frequency"
+                aria-label="Frequency" aria-describedby="basic-addon1">
+            <textarea [(ngModel)]="Message" name="Message" type="text" class="form-control" placeholder="Email Message"
+                aria-label="EmailMessage" aria-describedby="basic-addon1"></textarea>
+            <button type="submit" mat-raised-button color="blue">
+                Add Reminder
+            </button>
+        </form>
+    </div>
+</ng-template>

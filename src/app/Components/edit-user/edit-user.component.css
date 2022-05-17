@@ -5,6 +5,7 @@
     box-shadow: 0.5px 25px 15px 0 rgb(0 0 0 / 39%);
     background-color: white;
     margin-right: 5px;
+    border-radius: 5px;
 }
 
 .row1-right {
@@ -15,6 +16,7 @@
     background-color: white;
     margin-left: 5px;
     display: flex;
+    border-radius: 5px;
 }
 
 /* Clear floats after the columns */
@@ -29,19 +31,22 @@
     margin-top: 20px;
 }
 
-.row2-container-left{
+.row2-container-left {
     height: 600px;
     width: 100%;
     margin-right: 15px;
     background: white;
     padding-top: 20px;
+    border-radius: 5px;
     box-shadow: 0.5px 25px 15px 0 rgb(0 0 0 / 39%);
 }
-.row2-container-right{
+
+.row2-container-right {
     height: 300px;
     width: 100%;
     background: white;
     box-shadow: 0.5px 25px 15px 0 rgb(0 0 0 / 39%);
+    border-radius: 5px;
 }
 
 .edit-user-heading {
@@ -102,7 +107,7 @@
     display: none;
 }
 
-input[type="file" i] {
+input[type="file"i] {
     appearance: none;
     background-color: initial;
     cursor: default;
@@ -139,12 +144,15 @@ h4 {
 
 .left-rightside {
     width: 50%;
+    background: linear-gradient(0deg, rgba(5,64,125,1) 0%, rgb(36 51 90) 100%);
+    padding: 20px;
     text-align: center;
+    border-radius: 5px 0px 0px 5px;
 }
 
 .scheduled-reminder-list-container {
     overflow-y: scroll;
-    height: 250px;
+    height: 600px;
 }
 
 .left-rightside:after {
@@ -164,13 +172,16 @@ li {
 
 .right-rightside {
     width: 50%;
+    background: linear-gradient(0deg, rgba(5,64,125,1) 0%, rgb(36 51 90) 100%);
+    padding: 20px;
+    border-radius: 0px 5px 5px 0px;
 }
 
 
 
 .reminder-inputs {
     padding-inline: 10px;
-    height: 250px;
+    height: 600px;    
     overflow-y: scroll;
     padding: 10%;
 }
@@ -195,7 +206,7 @@ table.reminder-schedule-table {
     width: 100%;
 }
 
-table.company-reminder-schedule-table{
+table.company-reminder-schedule-table {
     width: 100%;
 }
 
@@ -209,24 +220,28 @@ tr.reminder-schedule-table-row {
     border-bottom: solid 1px #8080807d;
 }
 
-input.company-reminder-schedule-search{
+input.company-reminder-schedule-search {
     width: 100%;
     border-radius: 5px;
     border: solid gray 1px
 }
-input.building-reminder-schedule-search{
+
+input.building-reminder-schedule-search {
     width: 100%;
     border-radius: 5px;
     border: solid gray 1px
 }
-input.all-reminder-schedule-search{
+
+input.all-reminder-schedule-search {
     width: 100%;
     border-radius: 5px;
     border: solid gray 1px
 }
+
 .input-group.mb-3 {
     padding-inline: 12%;
 }
+
 .user-info-input-container {
     height: 60%;
     overflow-y: scroll;
@@ -239,6 +254,7 @@ input.all-reminder-schedule-search{
     margin-right: 0.3125rem;
     margin-left: 10px;
 }
+
 input.form-control.disabled {
     text-align: center;
 }
@@ -249,7 +265,133 @@ button.btn.btn-dark {
     height: 50px;
 }
 
-.modal-dialog {
-    max-width: 100% !important;
-    margin: 1.75rem auto;
+.modal {
+    background: rgba(0, 0, 0, .3);
+}
+
+.modal-xl .modal-lg {
+    max-width: 90%;
+}
+
+button.myReminder-btn {
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    background: white;
+    box-shadow: 0px 2px 4px 0px rgb(0 0 0 / 12%);
+}
+button.myReminder-btn:hover{
+    transform: scale(1.05);
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+    cursor: pointer;
+}
+button.myReminder-btn:not(:hover){
+
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+}
+svg.fa-bell.fa-8x {
+    color: #033871;
+    transform: rotate(17deg);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    width: 100% !important;
+  }
+  
+  .modal-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 2px solid #3c7dcf;
+    border-radius: 0;
+  }
+  .modal-dialog.modal-dialog-centered.modal-lg{
+      width: 100% !important;
+  }
+  .modal-header {
+    position: static;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 50px;
+    padding: 10px;
+    background: #033871;
+    border: 0;
+  }
+  
+  
+
+  
+  .modal-footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 60px;
+    padding: 10px;
+    background: #f1f3f5;
+  }
+
+
+::ng-deep.modal-backdrop {
+    z-index: 1050
+  }
+
+  button.delete-reminder-btn {
+    border: none;
+    color: white;
+    background: red;
+    border-radius: 20px;
+    margin: 5px;
+    box-shadow: 0.5px 5px 15px 0 rgb(0 0 0 / 39%);
+}
+button.delete-reminder-btn:hover {
+    transform:translateY(3px);
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+    cursor: pointer;
+}
+
+button.delete-reminder-btn:not(:hover) {
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+}
+
+.modal-lg {
+    max-width: 1150px !important;
+}
+input.all-reminder-contact-search {
+    width: 100%;
+    border-radius: 5px;
+    border: solid gray 1px;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+.allreminder-contactlist-search-container {
+    display: inline-flex;
+    width: 100%;
+}
+h4.contact-filterd-number {
+    margin-left: 5px;
+    font-weight: 100;
+    font-size: 30px;
+}
+
+h4.mycompany-filterd-number{
+    margin-left: 5px;
+}
+
+.edit-user-container {
+    padding-left: 3%;
 }
