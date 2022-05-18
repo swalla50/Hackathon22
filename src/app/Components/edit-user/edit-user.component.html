@@ -423,9 +423,9 @@
                         Reminders
                     </mat-panel-description> -->
                     </mat-expansion-panel-header>
-                    <input type="text" class="all-reminder-schedule-search" placeholder="Search All Reminders"
+                    <input type="text" class="all-reminder-schedule-search" placeholder="Search All Reminders for {{contact.contactFirstName}} {{contact.contactLastName}}"
                         [(ngModel)]="Allterm">
-                    <table class="reminder-schedule-table" table-striped>
+                    <table class="reminder-schedule-table table-striped" >
                         <thead class="reminder-thead">
                             <td>
                                 Contact Name
@@ -492,8 +492,7 @@
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
                     <mat-panel-title *ngIf="buildingreminders">
-                        Building <h4 class="mycompany-filterd-number">({{(buildingreminders |
-                            filter:Buildingterm)?.length}})</h4>
+                        Building <h4 class="mycompany-filterd-number">({{(buildingreminders | filter:Buildingterm)?.length}})</h4>
                     </mat-panel-title>
                     <!-- <mat-panel-description>
                         Reminders
@@ -501,7 +500,7 @@
                 </mat-expansion-panel-header>
                 <input type="text" class="building-reminder-schedule-search" placeholder="Search Building Reminders"
                     [(ngModel)]="Buildingterm">
-                <table class="reminder-schedule-table" table-striped>
+                <table class="reminder-schedule-table table-striped"> 
                     <thead class="reminder-thead">
                         <td>
                             Date
@@ -520,9 +519,8 @@
                         </td>
                     </thead>
                     <tbody>
-                        <tr class="reminder-schedule-table-row"
-                            *ngFor="let display of buildingreminders | filter: Buildingterm">
-                            <td *ngIf="display.isDeleted == true">
+                        <tr class="reminder-schedule-table-row" *ngFor="let display of buildingreminders | filter: Buildingterm">
+                            <td *ngIf="display.isDeleted == false">
                                 {{display.startDate}}
                             </td>
                             <td *ngIf="display.isDeleted == false">
@@ -534,8 +532,8 @@
                             <td *ngIf="display.isDeleted == false">
                                 {{display.buildingName}}
                             </td>
-                            <td *ngIf="display.isDeleted == true">
-                                <button class="delete-reminder-btn">Delete Reminder</button>
+                            <td  id="{{display.tickleID}}" *ngIf="display.isDeleted == false">
+                                <button (click)="deleteReminder(display.tickleID)" class="delete-reminder-btn">Delete <fa-icon [icon]="faTrashCan" size='1x'></fa-icon></button>
                             </td>
                         </tr>
                     </tbody>
@@ -545,8 +543,7 @@
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
                     <mat-panel-title *ngIf="companyreminders">
-                        Company <h4 class="mycompany-filterd-number">({{(companyreminders |
-                            filter:Companyterm)?.length}})</h4>
+                        Company <h4 class="mycompany-filterd-number">({{(companyreminders | filter:Companyterm)?.length}})</h4>
                     </mat-panel-title>
                     <!-- <mat-panel-description>
                         Reminders
@@ -554,7 +551,7 @@
                 </mat-expansion-panel-header>
                 <input type="text" class="company-reminder-schedule-search" placeholder="Search Company Reminders"
                     [(ngModel)]="Companyterm">
-                <table class="company-reminder-schedule-table" table-striped>
+                <table class="company-reminder-schedule-table table-striped" >
                     <thead class="reminder-thead">
                         <td>
                             Date
@@ -574,7 +571,7 @@
                     </thead>
                     <tbody>
                         <tr class="reminder-schedule-table-row"
-                            *ngFor="let display of companyreminders | filter: Companyterm; let i = index">
+                            *ngFor="let display of companyreminders | filter: Companyterm">
                             <td *ngIf="display.isDeleted == false">
                                 {{display.startDate}}
                             </td>
@@ -588,7 +585,7 @@
                                 {{display.companyName}}
                             </td>
                             <td *ngIf="display.isDeleted == false">
-                                <button class="delete-reminder-btn">Delete Reminder</button>
+                                <button (click)="deleteReminder(display.tickleID)"class="delete-reminder-btn">Delete <fa-icon [icon]="faTrashCan" size='1x'></fa-icon></button>
                             </td>
                         </tr>
                     </tbody>
@@ -598,21 +595,53 @@
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        Lease
+                        Lease <h4 class="mycompany-filterd-number">({{(leasereminders | filter:Leaseterm)?.length}})</h4>
                     </mat-panel-title>
                     <!-- <mat-panel-description>
                         Reminders
                     </mat-panel-description> -->
                 </mat-expansion-panel-header>
-                <ul class="scheduled-reminder-list">
-                    <li class="Scheduled-reminder"> dummy data</li>
-                    <li class="Scheduled-reminder"> dummy data</li>
-                    <li class="Scheduled-reminder"> dummy data</li>
-                    <li class="Scheduled-reminder"> dummy data</li>
-                    <li class="Scheduled-reminder"> dummy data</li>
-                    <li class="Scheduled-reminder"> dummy data</li>
+                <input type="text" class="company-reminder-schedule-search" placeholder="Search Company Reminders"
+                    [(ngModel)]="Leaseterm">
+                <table class="company-reminder-schedule-table table-striped" >
+                    <thead class="reminder-thead">
+                        <td>
+                            Reminder Id
+                        </td>
+                        <td>
+                            Frequency
+                        </td>
+                        <td>
+                            Lease ID
+                        </td>
+                        <td>
+                            Reminder Message
+                        </td>
+                        <td>
 
-                </ul>
+                        </td>
+                    </thead>
+                    <tbody>
+                        <tr class="reminder-schedule-table-row"
+                            *ngFor="let display of leasereminders | filter: Leaseterm">
+                            <td *ngIf="display.isDeleted == false">
+                                {{display.reminderID}}
+                            </td>
+                            <td *ngIf="display.isDeleted == false">
+                                every {{display.reminderFreq}} days
+                            </td>
+                            <td *ngIf="display.isDeleted == false">
+                                {{display.objectID}}
+                            </td>
+                            <td *ngIf="display.isDeleted == false">
+                                {{display.reminderMessage}}
+                            </td>
+                            <td *ngIf="display.isDeleted == false">
+                                <button (click)="deleteReminder(display.reminderID)"class="delete-reminder-btn">Delete <fa-icon [icon]="faTrashCan" size='1x'></fa-icon></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </mat-expansion-panel>
             <!-- Shows user's Report reminders -->
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">

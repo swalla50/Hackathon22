@@ -351,9 +351,12 @@ svg.fa-bell.fa-8x {
   button.delete-reminder-btn {
     border: none;
     color: white;
-    background: red;
+    background: #c10000;
     border-radius: 20px;
     margin: 5px;
+    height: 30px;
+    width: 100px;
+    border-radius: 50px;
     box-shadow: 0.5px 5px 15px 0 rgb(0 0 0 / 39%);
 }
 button.delete-reminder-btn:hover {

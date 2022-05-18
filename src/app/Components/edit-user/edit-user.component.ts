@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/Services/shared.service';
-import { faBuilding, faUser, faFingerprint, faPeopleGroup, faFolderTree, faEnvelopeCircleCheck, faXmark, faBell, faCalendarPlus} from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faUser, faFingerprint, faPeopleGroup, faFolderTree, faEnvelopeCircleCheck, faXmark, faBell, faCalendarPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+declare var $: any;
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
@@ -21,30 +21,40 @@ export class EditUserComponent implements OnInit {
   faBell = faBell;
   faEnvelopeCircleCheck = faEnvelopeCircleCheck;
   faCalendarPlus = faCalendarPlus;
+  faTrashCan = faTrashCan;
   //arrays
   hierarchy: any;
   optiontype: any;
   buildingreminders: any;
+  leasereminders: any;
   allbuildings: any;
   allreminders: any;
   companyname: any;
   companyreminders: any;
   panelOpenState!: boolean;
   buildingrowtotal: any;
+  leaserowtotal: any;
   optionrowtotal: any;
   companyrowtotal: any;
   contacts: any;
-  allreminderscid:any;
+  allreminderscid: any;
   contactsid: any;
   allreminderlist: any;
+  listoleases: any;
   //for filter
   searchTerm = '';
   Companyterm = '';
   Buildingterm = '';
   Allterm = '';
+  Leaseterm = '';
   AllContacts = ''
   buildingName: any;
   buildingHierearchy: any;
+  //For Deleting Reminde
+  isDeleted: boolean | undefined;
+  tickleID: number | undefined;
+  deltedReminderval: any;
+  //Functionality
   showCompanyDrop!: boolean;
   Hierarchy: any = (i: any, n: any) => [
     { id: i, name: n }
@@ -67,13 +77,31 @@ export class EditUserComponent implements OnInit {
     { date: '3/15/2022', frequency: 120, reminderType: 'User Defined' },
   ]
   constructor(public service: SharedService, private toastr: ToastrService, private modalService: NgbModal) { }
-
-  openVerticallyCentered(content:any) {
-    this.modalService.open(content, { centered: true,backdrop:false, size:'lg',fullscreen:true});
+  //Opens Modals
+  openVerticallyCentered(content: any) {
+    this.modalService.open(content, { centered: true, backdrop: false, size: 'lg', fullscreen: true });
+  }
+  //Updates tblTickler to isDeleted=1
+  deleteReminder(value: any) {
+    var rval = {
+      tickleID: this.tickleID = value,
+      isDeleted: this.isDeleted = true,
+    }
+    this.service.deleteReminder(rval).subscribe(
+      (res: any) => {
+        this.deltedReminderval = res;
+        this.ngOnInit();
+        this.toastr.success('Deleted Reminder!');
+      },
+      err => {
+        if (err.status == 400)
+          this.toastr.error('Failed to update time.', 'Time update failed.')
+        else
+          console.log(err);
+      });
+    console.log(rval)
   }
   ngOnInit(): void {
-    
-
     this.service.getOptionType().subscribe(data => {
       this.optiontype = data.map((ndot: any) => ndot.tickleDescription);
       if (this.selectedOptionType == "Company - User Defined") {
@@ -85,7 +113,6 @@ export class EditUserComponent implements OnInit {
         let test1 = this.optiontype.filter((obj: any) => obj != 'Company - User Defined')
         this.optiontype = test1;
         this.ngOnInit
-
       }
     })
     this.service.getHierarchy().subscribe(datah => {
@@ -107,32 +134,28 @@ export class EditUserComponent implements OnInit {
               }
             }
           }
-          console.log("listobuilding", this.buildingName)
+          console.log("listobuilding", this.allbuildings)
         })
       }
     })
     this.service.getContacts().subscribe(data => {
-          
       this.contacts = data;
-      this.contactsid= data.map((obj:any) => obj.contactID)
-    this.service.getAllReminders().subscribe(datar => {
-      this.allreminders = datar;
-      this.allreminderscid = datar.map((obj:any) => obj.contactID)
-      for (let i = 0; i < this.allreminders.length; i++) {
-        this.allreminders[i].startDate = new Date(this.allreminders[i].startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
-        for(let j=0; j< this.contacts.length; j++){
-
-          if(this.contacts[j].contactID === this.allreminders[i].contactID)
-          console.log("contacts: ", this.allreminders[j])
-          this.Allterm = this.allreminders[i].length
-          this.allreminderlist = this.allreminders
+      this.contactsid = data.map((obj: any) => obj.contactID)
+      this.service.getAllReminders().subscribe(datar => {
+        this.allreminders = datar;
+        this.allreminderscid = datar.map((obj: any) => obj.contactID)
+        for (let i = 0; i < this.allreminders.length; i++) {
+          this.allreminders[i].startDate = new Date(this.allreminders[i].startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
+          for (let j = 0; j < this.contacts.length; j++) {
+            if (this.contacts[j].contactID === this.allreminders[i].contactID)
+              console.log("contacts: ", this.allreminders[j])
+            this.Allterm = this.allreminders[i].length
+            this.allreminderlist = this.allreminders
+          }
         }
-      }
-      console.log(this.allreminders)
+        console.log(this.allreminders)
+      })
     })
-  
-          
-})
     this.service.getCompanyList().subscribe(data => {
       this.companyname = data.map((ndcl: any) => ndcl.companyName);
     })
@@ -141,6 +164,11 @@ export class EditUserComponent implements OnInit {
       this.companyrowtotal = this.companyreminders.length;
       for (let i = 0; i < this.companyreminders.length; i++) {
         this.companyreminders[i].startDate = new Date(this.companyreminders[i].startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
+        const index = this.companyreminders.indexOf(this.companyreminders[i].isDeleted, 0);
+        if (this.companyreminders[i].isDeleted !== false) {
+          this.companyreminders = this.companyreminders.filter((obj: any) => obj.isDeleted === false)
+          console.log("companyr", this.companyreminders)
+        }
       }
     })
     this.service.getBuildingReminders().subscribe(data => {
@@ -148,8 +176,23 @@ export class EditUserComponent implements OnInit {
       this.buildingrowtotal = this.buildingreminders.length;
       for (let i = 0; i < this.buildingreminders.length; i++) {
         this.buildingreminders[i].startDate = new Date(this.buildingreminders[i].startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
+        const index = this.buildingreminders.indexOf(this.buildingreminders[i].isDeleted, 0);
+        if (this.buildingreminders[i].isDeleted !== false) {
+          this.buildingreminders = this.buildingreminders.filter((obj: any) => obj.isDeleted === false)
+          console.log("buildingr", this.buildingreminders)
+        }
       }
-      console.log("buildingr",this.buildingreminders)
+    })
+    this.service.getLeaseReminders().subscribe(data => {
+      this.leasereminders = data;
+      this.leaserowtotal = this.leasereminders.length;
+      for (let i = 0; i < this.leasereminders.length; i++) {
+        const index = this.leasereminders.indexOf(this.leasereminders[i].isDeleted, 0);
+        if (this.leasereminders[i].isDeleted !== false) {
+          this.leasereminders = this.leasereminders.filter((obj: any) => obj.isDeleted === false)
+          console.log("leaser", this.leasereminders)
+        }
+      }
     })
   }
   //functionality of getting the selected values of dropdown
@@ -158,7 +201,6 @@ export class EditUserComponent implements OnInit {
       this.showBuildingDrop = true;
       this.ngOnInit()
     }
-
     if (this.selectedHierarchy.length > 1) {
       this.showBuildingDrop = false;
       this.selectedBuilding = []
@@ -169,7 +211,6 @@ export class EditUserComponent implements OnInit {
     }
     if (this.selectedHierarchy.length === 0) {
       this.showBuildingDrop = false;
-
       this.selectedHierarchy = [];
       this.listobuildings = []
       this.buildingName = []
@@ -199,7 +240,6 @@ export class EditUserComponent implements OnInit {
       this.ngOnInit()
     }
     if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType == "Building - Option Reminder") {
-
       this.showBuildingDrop = true;
       this.ngOnInit()
       console.log("buildingshow", this.showBuildingDrop)
@@ -215,7 +255,6 @@ export class EditUserComponent implements OnInit {
       this.showCompanyDrop = false;
       this.selectedBuilding = [];
       this.showBuildingDrop = false;
-
       this.selectedCompany = [];
       console.log("buildingshow2", this.showBuildingDrop, this.selectedOptionType)
     }
@@ -223,7 +262,6 @@ export class EditUserComponent implements OnInit {
     console.log("hierarchy", this.selectedHierarchy)
     console.log("thisoption", this.selectedOptionType)
   }
-
   reminderobj: any = [];
   onSubmit() {
     for (let i = 0; i < this.selectedOptionType.length; i++) {
@@ -243,6 +281,16 @@ export class EditUserComponent implements OnInit {
         console.log()
         if (this.reminderobj[i].optionType == "Contact - User Defined") {
           console.log("CONTACT: ", this.reminderobj[i])
+        }
+        if (this.reminderobj[i].optionType == "Building - Option Reminder") {
+          console.log("BUILDING: ", this.reminderobj[i])
+          for (let j = 0; j < this.allbuildings.length; j++) {
+            for (let k = 0; k < this.reminderobj[i].hierarchy.length; k++) {
+              if (this.reminderobj[i].hierarchy[k] == this.allbuildings[j].hierarchy) {
+                console.log("Building ", j, " ", this.allbuildings[j])
+              }
+            }
+          }
         }
         if (this.reminderobj[i].optionType == "Lease - User Defined") {
           console.log("LEASE: ", this.reminderobj[i])
@@ -265,8 +313,5 @@ export class EditUserComponent implements OnInit {
         console.log("Goes to Building")
       }
     }
-
-
   }
-
 }
