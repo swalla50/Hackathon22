@@ -68,6 +68,9 @@ export class EditUserComponent implements OnInit {
   Message!: string;
   listobuildings: any = []
   showBuildingDrop!: boolean;
+  getUser: any;
+  userObj: any;
+
   displayreminder: any = [
     { date: '2/13/2022', frequency: 3, reminderType: 'User Defined' },
     { date: '4/13/2022', frequency: 4, reminderType: 'User Defined' },
@@ -102,15 +105,20 @@ export class EditUserComponent implements OnInit {
     console.log(rval)
   }
   ngOnInit(): void {
+
+    this.getUser = localStorage.getItem('User');
+    this.userObj = JSON.parse(this.getUser)
+
+    console.log(this.userObj);
     this.service.getOptionType().subscribe(data => {
       this.optiontype = data.map((ndot: any) => ndot.tickleDescription);
-      if (this.selectedOptionType == "Company - User Defined") {
-        let test = this.optiontype.filter((obj: any) => obj === "Company - User Defined")
+      if (this.selectedOptionType == "Company - Reminder") {
+        let test = this.optiontype.filter((obj: any) => obj === "Company - Reminder")
         this.optiontype = test;
         this.ngOnInit
       }
       if (this.selectedOptionType.length > 0 || this.selectedHierarchy.length > 0) {
-        let test1 = this.optiontype.filter((obj: any) => obj != 'Company - User Defined')
+        let test1 = this.optiontype.filter((obj: any) => obj != 'Company - Reminder')
         this.optiontype = test1;
         this.ngOnInit
       }
@@ -148,7 +156,6 @@ export class EditUserComponent implements OnInit {
           this.allreminders[i].startDate = new Date(this.allreminders[i].startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
           for (let j = 0; j < this.contacts.length; j++) {
             if (this.contacts[j].contactID === this.allreminders[i].contactID)
-              console.log("contacts: ", this.allreminders[j])
             this.Allterm = this.allreminders[i].length
             this.allreminderlist = this.allreminders
           }
@@ -162,11 +169,12 @@ export class EditUserComponent implements OnInit {
     this.service.getCompanyReminders().subscribe(data => {
       this.companyreminders = data;
       this.companyrowtotal = this.companyreminders.length;
+      this.companyreminders = this.companyreminders.filter((obj: any) => obj.isDeleted === false && obj.contactID === this.userObj.contactID)
       for (let i = 0; i < this.companyreminders.length; i++) {
         this.companyreminders[i].startDate = new Date(this.companyreminders[i].startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
         const index = this.companyreminders.indexOf(this.companyreminders[i].isDeleted, 0);
         if (this.companyreminders[i].isDeleted !== false) {
-          this.companyreminders = this.companyreminders.filter((obj: any) => obj.isDeleted === false)
+          
           console.log("companyr", this.companyreminders)
         }
       }
@@ -174,30 +182,40 @@ export class EditUserComponent implements OnInit {
     this.service.getBuildingReminders().subscribe(data => {
       this.buildingreminders = data;
       this.buildingrowtotal = this.buildingreminders.length;
+      this.buildingreminders = this.buildingreminders.filter((obj: any) => obj.isDeleted === false && obj.contactID === this.userObj.contactID)
       for (let i = 0; i < this.buildingreminders.length; i++) {
         this.buildingreminders[i].startDate = new Date(this.buildingreminders[i].startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
         const index = this.buildingreminders.indexOf(this.buildingreminders[i].isDeleted, 0);
         if (this.buildingreminders[i].isDeleted !== false) {
-          this.buildingreminders = this.buildingreminders.filter((obj: any) => obj.isDeleted === false)
+          this.buildingreminders = this.buildingreminders.filter((obj: any) => obj.isDeleted === false && obj.contactID === this.userObj.contactID)
           console.log("buildingr", this.buildingreminders)
         }
       }
     })
     this.service.getLeaseReminders().subscribe(data => {
       this.leasereminders = data;
+      console.log("leaser", this.leasereminders)
+      console.log("users",this.userObj)
       this.leaserowtotal = this.leasereminders.length;
+      this.leasereminders = this.leasereminders.filter((obj: any) => {return obj.isDeleted == false && obj.contactID == this.userObj.contactID} )
       for (let i = 0; i < this.leasereminders.length; i++) {
-        const index = this.leasereminders.indexOf(this.leasereminders[i].isDeleted, 0);
-        if (this.leasereminders[i].isDeleted !== false) {
-          this.leasereminders = this.leasereminders.filter((obj: any) => obj.isDeleted === false)
-          console.log("leaser", this.leasereminders)
+        for (let j = 0; j < this.userObj.length; j++) {
+          
+          if (this.leasereminders[i].isDeleted !== false) {
+            
+            console.log('filtede', this.leasereminders)
+            
+          }
         }
+        
+
       }
     })
   }
   //functionality of getting the selected values of dropdown
   changeH(val: any) {
-    if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType == "Building - Option Reminder") {
+    if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType == "Building - Reminder") {
+      this.listobuildings = []
       this.showBuildingDrop = true;
       this.ngOnInit()
     }
@@ -235,11 +253,11 @@ export class EditUserComponent implements OnInit {
   }
   changeOT(val: any) {
     console.log("OptionType selection:", val);
-    if (val == "Company - User Defined") {
+    if (val == "Company - Reminder") {
       this.showCompanyDrop = true;
       this.ngOnInit()
     }
-    if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType == "Building - Option Reminder") {
+    if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType == "Building - Reminder") {
       this.showBuildingDrop = true;
       this.ngOnInit()
       console.log("buildingshow", this.showBuildingDrop)
@@ -247,11 +265,13 @@ export class EditUserComponent implements OnInit {
     if (val.length === 0) {
       this.showCompanyDrop = false;
       this.selectedBuilding = [];
+      this.selectedHierarchy = []
       this.showBuildingDrop = false;
       this.ngOnInit()
       this.selectedCompany = [];
+      this.listobuildings = []
     }
-    if (this.selectedOptionType.length > 0 && this.selectedOptionType != "Building - Option Reminder") {
+    if (this.selectedOptionType.length > 0 && this.selectedOptionType != "Building - Reminder") {
       this.showCompanyDrop = false;
       this.selectedBuilding = [];
       this.showBuildingDrop = false;
@@ -282,7 +302,7 @@ export class EditUserComponent implements OnInit {
         if (this.reminderobj[i].optionType == "Contact - User Defined") {
           console.log("CONTACT: ", this.reminderobj[i])
         }
-        if (this.reminderobj[i].optionType == "Building - Option Reminder") {
+        if (this.reminderobj[i].optionType == "Building - Reminder") {
           console.log("BUILDING: ", this.reminderobj[i])
           for (let j = 0; j < this.allbuildings.length; j++) {
             for (let k = 0; k < this.reminderobj[i].hierarchy.length; k++) {

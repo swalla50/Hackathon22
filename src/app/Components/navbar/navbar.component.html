@@ -37,8 +37,8 @@
                 </div>
             </form>
 
-            <button class="user-profile">
-                <p class="user-initials">VS</p>
+            <button class="user-profile" *ngIf="acronym">
+                <p class="user-initials">{{acronym}}</p>
             </button>
         </div>
     </div>

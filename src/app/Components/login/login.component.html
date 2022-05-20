@@ -65,13 +65,13 @@
                 <div class="leftBox">
                     <div class="loginBox">
 
-                        <fieldset>
+                        <form (submit)="login()">
 
                             <legend class="h2Title">Log In</legend>
 
                             <div class="newLine">
                                 <label for="txtUserID">User ID</label>
-                                <input name="ctl00$ContentPlaceHolder1$txtUserID" type="text" id="txtUserID"
+                                <input name="ContactUserID" [(ngModel)]="ContactUserID" type="text" id="txtUserID"
                                     autofocus="" autocomplete="off">
                                 <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator1" class="error"
                                     style="color:Red;display:none;">* You must enter a user ID.</span>
@@ -81,14 +81,14 @@
 
                             <div class="newLine">
                                 <label class="labelPass" for="txtPassword">Password</label>
-                                <input name="ctl00$ContentPlaceHolder1$txtPassword" type="password" id="txtPassword"
+                                <input name="ContactPassword" [(ngModel)]="ContactPassword"  type="password" id="txtPassword"
                                     autocomplete="off">
                                 <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator2" class="error"
                                     style="color:Red;display:none;">* You must enter a password.</span>
                             </div>
 
                             <div class="newLine">
-                                <input type="submit" name="ctl00$ContentPlaceHolder1$btnLogon" (click)="login()" value="Log In"
+                                <input type="submit" name="ctl00$ContentPlaceHolder1$btnLogon" value="Log In"
                                     id="ctl00_ContentPlaceHolder1_btnLogon" class="btnLogon">
 
 
@@ -119,7 +119,7 @@
                             </p>
 
 
-                        </fieldset>
+                        </form>
 
                     </div>
                     <!--end login Box-->

@@ -47,13 +47,13 @@
             <div class="row2-container-left">
                 <h4>Edit Contact Information: </h4>
                 <div class="user-info-input-container">
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3" *ngIf="userObj">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">
                                 <fa-icon [icon]="faFingerprint" size='sm'></fa-icon> &nbsp;System Contact ID:
                             </span>
                         </div>
-                        <input disabled type="text" class="form-control disabled" placeholder="2"
+                        <input disabled type="text" class="form-control disabled" placeholder="{{userObj.contactID}}"
                             aria-label="SystemContactID" aria-describedby="basic-addon1">
 
                     </div>
@@ -520,19 +520,19 @@
                     </thead>
                     <tbody>
                         <tr class="reminder-schedule-table-row" *ngFor="let display of buildingreminders | filter: Buildingterm">
-                            <td *ngIf="display.isDeleted == false">
+                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                 {{display.startDate}}
                             </td>
-                            <td *ngIf="display.isDeleted == false">
+                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                 every {{display.ticklerFreq}} days
                             </td>
-                            <td *ngIf="display.isDeleted == false">
+                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                 {{display.buildingID}}
                             </td>
-                            <td *ngIf="display.isDeleted == false">
+                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                 {{display.buildingName}}
                             </td>
-                            <td  id="{{display.tickleID}}" *ngIf="display.isDeleted == false">
+                            <td  id="{{display.tickleID}}" *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                 <button (click)="deleteReminder(display.tickleID)" class="delete-reminder-btn">Delete <fa-icon [icon]="faTrashCan" size='1x'></fa-icon></button>
                             </td>
                         </tr>
@@ -572,19 +572,19 @@
                     <tbody>
                         <tr class="reminder-schedule-table-row"
                             *ngFor="let display of companyreminders | filter: Companyterm">
-                            <td *ngIf="display.isDeleted == false">
+                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                 {{display.startDate}}
                             </td>
-                            <td *ngIf="display.isDeleted == false">
+                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                 every {{display.ticklerFreq}} days
                             </td>
-                            <td *ngIf="display.isDeleted == false">
+                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                 {{display.companyID}}
                             </td>
-                            <td *ngIf="display.isDeleted == false">
+                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                 {{display.companyName}}
                             </td>
-                            <td *ngIf="display.isDeleted == false">
+                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                 <button (click)="deleteReminder(display.tickleID)"class="delete-reminder-btn">Delete <fa-icon [icon]="faTrashCan" size='1x'></fa-icon></button>
                             </td>
                         </tr>
@@ -622,21 +622,20 @@
                         </td>
                     </thead>
                     <tbody>
-                        <tr class="reminder-schedule-table-row"
-                            *ngFor="let display of leasereminders | filter: Leaseterm">
-                            <td *ngIf="display.isDeleted == false">
+                        <tr class="reminder-schedule-table-row" *ngFor="let display of leasereminders| filter: Leaseterm">
+                            <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
                                 {{display.reminderID}}
                             </td>
-                            <td *ngIf="display.isDeleted == false">
+                            <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
                                 every {{display.reminderFreq}} days
                             </td>
-                            <td *ngIf="display.isDeleted == false">
+                            <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
                                 {{display.objectID}}
                             </td>
-                            <td *ngIf="display.isDeleted == false">
+                            <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
                                 {{display.reminderMessage}}
                             </td>
-                            <td *ngIf="display.isDeleted == false">
+                            <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
                                 <button (click)="deleteReminder(display.reminderID)"class="delete-reminder-btn">Delete <fa-icon [icon]="faTrashCan" size='1x'></fa-icon></button>
                             </td>
                         </tr>

@@ -9,10 +9,20 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 export class NavbarComponent implements OnInit {
 
   faMagnifyingGlass= faMagnifyingGlass;
+
+  getUser:any;
+  userObj: any;
+  acronym:any;
+  getacronym:any;
   
   constructor() { }
 
   ngOnInit(): void {
+    this.getacronym = 
+    this.acronym = localStorage.getItem('acronym')
+
+    
+    console.log('acronym',this.acronym)
   }
 
 }
