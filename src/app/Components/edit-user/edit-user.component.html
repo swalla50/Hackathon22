@@ -94,8 +94,19 @@
                                 <fa-icon [icon]="faUser" size='sm'></fa-icon>
                             </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="First Name" aria-label="FirstName"
-                            aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" placeholder="{{userObj.contactFirstName}}"
+                            aria-label="contactFirstName" aria-describedby="basic-addon1">
+
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                <fa-icon [icon]="faUser" size='sm'></fa-icon>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="{{userObj.contactMiddleName}}"
+                            aria-label="contactMiddleName" aria-describedby="basic-addon1">
 
                     </div>
                     <div class="input-group mb-3">
@@ -104,8 +115,8 @@
                                 <fa-icon [icon]="faUser" size='sm'></fa-icon>
                             </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Middle Name" aria-label="MiddleName"
-                            aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" placeholder="{{userObj.contactLastName}}"
+                            aria-label="LastName" aria-describedby="basic-addon1">
 
                     </div>
                     <div class="input-group mb-3">
@@ -114,18 +125,8 @@
                                 <fa-icon [icon]="faUser" size='sm'></fa-icon>
                             </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Title" aria-label="MiddleName"
-                            aria-describedby="basic-addon1">
-
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">
-                                <fa-icon [icon]="faUser" size='sm'></fa-icon>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Last Name" aria-label="LastName"
-                            aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" placeholder="{{userObj.contactTitle}}"
+                            aria-label="contactTitle" aria-describedby="basic-addon1">
 
                     </div>
                     <div class="input-group mb-3">
@@ -137,7 +138,7 @@
                         <select class="custom-select" id="inputGroupSelect02">
                             <option value="-1">[Select a Company]</option>
                             <option *ngFor="let ucompany of companyname " placeholder="" value="{{ucompany}}">
-                                {{ucompany}}
+                                {{ucompany.companyName}}
                             </option>
                         </select>
 
@@ -371,7 +372,7 @@
                                 <fa-icon [icon]="faFingerprint" size='sm'></fa-icon>
                             </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="User ID" aria-label="UserID"
+                        <input type="text" class="form-control" placeholder="{{userObj.contactUserID}}" aria-label="UserID"
                             aria-describedby="basic-addon1">
 
                     </div>
@@ -381,7 +382,7 @@
                                 <fa-icon [icon]="faEnvelopeCircleCheck" size='sm'></fa-icon>
                             </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Contact Email" aria-label="Email"
+                        <input type="text" class="form-control" placeholder="{{userObj.contactEmailAddress}}" aria-label="Email"
                             aria-describedby="basic-addon1">
 
                     </div>
@@ -389,24 +390,27 @@
 
                         <div class="form-check form-check-inline">
                             <label class="form-check-label" for="inlineCheckbox1">Allow Log On: </label>
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                            <input class="form-check-input" *ngIf="userObj.allowLogon === true" type="checkbox" id="inlineCheckbox1" value="option1" disabled checked>
+                            <input class="form-check-input" *ngIf="userObj.allowLogon === false" type="checkbox" id="inlineCheckbox1" value="option1" disabled readonly>
 
                         </div>
                         <div class="form-check form-check-inline">
                             <label class="form-check-label" for="inlineCheckbox2">Contact Active: </label>
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                            <input class="form-check-input" *ngIf="userObj.contactActive === true" type="checkbox" id="inlineCheckbox2" value="option2" disabled checked>
+                            <input class="form-check-input"  *ngIf="userObj.contactActive === false" type="checkbox" id="inlineCheckbox2" value="option2" disabled>
                         </div>
                         <div class="form-check form-check-inline">
                             <label class="form-check-label" for="inlineCheckbox3">Hide Default login when using
                                 Profiles: </label>
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                            <input class="form-check-input" *ngIf="userObj.hideLogin === true" type="checkbox" id="inlineCheckbox3" value="option3" disabled checked>
+                            <input class="form-check-input" *ngIf="userObj.hideLogin === false" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
 
                         </div>
 
                     </div>
                 </div>
             </div>
-            <div class="row2-container-right">
+            <div class="row2-container-right" *ngIf="userObj.contactRole ==='Admin'">
                 <h4>All Reminders By Contact: </h4>
                 <div class="allreminder-contactlist-search-container">
                     <h4 class="contact-filterd-number">({{(contacts | filter:AllContacts)?.length}})</h4>
@@ -423,15 +427,19 @@
                         Reminders
                     </mat-panel-description> -->
                     </mat-expansion-panel-header>
-                    <input type="text" class="all-reminder-schedule-search" placeholder="Search All Reminders for {{contact.contactFirstName}} {{contact.contactLastName}}"
+                    <input type="text" class="all-reminder-schedule-search"
+                        placeholder="Search All Reminders for {{contact.contactFirstName}} {{contact.contactLastName}}"
                         [(ngModel)]="Allterm">
-                    <table class="reminder-schedule-table table-striped" >
+                    <table class="reminder-schedule-table table-striped">
                         <thead class="reminder-thead">
                             <td>
                                 Contact Name
                             </td>
                             <td>
                                 Reminder Type
+                            </td>
+                            <td>
+                                Object's ID
                             </td>
                             <td>
                                 Message
@@ -454,8 +462,11 @@
                                     *ngIf="allreminders.contactID == contact.contactID && allreminders.isDeleted == false">
                                     {{allreminders.tickleDescription}}
                                 </td>
-
                                 <td
+                                    *ngIf="allreminders.contactID == contact.contactID && allreminders.isDeleted == false">
+                                    {{allreminders.objectID}}
+                                </td>
+                                <td class="all-reminder-message"
                                     *ngIf="allreminders.contactID == contact.contactID && allreminders.isDeleted == false">
                                     {{allreminders.ticklerMessage}}
                                 </td>
@@ -492,7 +503,8 @@
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
                     <mat-panel-title *ngIf="buildingreminders">
-                        Building <h4 class="mycompany-filterd-number">({{(buildingreminders | filter:Buildingterm)?.length}})</h4>
+                        Building <h4 class="mycompany-filterd-number">({{(buildingreminders |
+                            filter:Buildingterm)?.length}})</h4>
                     </mat-panel-title>
                     <!-- <mat-panel-description>
                         Reminders
@@ -500,7 +512,7 @@
                 </mat-expansion-panel-header>
                 <input type="text" class="building-reminder-schedule-search" placeholder="Search Building Reminders"
                     [(ngModel)]="Buildingterm">
-                <table class="reminder-schedule-table table-striped"> 
+                <table class="reminder-schedule-table table-striped">
                     <thead class="reminder-thead">
                         <td>
                             Date
@@ -519,7 +531,8 @@
                         </td>
                     </thead>
                     <tbody>
-                        <tr class="reminder-schedule-table-row" *ngFor="let display of buildingreminders | filter: Buildingterm">
+                        <tr class="reminder-schedule-table-row"
+                            *ngFor="let display of buildingreminders | filter: Buildingterm">
                             <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                 {{display.startDate}}
                             </td>
@@ -532,8 +545,10 @@
                             <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                 {{display.buildingName}}
                             </td>
-                            <td  id="{{display.tickleID}}" *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                <button (click)="deleteReminder(display.tickleID)" class="delete-reminder-btn">Delete <fa-icon [icon]="faTrashCan" size='1x'></fa-icon></button>
+                            <td id="{{display.tickleID}}"
+                                *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                <button (click)="deleteReminder(display.tickleID)" class="delete-reminder-btn">Delete
+                                    <fa-icon [icon]="faTrashCan" size='1x'></fa-icon></button>
                             </td>
                         </tr>
                     </tbody>
@@ -543,7 +558,8 @@
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
                     <mat-panel-title *ngIf="companyreminders">
-                        Company <h4 class="mycompany-filterd-number">({{(companyreminders | filter:Companyterm)?.length}})</h4>
+                        Company <h4 class="mycompany-filterd-number">({{(companyreminders |
+                            filter:Companyterm)?.length}})</h4>
                     </mat-panel-title>
                     <!-- <mat-panel-description>
                         Reminders
@@ -551,7 +567,7 @@
                 </mat-expansion-panel-header>
                 <input type="text" class="company-reminder-schedule-search" placeholder="Search Company Reminders"
                     [(ngModel)]="Companyterm">
-                <table class="company-reminder-schedule-table table-striped" >
+                <table class="company-reminder-schedule-table table-striped">
                     <thead class="reminder-thead">
                         <td>
                             Date
@@ -585,7 +601,8 @@
                                 {{display.companyName}}
                             </td>
                             <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                <button (click)="deleteReminder(display.tickleID)"class="delete-reminder-btn">Delete <fa-icon [icon]="faTrashCan" size='1x'></fa-icon></button>
+                                <button (click)="deleteReminder(display.tickleID)" class="delete-reminder-btn">Delete
+                                    <fa-icon [icon]="faTrashCan" size='1x'></fa-icon></button>
                             </td>
                         </tr>
                     </tbody>
@@ -595,7 +612,8 @@
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        Lease <h4 class="mycompany-filterd-number">({{(leasereminders | filter:Leaseterm)?.length}})</h4>
+                        Lease <h4 class="mycompany-filterd-number">({{(leasereminders | filter:Leaseterm)?.length}})
+                        </h4>
                     </mat-panel-title>
                     <!-- <mat-panel-description>
                         Reminders
@@ -603,7 +621,7 @@
                 </mat-expansion-panel-header>
                 <input type="text" class="company-reminder-schedule-search" placeholder="Search Company Reminders"
                     [(ngModel)]="Leaseterm">
-                <table class="company-reminder-schedule-table table-striped" >
+                <table class="company-reminder-schedule-table table-striped">
                     <thead class="reminder-thead">
                         <td>
                             Reminder Id
@@ -622,7 +640,8 @@
                         </td>
                     </thead>
                     <tbody>
-                        <tr class="reminder-schedule-table-row" *ngFor="let display of leasereminders| filter: Leaseterm">
+                        <tr class="reminder-schedule-table-row"
+                            *ngFor="let display of leasereminders| filter: Leaseterm">
                             <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
                                 {{display.reminderID}}
                             </td>
@@ -636,7 +655,8 @@
                                 {{display.reminderMessage}}
                             </td>
                             <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
-                                <button (click)="deleteReminder(display.reminderID)"class="delete-reminder-btn">Delete <fa-icon [icon]="faTrashCan" size='1x'></fa-icon></button>
+                                <button (click)="deleteReminder(display.reminderID)" class="delete-reminder-btn">Delete
+                                    <fa-icon [icon]="faTrashCan" size='1x'></fa-icon></button>
                             </td>
                         </tr>
                     </tbody>

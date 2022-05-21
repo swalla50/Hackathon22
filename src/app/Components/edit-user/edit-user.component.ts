@@ -149,6 +149,8 @@ export class EditUserComponent implements OnInit {
     this.service.getContacts().subscribe(data => {
       this.contacts = data;
       this.contactsid = data.map((obj: any) => obj.contactID)
+      this.contacts = this.contacts.filter((obj: any) => obj.companyID === this.userObj.companyID)
+
       this.service.getAllReminders().subscribe(datar => {
         this.allreminders = datar;
         this.allreminderscid = datar.map((obj: any) => obj.contactID)
@@ -158,13 +160,15 @@ export class EditUserComponent implements OnInit {
             if (this.contacts[j].contactID === this.allreminders[i].contactID)
             this.Allterm = this.allreminders[i].length
             this.allreminderlist = this.allreminders
+
           }
         }
         console.log(this.allreminders)
       })
     })
     this.service.getCompanyList().subscribe(data => {
-      this.companyname = data.map((ndcl: any) => ndcl.companyName);
+      this.companyname = data;
+      console.log("company", this.companyname)
     })
     this.service.getCompanyReminders().subscribe(data => {
       this.companyreminders = data;

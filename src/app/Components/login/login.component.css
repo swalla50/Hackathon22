@@ -47,6 +47,8 @@
     margin: 0 auto;
     /* width: 88%; */
     font-size: 12px;
+    height: 450px;
+
     border: 1px solid #CCC;
     transition: all 0.5s ease;
     -webkit-transition: all 0.5s ease;
@@ -94,10 +96,9 @@ div {
     font-size: 9px;
     color: #999;
 }
-p {
-    color: red
+div#ctl00_ContentPlaceHolder1_divVPLinks {
+    color: transparent;
 }
-
 .loginNewsBox .h2Title {
     padding-bottom: 16px !important;
 }
@@ -129,7 +130,7 @@ BODY {
     margin: 6% 0 0 0;
     border-top: 1px solid #CCC;
 }
-.loginBox fieldset {
+.loginBox form {
     margin: 0;
     padding: 0;
     border: 0;
@@ -160,7 +161,7 @@ legend {
 .loginBox input {
     display: block !important;
     padding: 5px 4.8% !important;
-    width: 90% !important;
+    width: 100% !important;
     margin: 0 !important;
     font-size: 16px !important;
     line-height: 16px !important;

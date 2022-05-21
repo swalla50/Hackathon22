@@ -37,9 +37,21 @@
                 </div>
             </form>
 
-            <button class="user-profile" *ngIf="acronym">
-                <p class="user-initials">{{acronym}}</p>
-            </button>
+            <div ngbDropdown class="d-inline-block">
+                <button class="user-profile" id="dropdownBasic1" ngbDropdownToggle *ngIf="acronym">
+                    <p class="user-initials">{{acronym}}</p>
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <div class="user-nav-info" >
+                        <p class="user-info">{{userObj.contactFirstName}} {{userObj.contactLastName}}</p>
+                        <p class="user-info">{{userObj.contactUserID}}</p>
+                        <p class="user-info">{{userObj.contactEmailAddress}}</p>
+                    </div>
+                    <button ngbDropdownItem >My Preferences <fa-icon [icon]="faUserAlt" size='sm'></fa-icon></button>
+                    <button ngbDropdownItem >Date Calculator <fa-icon [icon]="faCalculator" size='sm'></fa-icon></button>
+                    <button ngbDropdownItem (click)="logout()">Logout <fa-icon [icon]="faArrowRightFromBracket" size='sm'></fa-icon></button>
+                </div>
+            </div>
         </div>
     </div>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -60,7 +72,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Reports</a>
                 </li>
-                <li class="nav-item">
+                <li *ngIf="userObj.contactRole=== 'Admin'"class="nav-item">
                     <a class="nav-link" href="#">Admin</a>
                 </li>
             </ul>

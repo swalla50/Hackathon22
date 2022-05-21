@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
 
   LoggedIn = 'true';
   ngOnInit(): void {
-    localStorage.setItem('LoggedIn', this.LoggedIn)
     console.log(this.ContactUserID, this.ContactPassword)
   }
 
@@ -42,8 +41,8 @@ export class LoginComponent implements OnInit {
               
             })
             .then(()=>{
-              this.toastr.success('Login Successful!'
-              )})
+              this.toastr.success('Login Successful!')
+            })
 
           localStorage.setItem('LoggedIn', 'true')
           localStorage.setItem('User', JSON.stringify(this.contactdata[i]))
@@ -54,13 +53,13 @@ export class LoginComponent implements OnInit {
           this.acronym = matches.join(''); // JSON
           localStorage.setItem('acronym', this.acronym)
         }
-        if (localStorage.getItem('LoggedIn') != 'true') {
-          this.toastr.error('Login Denied.')
-        }
+        
 
 
       }
-
+      if (localStorage.getItem('LoggedIn') != 'true') {
+        this.toastr.error('Login Denied.')
+      }
 
     })
 
