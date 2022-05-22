@@ -104,6 +104,15 @@ export class EditUserComponent implements OnInit {
       });
     console.log(rval)
   }
+  addReminder(value:any){
+    var rval ={
+      tickleBy:
+
+    }
+    this.service.addReminder(rval).subscribe(data => {
+
+    })
+  }
   ngOnInit(): void {
 
     this.getUser = localStorage.getItem('User');
@@ -312,6 +321,28 @@ export class EditUserComponent implements OnInit {
             for (let k = 0; k < this.reminderobj[i].hierarchy.length; k++) {
               if (this.reminderobj[i].hierarchy[k] == this.allbuildings[j].hierarchy) {
                 console.log("Building ", j, " ", this.allbuildings[j])
+                var rval = {
+                  tickleBy: this.reminderobj[i].tickleBy,
+                  contactID: this.userObj.contactID,
+                  ticklerTypeID: 1,
+                  objectID: this.allbuildings[j].buildingID,
+                  objectTypeID: 2,
+                  ticklerDaysOut: this.reminderobj[i].daysOut
+                }
+                this.service.deleteReminder(rval).subscribe(
+                  (res: any) => {
+                    this.deltedReminderval = res;
+                    this.ngOnInit();
+                    this.toastr.success('Deleted Reminder!');
+                  },
+                  err => {
+                    if (err.status == 400)
+                      this.toastr.error('Failed to update time.', 'Time update failed.')
+                    else
+                      console.log(err);
+                  });
+                console.log(rval)
+                
               }
             }
           }
