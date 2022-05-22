@@ -51,4 +51,8 @@ export class SharedService {
     return this.http.put<any>(this.APIUrl + 'DeleteReminder/delete', val)
   }
 
+  addReminder(val: any):Observable<any[]>{
+    return this.http.post<any>(this.APIUrl + 'AddReminder/add', val)
+  }
+
 }

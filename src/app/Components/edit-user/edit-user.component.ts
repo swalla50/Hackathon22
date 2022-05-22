@@ -82,7 +82,7 @@ export class EditUserComponent implements OnInit {
   constructor(public service: SharedService, private toastr: ToastrService, private modalService: NgbModal) { }
   //Opens Modals
   openVerticallyCentered(content: any) {
-    this.modalService.open(content, { centered: true, backdrop: false, size: 'lg', fullscreen: true });
+    this.modalService.open(content, { centered: true, backdrop: false, size: 'lg' });
   }
   //Updates tblTickler to isDeleted=1
   deleteReminder(value: any) {
