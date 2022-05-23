@@ -56,6 +56,7 @@ export class EditUserComponent implements OnInit {
   allreminderlist: any;
   listoleases: any = [];
   listohierarchy: any;
+  listtoproject; any = [];
   //for filter
   searchTerm = '';
   Companyterm = '';
@@ -93,6 +94,8 @@ export class EditUserComponent implements OnInit {
   listobuildings: any = []
   showBuildingDrop!: boolean;
   showLeaseDrop!: boolean;
+  showProjectDrop!: boolean;
+  showReminderDrop!: boolean;
   getUser: any;
   userObj: any;
   ticklerFrequency: any;
@@ -595,43 +598,42 @@ export class EditUserComponent implements OnInit {
         // }
         
         
-         // if (this.reminderobj[i].optionType == "Project - Reminder") {
-        //   for (let j = 0; j < this.projectReminders.length; j++) {
-        //     for (let k = 0; k < this.reminderobj[i].hierarchy.length; k++) {
-        //       if (this.reminderobj[i].hierarchy[k] == this.allbuildings[j].hierarchy) {
-        //         var rval = {
-        //           tickleBy: this.Frequency,
-        //           ticklerFrequency: this.Frequency,
-        //           contactID: this.userObj.contactID,
-        //           ticklerMessage: this.Message,
-        //           ticklerTypeID: 6,
-        //           objectID: this.projectReminders[j].objectID,
-        //           objectTypeID: 2,
-        //           ticklerDaysOut: this.reminderobj[i].daysOut,
-        //           userDefinedDate: this.userdefineddate,
-        //           isDeleted: false,
-        //           LastModifiedBy: this.userObj.contactID,
-        //           LastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
-        //         }
-        //         console.log("CONTACT: ", rval)
+         if (this.reminderobj[i].optionType == "Project - Reminder") {
+           for (let j = 0; j < this.projectReminders.length; j++) {
+             for (let k = 0; k < this.reminderobj[i].hierarchy.length; k++) {
+               if (this.reminderobj[i].hierarchy[k] == this.allprojects[j].hierarchy) {
+                 var rval = {
+                   tickleBy: this.Frequency,
+                   ticklerFrequency: this.Frequency,
+                   contactID: this.userObj.contactID,
+                   ticklerMessage: this.Message,
+                   ticklerTypeID: 6,
+                   objectID: this.projectReminders[j].objectID,
+                   objectTypeID: 2,
+                   ticklerDaysOut: this.reminderobj[i].daysOut,
+                   userDefinedDate: this.userdefineddate,
+                   isDeleted: false,
+                   LastModifiedBy: this.userObj.contactID,
+                   LastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
+                 }
+                 console.log("CONTACT: ", rval)
 
-        //         // this.service.addReminder(rval).subscribe(
-        //         //   (res: any) => {
-        //         //     this.AddReminderVal = res;
-        //         //     this.ngOnInit();
-        //         //     this.toastr.success('Added Reminder for Project ID: ' + this.allprojects[j].projectID)
-        //         //   },
-        //         //   err => {
-        //         //     if (err.status == 400)
-        //         //       this.toastr.error('Failed to update time.', 'Time update failed.')
-        //         //     else
-        //         //       console.log(err);
-        //         //   });
-        //       }
-        //     }
-        //   }
-
-        // }
+                this.service.addReminder(rval).subscribe(
+                    (res: any) => {
+                      this.AddReminderVal = res;
+                      this.ngOnInit();
+                      this.toastr.success('Added Reminder for Project ID: ' + this.allprojects[j].projectID)
+                    },
+                  err => {
+                    if (err.status == 400)
+                      this.toastr.error('Failed to update time.', 'Time update failed.')
+                    else
+                      console.log(err);
+                  });
+               }
+             }
+           }
+         }
         
         
          // if (this.reminderobj[i].optionType == "Report - Reminder") {
