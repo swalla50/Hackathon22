@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/Services/shared.service';
-import { faBuilding, faUser, faFingerprint, faPeopleGroup, faFolderTree, faEnvelopeCircleCheck, faXmark, faBell, faCalendarPlus, faTrashCan, faPencil, faCheck,faX} from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faUser, faFingerprint, faPeopleGroup, faFolderTree, faEnvelopeCircleCheck, faXmark, faBell, faCalendarPlus, faTrashCan, faPencil, faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 declare var $: any;
 @Component({
   selector: 'app-edit-user',
@@ -27,7 +28,7 @@ export class EditUserComponent implements OnInit {
   faTrashCan = faTrashCan;
   faPencil = faPencil;
   faCheck = faCheck;
-  faX = faX; 
+  faX = faX;
   //arrays
   hierarchy: any;
   optiontype: any;
@@ -86,8 +87,8 @@ export class EditUserComponent implements OnInit {
   getUser: any;
   userObj: any;
   ticklerFrequency: any;
-  ticklerMessage:any;
-  userDefinedDate:any;
+  ticklerMessage: any;
+  contactReminderDate: any;
   lastModifiedBy: any;
   contacteditR: any;
 
@@ -99,10 +100,10 @@ export class EditUserComponent implements OnInit {
     { date: '5/13/2022', frequency: 60, reminderType: 'User Defined' },
     { date: '3/15/2022', frequency: 120, reminderType: 'User Defined' },
   ]
-  constructor(public service: SharedService, private toastr: ToastrService, private modalService: NgbModal) { }
+  constructor(public service: SharedService, private toastr: ToastrService, private modalService: NgbModal, private router: Router) { }
   //Opens Modals
   openVerticallyCentered(content: any) {
-    this.modalService.open(content, { centered: true, backdrop: false, size: 'lg', windowClass: 'modal-xl'});
+    this.modalService.open(content, { centered: true, backdrop: false, size: 'lg', windowClass: 'modal-xl' });
   }
   //Updates tblTickler to isDeleted=1
   deleteReminder(value: any) {
@@ -142,35 +143,36 @@ export class EditUserComponent implements OnInit {
     this.isEditing = false;
     this.enableEditIndex = null;
   }
-//Refreshed the contactmodule
+  //Refreshed the contactmodule
   refreshContactReminder$ = new BehaviorSubject<boolean>(true);
 
   //UpdateContactReminder
-  updateContactReminder(value: any){
-        
+  updateContactReminder(value: any,byVal:any,freqval:any,messval:any,dateval:any) {
+    console.log()
     var crval = {
       tickleID: this.tickleID = value,
-      tickleBy: this.ticklerFrequency,
-      ticklerFrequency: this.ticklerFrequency,
-      ticklerMessage: this.ticklerMessage,
-      userDefinedDate: this.userDefinedDate,
+      tickleBy: this.ticklerFrequency = byVal,
+      ticklerFrequency: this.ticklerFrequency = freqval,
+      ticklerMessage: this.ticklerMessage = messval,
+      userDefinedDate: this.contactReminderDate = dateval,
       lastModifiedBy: this.userObj.contactID,
-      lastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
+      lastModified: moment().format('YYYY-MM-DDTHH:MM:SS')
 
-    } 
-    // this.service.updateContactR(crval).subscribe(
-    //   (res:any) =>{
-    //     this.contacteditR = res;
-    //     this.refreshContactReminder$.next(true)
-        
-    //     this.toastr.success('Edited Contact Reminder!');
-    //   },
-    //   err =>{
-    //     if(err.status == 400)
-    //     this.toastr.error('Failed to update time.', 'Time update failed.')
-    //     else
-    //     console.log(err);
-    //   });
+    }
+    this.service.updateContactR(crval).subscribe(
+      (res: any) => {
+        this.contacteditR = res;
+        this.save();
+        this.ngOnInit();
+        this.toastr.success('Edited Contact Reminder!');
+      },
+      err => {
+        if (err.status == 400)
+          this.toastr.error('Failed to update time.', 'Time update failed.')
+        else
+          console.log(err);
+      });
+
     console.log(crval)
   }
   ngOnInit(): void {
@@ -289,7 +291,7 @@ export class EditUserComponent implements OnInit {
     })
     this.service.getCompanyList().subscribe(data => {
       this.companyname = data;
-      console.log("companyname:",this.companyname)
+      console.log("companyname:", this.companyname)
     })
     this.service.getCompanyReminders().subscribe(data => {
       this.companyreminders = data;

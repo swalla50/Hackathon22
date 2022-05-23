@@ -579,20 +579,20 @@
                                 <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID"
                                     id={{display.reminderID}}>
                                     <input #reminderFrequency class="form-control" name="{{display.reminderFrequency}}"
-                                        type="number" [(ngModel)]="ticklerFrequency" />
+                                        type="number" [(ngModel)]="display.reminderFrequency" />
                                 </td>
                                 <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                     <input #reminderMessage class="form-control" name="{{display.reminderMessage}}"
-                                        type="text" [(ngModel)]="ticklerMessage" />
+                                        type="text" [(ngModel)]="display.reminderMessage" />
                                 </td>
                                 <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                    <input #userDefinedDate class="form-control" placeholder="dd-MM-dd HH:mm:ss"
+                                    <input required #userDefinedDate class="form-control" placeholder="dd-MM-dd HH:mm:ss"
                                         name="{{display.userDefinedDate}}" type="datetime-local"
-                                        [(ngModel)]="userDefinedDate" />
+                                        [(ngModel)]="display.userDefinedDate" />
                                 </td>
-                                <td id="{{display.tickleID}}"
+                                <td id="{{display.reminderID}}"
                                     *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                    <button (click) = "updateContactReminder(display.tickleID)"class="save-edit-reminder-btn">Save
+                                    <button (click) = "updateContactReminder(display.reminderID,display.reminderFrequency,display.reminderFrequency,display.reminderMessage,display.userDefinedDate)"class="save-edit-reminder-btn">Save
                                         <fa-icon [icon]="faCheck" size='1x'></fa-icon>
                                     </button>
                                     <button (click)="cancel()" class="cancel-edit-reminder-btn">Cancel
