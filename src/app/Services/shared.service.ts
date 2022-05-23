@@ -50,9 +50,18 @@ export class SharedService {
   deleteReminder(val: any):Observable<any[]>{
     return this.http.put<any>(this.APIUrl + 'DeleteReminder/delete', val)
   }
+  getLH():Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'getleaseandhierarchy/leasehierarchy');
+  }
 
+  getContactReminders():Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'getcontactreminders/reminder');
+  }
   addReminder(val: any):Observable<any[]>{
     return this.http.post<any>(this.APIUrl + 'AddReminder/add', val)
+  }
+  updateContactR(val:any):Observable<any[]>{
+    return this.http.put<any>(this.APIUrl + 'updatecontactreminder/update',val)
   }
 
 }

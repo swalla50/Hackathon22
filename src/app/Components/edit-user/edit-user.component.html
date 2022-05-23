@@ -372,8 +372,8 @@
                                 <fa-icon [icon]="faFingerprint" size='sm'></fa-icon>
                             </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="{{userObj.contactUserID}}" aria-label="UserID"
-                            aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" placeholder="{{userObj.contactUserID}}"
+                            aria-label="UserID" aria-describedby="basic-addon1">
 
                     </div>
                     <div class="input-group mb-3">
@@ -382,28 +382,34 @@
                                 <fa-icon [icon]="faEnvelopeCircleCheck" size='sm'></fa-icon>
                             </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="{{userObj.contactEmailAddress}}" aria-label="Email"
-                            aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" placeholder="{{userObj.contactEmailAddress}}"
+                            aria-label="Email" aria-describedby="basic-addon1">
 
                     </div>
                     <div class="input-group mb-3">
 
                         <div class="form-check form-check-inline">
                             <label class="form-check-label" for="inlineCheckbox1">Allow Log On: </label>
-                            <input class="form-check-input" *ngIf="userObj.allowLogon === true" type="checkbox" id="inlineCheckbox1" value="option1" disabled checked>
-                            <input class="form-check-input" *ngIf="userObj.allowLogon === false" type="checkbox" id="inlineCheckbox1" value="option1" disabled readonly>
+                            <input class="form-check-input" *ngIf="userObj.allowLogon === true" type="checkbox"
+                                id="inlineCheckbox1" value="option1" disabled checked>
+                            <input class="form-check-input" *ngIf="userObj.allowLogon === false" type="checkbox"
+                                id="inlineCheckbox1" value="option1" disabled readonly>
 
                         </div>
                         <div class="form-check form-check-inline">
                             <label class="form-check-label" for="inlineCheckbox2">Contact Active: </label>
-                            <input class="form-check-input" *ngIf="userObj.contactActive === true" type="checkbox" id="inlineCheckbox2" value="option2" disabled checked>
-                            <input class="form-check-input"  *ngIf="userObj.contactActive === false" type="checkbox" id="inlineCheckbox2" value="option2" disabled>
+                            <input class="form-check-input" *ngIf="userObj.contactActive === true" type="checkbox"
+                                id="inlineCheckbox2" value="option2" disabled checked>
+                            <input class="form-check-input" *ngIf="userObj.contactActive === false" type="checkbox"
+                                id="inlineCheckbox2" value="option2" disabled>
                         </div>
                         <div class="form-check form-check-inline">
                             <label class="form-check-label" for="inlineCheckbox3">Hide Default login when using
                                 Profiles: </label>
-                            <input class="form-check-input" *ngIf="userObj.hideLogin === true" type="checkbox" id="inlineCheckbox3" value="option3" disabled checked>
-                            <input class="form-check-input" *ngIf="userObj.hideLogin === false" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+                            <input class="form-check-input" *ngIf="userObj.hideLogin === true" type="checkbox"
+                                id="inlineCheckbox3" value="option3" disabled checked>
+                            <input class="form-check-input" *ngIf="userObj.hideLogin === false" type="checkbox"
+                                id="inlineCheckbox3" value="option3" disabled>
 
                         </div>
 
@@ -489,7 +495,7 @@
 
 <!-- [(ngModel)]="selectedHierarchy" -->
 
-<ng-template #content let-modal style="z-index: 1000;">
+<ng-template #content let-modal style="z-index: 1000; width: 2000px;">
     <div class="modal-header">
         <button type="button" class="btn btn-dark" (click)="modal.close('Close click')">
             <fa-icon [icon]="faXmark" size='sm'></fa-icon>
@@ -498,7 +504,106 @@
 
     <h4>Scheduled Reminders: </h4>
     <div class="scheduled-reminder-list-container">
+
         <mat-accordion>
+            <!-- shows user's building reminders -->
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Contact <h4 class="mycompany-filterd-number">({{(contactReminders |
+                            filter:Contactterm)?.length}})</h4>
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
+                        Reminders
+                    </mat-panel-description> -->
+                </mat-expansion-panel-header>
+                <input type="text" class="building-reminder-schedule-search" placeholder="Search Contact Reminders"
+                    [(ngModel)]="Contactterm">
+                <table class="reminder-schedule-table table-striped">
+                    <thead class="reminder-thead">
+                        <td>
+                            Contact
+                        </td>
+                        <td>
+                            Reminder Type
+                        </td>
+                        <td>
+                            Frequency
+                        </td>
+                        <td>
+                            Message
+                        </td>
+                        <td>
+                            Date
+                        </td>
+                        <td>
+
+                        </td>
+                    </thead>
+                    <tbody *ngFor="let display of contactReminders |  filter: Contactterm; index as i">
+                        <tr class="reminder-schedule-table-row">
+                            <ng-container #timedata *ngIf="enableEditIndex != i">
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    {{display.createdBy}}
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    {{display.reminderDescription}}
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    every {{display.reminderFrequency}} days
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    {{display.reminderMessage}}
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    {{display.userDefinedDate}}
+                                </td>
+                                <td id="{{display.tickleID}}"
+                                    *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <button (click)="switchEditMode(i)" class="edit-reminder-btn">Edit
+                                        <fa-icon [icon]="faPencil" size='1x'></fa-icon>
+                                    </button>
+                                    <button (click)="deleteReminder(display.tickleID)"
+                                        class="delete-reminder-btn">Delete
+                                        <fa-icon [icon]="faTrashCan" size='1x'></fa-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
+                            <ng-container *ngIf="enableEditIndex == i">
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <input readonly [(ngModel)]="display.createdBy" />
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <input readonly [(ngModel)]="display.reminderDescription" />
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID"
+                                    id={{display.reminderID}}>
+                                    <input #reminderFrequency class="form-control" name="{{display.reminderFrequency}}"
+                                        type="number" [(ngModel)]="ticklerFrequency" />
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <input #reminderMessage class="form-control" name="{{display.reminderMessage}}"
+                                        type="text" [(ngModel)]="ticklerMessage" />
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <input #userDefinedDate class="form-control" placeholder="dd-MM-dd HH:mm:ss"
+                                        name="{{display.userDefinedDate}}" type="datetime-local"
+                                        [(ngModel)]="userDefinedDate" />
+                                </td>
+                                <td id="{{display.tickleID}}"
+                                    *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <button (click) = "updateContactReminder(display.tickleID)"class="save-edit-reminder-btn">Save
+                                        <fa-icon [icon]="faCheck" size='1x'></fa-icon>
+                                    </button>
+                                    <button (click)="cancel()" class="cancel-edit-reminder-btn">Cancel
+                                        <fa-icon [icon]="faX" size='1x'></fa-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+            </mat-expansion-panel>
             <!-- shows user's building reminders -->
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
@@ -530,26 +635,62 @@
 
                         </td>
                     </thead>
-                    <tbody>
-                        <tr class="reminder-schedule-table-row"
-                            *ngFor="let display of buildingreminders | filter: Buildingterm">
-                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                {{display.startDate}}
-                            </td>
-                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                every {{display.ticklerFreq}} days
-                            </td>
-                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                {{display.buildingID}}
-                            </td>
-                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                {{display.buildingName}}
-                            </td>
-                            <td id="{{display.tickleID}}"
-                                *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                <button (click)="deleteReminder(display.tickleID)" class="delete-reminder-btn">Delete
-                                    <fa-icon [icon]="faTrashCan" size='1x'></fa-icon></button>
-                            </td>
+                    <tbody *ngFor="let display of buildingreminders | filter: Buildingterm;  index as i">
+                        <tr class="reminder-schedule-table-row">
+                            <ng-container #timedata *ngIf="enableEditIndex != i">
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    {{display.startDate}}
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    every {{display.ticklerFreq}} days
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    {{display.buildingID}}
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    {{display.buildingName}}
+                                </td>
+                                <td id="{{display.tickleID}}"
+                                    *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <button (click)="switchEditMode(i)" class="edit-reminder-btn">Edit
+                                        <fa-icon [icon]="faPencil" size='1x'></fa-icon>
+                                    </button>
+                                    <button (click)="deleteReminder(display.tickleID)"
+                                        class="delete-reminder-btn">Delete
+                                        <fa-icon [icon]="faTrashCan" size='1x'></fa-icon>
+                                    </button>
+
+                                </td>
+                            </ng-container>
+                            <ng-container #timedata *ngIf="enableEditIndex == i">
+                                <td id={{display.tickleID}}
+                                    *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <input #startDate class="form-control" name="{{display.startDate}}"
+                                        placeholder="dd-MM-dd HH:mm:ss" type="datetime-local"
+                                        [(ngModel)]="display.startDate" />
+                                </td>
+                                <td id={{display.tickleID}}
+                                    *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    every {{display.ticklerFreq}} days
+                                    <input #ticklerFreq class="form-control" name="{{display.ticklerFreq}}"
+                                        type="number" [(ngModel)]="display.ticklerFreq" />
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <input readonly [(ngModel)]="display.buildingID" />
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <input readonly [(ngModel)]="display.buildingName" />
+                                </td>
+                                <td id="{{display.tickleID}}"
+                                    *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <button class="save-edit-reminder-btn">Save
+                                        <fa-icon [icon]="faCheck" size='1x'></fa-icon>
+                                    </button>
+                                    <button (click)="cancel()" class="cancel-edit-reminder-btn">Cancel
+                                        <fa-icon [icon]="faX" size='1x'></fa-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
                         </tr>
                     </tbody>
                 </table>
@@ -585,25 +726,58 @@
 
                         </td>
                     </thead>
-                    <tbody>
-                        <tr class="reminder-schedule-table-row"
-                            *ngFor="let display of companyreminders | filter: Companyterm">
-                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                {{display.startDate}}
-                            </td>
-                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                every {{display.ticklerFreq}} days
-                            </td>
-                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                {{display.companyID}}
-                            </td>
-                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                {{display.companyName}}
-                            </td>
-                            <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                <button (click)="deleteReminder(display.tickleID)" class="delete-reminder-btn">Delete
-                                    <fa-icon [icon]="faTrashCan" size='1x'></fa-icon></button>
-                            </td>
+                    <tbody *ngFor="let display of companyreminders | filter: Companyterm; index as i">
+                        <tr class="reminder-schedule-table-row">
+                            <ng-container #timedata *ngIf="enableEditIndex != i">
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    {{display.startDate}}
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    every {{display.ticklerFreq}} days
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    {{display.companyID}}
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    {{display.companyName}}
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <button (click)="switchEditMode(i)" class="edit-reminder-btn">Edit
+                                        <fa-icon [icon]="faPencil" size='1x'></fa-icon>
+                                    </button>
+                                    <button (click)="deleteReminder(display.tickleID)"
+                                        class="delete-reminder-btn">Delete
+                                        <fa-icon [icon]="faTrashCan" size='1x'></fa-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
+                            <ng-container #timedata *ngIf="enableEditIndex == i">
+                                <td id={{display.tickleID}
+                                    *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <input #startDate class="form-control" name="{{display.startDate}}"
+                                        placeholder="dd-MM-dd HH:mm:ss" type="datetime-local"
+                                        [(ngModel)]="display.startDate" />
+                                </td>
+                                <td id={{display.tickleID}}
+                                    *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <input #ticklerFreq class="form-control" name="{{display.ticklerFreq}}"
+                                        type="number" [(ngModel)]="display.ticklerFreq" />
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <input readonly [(ngModel)]="display.companyID" />
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <input readonly [(ngModel)]="display.companyName" />
+                                </td>
+                                <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
+                                    <button class="save-edit-reminder-btn">Save
+                                        <fa-icon [icon]="faCheck" size='1x'></fa-icon>
+                                    </button>
+                                    <button (click)="cancel()" class="cancel-edit-reminder-btn">Cancel
+                                        <fa-icon [icon]="faX" size='1x'></fa-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
                         </tr>
                     </tbody>
                 </table>
@@ -639,25 +813,53 @@
 
                         </td>
                     </thead>
-                    <tbody>
-                        <tr class="reminder-schedule-table-row"
-                            *ngFor="let display of leasereminders| filter: Leaseterm">
-                            <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
-                                {{display.reminderID}}
-                            </td>
-                            <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
-                                every {{display.reminderFreq}} days
-                            </td>
-                            <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
-                                {{display.objectID}}
-                            </td>
-                            <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
-                                {{display.reminderMessage}}
-                            </td>
-                            <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
-                                <button (click)="deleteReminder(display.reminderID)" class="delete-reminder-btn">Delete
-                                    <fa-icon [icon]="faTrashCan" size='1x'></fa-icon></button>
-                            </td>
+                    <tbody *ngFor="let display of leasereminders| filter: Leaseterm; index as i">
+                        <tr class="reminder-schedule-table-row">
+                            <ng-container #timedata *ngIf="enableEditIndex != i">
+                                <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
+                                    {{display.reminderID}}
+                                </td>
+                                <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
+                                    every {{display.reminderFreq}} days
+                                </td>
+                                <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
+                                    {{display.objectID}}
+                                </td>
+                                <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
+                                    {{display.reminderMessage}}
+                                </td>
+                                <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
+                                    <button (click)="switchEditMode(i)" class="edit-reminder-btn">Edit
+                                        <fa-icon [icon]="faPencil" size='1x'></fa-icon>
+                                    </button>
+                                    <button (click)="deleteReminder(display.tickleID)"
+                                        class="delete-reminder-btn">Delete
+                                        <fa-icon [icon]="faTrashCan" size='1x'></fa-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
+                            <ng-container #timedata *ngIf="enableEditIndex == i">
+                                <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
+                                    <input readonly [(ngModel)]="display.reminderID" />
+                                </td>
+                                <td id= {{display.reminderID}} *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
+                                    <input #reminderFreq class="form-control" name= "{{display.reminderFreq}}" type="number" [(ngModel)]="display.reminderFreq" />
+                                </td>
+                                <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
+                                    <input readonly [(ngModel)]="display.objectID" />
+                                </td>
+                                <td id= {{display.reminderID}} *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
+                                    <input #reminderMessage class="form-control" name= "{{display.reminderMessage}}" type="text" [(ngModel)]="display.reminderMessage" />                                
+                                </td>
+                                <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
+                                    <button class="save-edit-reminder-btn">Save
+                                        <fa-icon [icon]="faCheck" size='1x'></fa-icon>
+                                    </button>
+                                    <button (click)="cancel()" class="cancel-edit-reminder-btn">Cancel
+                                        <fa-icon [icon]="faX" size='1x'></fa-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
                         </tr>
                     </tbody>
                 </table>
@@ -730,7 +932,7 @@
 
             <!-- Pulls in list of Hierachies -->
             <ng-select aria-required="true" (change)="changeH(selectedHierarchy)" [(ngModel)]="selectedHierarchy"
-                *ngIf="hierarchy  && showCompanyDrop !== true" [items]="hierarchy" name="selectedHierarchy"
+                *ngIf="hierarchy  && showCompanyDrop !== true " [items]="hierarchy" name="selectedHierarchy"
                 bindLabel="companyHierarchyLabelDesc" placeholder="Select a Hierarchy" appendTo="body" [multiple]="true"
                 [closeOnSelect]="false">
                 <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
@@ -751,6 +953,17 @@
                 </ng-template>
             </ng-select>
 
+            <!-- Lease DropDown -->
+            <ng-select aria-required="true" *ngIf="leaseName && showLeaseDrop === true"
+                (change)="changeLease(selectedLease)" [(ngModel)]="selectedLease" name="selectedLease"
+                [items]="leaseName" bindLabel="leaseName" placeholder="Select a Lease" appendTo="body" [multiple]="true"
+                [closeOnSelect]="false">
+                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                    <input id="item-{{index}}" type="checkbox" name="item-{{index}}" [ngModel]="item$.selected" />
+                    {{item}}
+                </ng-template>
+            </ng-select>
+
             <!-- Company routes need to be added to grab data -->
             <ng-select aria-required="true" (change)="changeCompany(selectedCompany)" [(ngModel)]="selectedCompany"
                 *ngIf="companyname && showCompanyDrop === true" [items]="companyname" name="selectedCompany"
@@ -762,6 +975,7 @@
                 </ng-template>
             </ng-select>
 
+            <input [(ngModel)]="userdefineddate" name="userdefineddate" class="form-control" type="datetime-local">
             <input [(ngModel)]="daysOut" name="daysOut" type="number" class="form-control" placeholder="Days Out"
                 aria-label="DaysOut" aria-describedby="basic-addon1">
             <input [(ngModel)]="Frequency" name="Frequency" type="number" class="form-control" placeholder="Frequency"

@@ -47,6 +47,7 @@
     background: white;
     box-shadow: 0.5px 25px 15px 0 rgb(0 0 0 / 39%);
     border-radius: 5px;
+    overflow-y: scroll;
 }
 
 .edit-user-heading {
@@ -313,8 +314,7 @@ svg.fa-bell.fa-8x {
     right: 0;
     bottom: 0;
     left: 0;
-    border: 2px solid #3c7dcf;
-    border-radius: 0;
+    border-radius: 7px !important;
   }
   .modal-dialog.modal-dialog-centered.modal-lg{
       width: 100% !important;
@@ -370,7 +370,72 @@ button.delete-reminder-btn:not(:hover) {
     -webkit-transition: all 1s ease;
     transition: all 200ms ease-in-out;
 }
+button.edit-reminder-btn {
+    border: none;
+    color: white;
+    background: #033871;
+    border-radius: 20px;
+    margin: 5px;
+    height: 30px;
+    width: 100px;
+    border-radius: 50px;
+    box-shadow: 0.5px 5px 15px 0 rgb(0 0 0 / 39%);
+}
+button.edit-reminder-btn:hover {
+    transform:translateY(3px);
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+    cursor: pointer;
+}
 
+button.edit-reminder-btn:not(:hover) {
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+}
+button.save-edit-reminder-btn{
+    border: none;
+    color: white;
+    background: #00bc09;
+    border-radius: 20px;
+    margin: 5px;
+    height: 30px;
+    width: 100px;
+    border-radius: 50px;
+    box-shadow: 0.5px 5px 15px 0 rgb(0 0 0 / 39%);
+}
+button.save-edit-reminder-btn:hover {
+    transform:translateY(3px);
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+    cursor: pointer;
+}
+
+button.save-edit-reminder-btn:not(:hover) {
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+}
+button.cancel-edit-reminder-btn{
+    border: none;
+    color: white;
+    background: #c10000;
+    border-radius: 20px;
+    margin: 5px;
+    height: 30px;
+    width: 100px;
+    border-radius: 50px;
+    box-shadow: 0.5px 5px 15px 0 rgb(0 0 0 / 39%);
+}
+button.cancel-edit-reminder-btn:hover {
+    transform:translateY(3px);
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+    cursor: pointer;
+}
+
+button.cancel-edit-reminder-btn:not(:hover) {
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+}
 .modal-lg {
     max-width: 1150px !important;
 }
@@ -405,3 +470,13 @@ h4.mycompany-filterd-number{
     text-overflow: ellipsis;
     white-space: nowrap;
   } */
+  .modal-xl .modal-lg {
+    max-width: 95%;
+  }
+  h3.edit-user-heading {
+    margin-left: 50px;
+}
+ngb-modal-window.d-block.modal.modal-xl.fade.show {
+    background: #000000b8;
+}
+

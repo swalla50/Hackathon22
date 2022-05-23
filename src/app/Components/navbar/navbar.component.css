@@ -36,11 +36,11 @@ form.form-inline.my-2.my-lg-0.ng-untouched.ng-pristine.ng-valid {
     justify-content: left;
 }
 
-.row1-left {
+.row1-nav-left {
     width: 40%;
     display: inline-flex;
 }
-.row1-right {
+.row1-nav-right {
     width: 70%;
     display: inline-flex;
 }
