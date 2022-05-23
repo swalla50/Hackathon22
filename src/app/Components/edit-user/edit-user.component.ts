@@ -37,10 +37,14 @@ export class EditUserComponent implements OnInit {
   leasereminders: any;
   allbuildings: any;
   allleases: any;
+  allreports: any;
+  allprojects: any;
   allreminders: any;
   companyname: any;
   companyreminders: any;
   contactReminders: any;
+  projectReminders: any;
+  reportReminders: any;
   panelOpenState!: boolean;
   buildingrowtotal: any;
   leaserowtotal: any;
@@ -62,6 +66,8 @@ export class EditUserComponent implements OnInit {
   AllContacts = ''
   buildingName: any;
   leaseName: any;
+  projectName: any;
+  reportName: any;
   buildingHierearchy: any;
   //For Deleting Reminde
   isDeleted: boolean | undefined;
@@ -78,6 +84,8 @@ export class EditUserComponent implements OnInit {
   selectedCompany: any = [];
   selectedBuilding: any = [];
   selectedLease: any = [];
+  selectedProject: any [];
+  selectedReport: any [];
   daysOut!: string;
   userdefineddate!: Date;
   Frequency!: string;
@@ -273,6 +281,32 @@ export class EditUserComponent implements OnInit {
     })
 
 
+    this.service.getPH().subscribe(data => {
+      this.allprojects = data;
+      this.allprojects = this.allleases.filter((obj: any) => obj.companyID === this.userObj.companyID)
+      this.projectName = this.allleases.map((obj: any) => obj.leaseName)
+      console.log("projectname", this.projectName)
+      if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType.length !== 0) {
+        for (let j = 0; j < this.selectedHierarchy.length; j++) {
+          for (let i = 0; i < this.allprojects.length; i++) {
+            // console.log("building hierarchy", this.buildingHierearchy)
+            if (this.selectedHierarchy[j] === this.allprojects[i].hierarchy) {
+              this.projectName[i] = this.allprojects[i].leaseName;
+              this.listoprojects.push(this.projectName[i]);
+              let projectsetOfValue: any = new Set(this.listoprojects)
+              //   //distinct building name values from array
+              let uniqueprojectValues = [...projetcsetOfValue]
+              this.leaseName = uniqueprojectValues;
+            }
+            else {
+              this.projectName = []
+            }
+
+          }
+        }
+      }
+    })
+
     this.service.getContactReminders().subscribe(data => {
       this.contactReminders = data;
       this.contactReminders = this.contactReminders.filter((obj: any) => obj.isDeleted === false && obj.contactID === this.userObj.contactID)
@@ -347,6 +381,19 @@ export class EditUserComponent implements OnInit {
 
           }
         }
+       
+      this.service.getProjectReminders().subscribe(data => {
+      this.projectreminders = data;
+
+      this.projectrowtotal = this.projectreminders.length;
+      this.projectreminders = this.projectreminders.filter((obj: any) => { return obj.isDeleted == false && obj.contactID == this.userObj.contactID })
+      for (let i = 0; i < this.projectreminders.length; i++) {
+        for (let j = 0; j < this.userObj.length; j++) {
+
+          if (this.projectreminders[i].isDeleted !== false) {
+
+          }
+        }
 
 
       }
@@ -365,6 +412,18 @@ export class EditUserComponent implements OnInit {
       this.showLeaseDrop = true;
       this.ngOnInit()
     }
+    //if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType == "Project - Reminder") {
+    //  this.listobuildings = []
+    //  this.showBuildingDrop = false;
+   //   this.showLeaseDrop = true;
+    //  this.ngOnInit()
+ //   }
+   // if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType == "Report- Reminder") {
+    //  this.listobuildings = []
+    //  this.showBuildingDrop = false;
+   //   this.showLeaseDrop = true;
+   //   this.ngOnInit()
+  //  }
     if (this.selectedHierarchy.length > 1) {
       this.showBuildingDrop = false;
       this.showLeaseDrop = false;
@@ -401,6 +460,13 @@ export class EditUserComponent implements OnInit {
     this.ngOnInit()
   }
   changeLease(val: any) {
+    if (this.selectedOptionType.length === 0) {
+      val = []
+      this.ngOnInit()
+    }
+    this.ngOnInit()
+  }
+        changeProject(val: any) {
     if (this.selectedOptionType.length === 0) {
       val = []
       this.ngOnInit()
@@ -527,6 +593,87 @@ export class EditUserComponent implements OnInit {
         //   }
 
         // }
+        
+        
+         // if (this.reminderobj[i].optionType == "Project - Reminder") {
+        //   for (let j = 0; j < this.projectReminders.length; j++) {
+        //     for (let k = 0; k < this.reminderobj[i].hierarchy.length; k++) {
+        //       if (this.reminderobj[i].hierarchy[k] == this.allbuildings[j].hierarchy) {
+        //         var rval = {
+        //           tickleBy: this.Frequency,
+        //           ticklerFrequency: this.Frequency,
+        //           contactID: this.userObj.contactID,
+        //           ticklerMessage: this.Message,
+        //           ticklerTypeID: 6,
+        //           objectID: this.projectReminders[j].objectID,
+        //           objectTypeID: 2,
+        //           ticklerDaysOut: this.reminderobj[i].daysOut,
+        //           userDefinedDate: this.userdefineddate,
+        //           isDeleted: false,
+        //           LastModifiedBy: this.userObj.contactID,
+        //           LastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
+        //         }
+        //         console.log("CONTACT: ", rval)
+
+        //         // this.service.addReminder(rval).subscribe(
+        //         //   (res: any) => {
+        //         //     this.AddReminderVal = res;
+        //         //     this.ngOnInit();
+        //         //     this.toastr.success('Added Reminder for Project ID: ' + this.allprojects[j].projectID)
+        //         //   },
+        //         //   err => {
+        //         //     if (err.status == 400)
+        //         //       this.toastr.error('Failed to update time.', 'Time update failed.')
+        //         //     else
+        //         //       console.log(err);
+        //         //   });
+        //       }
+        //     }
+        //   }
+
+        // }
+        
+        
+         // if (this.reminderobj[i].optionType == "Report - Reminder") {
+        //   for (let j = 0; j < this.reportReminders.length; j++) {
+        //     for (let k = 0; k < this.reminderobj[i].hierarchy.length; k++) {
+        //       if (this.reminderobj[i].hierarchy[k] == this.allbuildings[j].hierarchy) {
+        //         var rval = {
+        //           tickleBy: this.Frequency,
+        //           ticklerFrequency: this.Frequency,
+        //           contactID: this.userObj.contactID,
+        //           ticklerMessage: this.Message,
+        //           ticklerTypeID: 6,
+        //           objectID: this.reportReminders[j].objectID,
+        //           objectTypeID: 2,
+        //           ticklerDaysOut: this.reminderobj[i].daysOut,
+        //           userDefinedDate: this.userdefineddate,
+        //           isDeleted: false,
+        //           LastModifiedBy: this.userObj.contactID,
+        //           LastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
+        //         }
+        //         console.log("CONTACT: ", rval)
+
+        //         // this.service.addReminder(rval).subscribe(
+        //         //   (res: any) => {
+        //         //     this.AddReminderVal = res;
+        //         //     this.ngOnInit();
+        //         //     this.toastr.success('Added Reminder for Report ID: ' + this.allreports[j].reportID)
+        //         //   },
+        //         //   err => {
+        //         //     if (err.status == 400)
+        //         //       this.toastr.error('Failed to update time.', 'Time update failed.')
+        //         //     else
+        //         //       console.log(err);
+        //         //   });
+        //       }
+        //     }
+        //   }
+
+        // }
+        
+        
+        
 
         if (this.reminderobj[i].optionType == "Building - Reminder") {
           for (let j = 0; j < this.allbuildings.length; j++) {
@@ -678,6 +825,84 @@ export class EditUserComponent implements OnInit {
                         this.AddReminderVal = res;
                         this.ngOnInit();
                         this.toastr.success('Added Reminder for Lease ID: ' + this.allleases[j].leaseName)
+                      },
+                      err => {
+                        if (err.status == 400)
+                          this.toastr.error('Failed to update time.', 'Time update failed.')
+                        else
+                          console.log(err);
+                      });
+
+                  }
+                }
+              }
+            }
+          }
+        }
+                  if (this.selectedOptionType[i] == "Project - Reminder") {
+            for (let j = 0; j < this.allprojects.length; j++) {
+              for (let k = 0; k < this.selectedHierarchy.length; k++) {
+                if (this.reminderobjh[k].hierarchy == this.selectedHierarchy[k]) {
+                  if (this.alllprojects[j].hierarchy == this.selectedHierarchy[k]) {
+                    var rval = {
+                      tickleBy: this.Frequency,
+                      ticklerFrequency: this.Frequency,
+                      contactID: this.userObj.contactID,
+                      ticklerMessage: this.Message,
+                      ticklerTypeID: 2,
+                      objectID: this.allleases[j].leaseID,
+                      objectTypeID: 3,
+                      ticklerDaysOut: this.reminderobj[i].daysOut,
+                      userDefinedDate: this.userdefineddate,
+                      isDeleted: false,
+                      LastModifiedBy: this.userObj.contactID,
+                      LastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
+                    }
+                    console.log("Projectrval", rval)
+                    this.service.addReminder(rval).subscribe(
+                      (res: any) => {
+                        this.AddReminderVal = res;
+                        this.ngOnInit();
+                        this.toastr.success('Added Reminder for Project ID: ' + this.allproject[j].projectName)
+                      },
+                      err => {
+                        if (err.status == 400)
+                          this.toastr.error('Failed to update time.', 'Time update failed.')
+                        else
+                          console.log(err);
+                      });
+
+                  }
+                }
+              }
+            }
+          }
+        }
+                if (this.selectedOptionType[i] == "Report - Reminder") {
+            for (let j = 0; j < this.allreports.length; j++) {
+              for (let k = 0; k < this.selectedHierarchy.length; k++) {
+                if (this.reminderobjh[k].hierarchy == this.selectedHierarchy[k]) {
+                  if (this.allreports[j].hierarchy == this.selectedHierarchy[k]) {
+                    var rval = {
+                      tickleBy: this.Frequency,
+                      ticklerFrequency: this.Frequency,
+                      contactID: this.userObj.contactID,
+                      ticklerMessage: this.Message,
+                      ticklerTypeID: 2,
+                      objectID: this.allleases[j].leaseID,
+                      objectTypeID: 3,
+                      ticklerDaysOut: this.reminderobj[i].daysOut,
+                      userDefinedDate: this.userdefineddate,
+                      isDeleted: false,
+                      LastModifiedBy: this.userObj.contactID,
+                      LastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
+                    }
+                    console.log("Reportrval", rval)
+                    this.service.addReminder(rval).subscribe(
+                      (res: any) => {
+                        this.AddReminderVal = res;
+                        this.ngOnInit();
+                        this.toastr.success('Added Reminder for Report ID: ' + this.allreports[j].reportName)
                       },
                       err => {
                         if (err.status == 400)
