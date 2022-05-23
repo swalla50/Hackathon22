@@ -571,28 +571,28 @@
                             </ng-container>
                             <ng-container *ngIf="enableEditIndex == i">
                                 <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                    <input readonly [(ngModel)]="display.createdBy" />
+                                    <input class="contact-reminder-input" readonly [(ngModel)]="display.createdBy" />
                                 </td>
                                 <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                    <input readonly [(ngModel)]="display.reminderDescription" />
+                                    <input class="contact-reminder-input" readonly [(ngModel)]="display.reminderDescription" />
                                 </td>
                                 <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID"
                                     id={{display.reminderID}}>
-                                    <input #reminderFrequency class="form-control" name="{{display.reminderFrequency}}"
+                                    <input class="contact-reminder-input" #reminderFrequency class="form-control" name="{{display.reminderFrequency}}"
                                         type="number" [(ngModel)]="display.reminderFrequency" />
                                 </td>
                                 <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                    <input #reminderMessage class="form-control" name="{{display.reminderMessage}}"
-                                        type="text" [(ngModel)]="display.reminderMessage" />
+                                    <button (click)="openChildComponentModel(display.reminderMessage)"class="form-control" ngDefaultControl #reminderMessage  name="{{display.reminderMessage}}"
+                                        type="text" [(ngModel)]="ticklerMessage">{{display.reminderMessage}}</button>
                                 </td>
                                 <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                    <input required #userDefinedDate class="form-control" placeholder="dd-MM-dd HH:mm:ss"
+                                    <input ngDefaultControl class="contact-reminder-input" required #userDefinedDate class="form-control" placeholder="dd-MM-dd HH:mm:ss"
                                         name="{{display.userDefinedDate}}" type="datetime-local"
                                         [(ngModel)]="display.userDefinedDate" />
                                 </td>
                                 <td id="{{display.reminderID}}"
                                     *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                    <button (click) = "updateContactReminder(display.reminderID,display.reminderFrequency,display.reminderFrequency,display.reminderMessage,display.userDefinedDate)"class="save-edit-reminder-btn">Save
+                                    <button (click) = "updateContactReminder(display.reminderID,display.reminderFrequency,display.reminderFrequency,display.userDefinedDate)"class="save-edit-reminder-btn">Save
                                         <fa-icon [icon]="faCheck" size='1x'></fa-icon>
                                     </button>
                                     <button (click)="cancel()" class="cancel-edit-reminder-btn">Cancel
@@ -671,7 +671,6 @@
                                 </td>
                                 <td id={{display.tickleID}}
                                     *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                    every {{display.ticklerFreq}} days
                                     <input #ticklerFreq class="form-control" name="{{display.ticklerFreq}}"
                                         type="number" [(ngModel)]="display.ticklerFreq" />
                                 </td>
@@ -832,7 +831,7 @@
                                     <button (click)="switchEditMode(i)" class="edit-reminder-btn">Edit
                                         <fa-icon [icon]="faPencil" size='1x'></fa-icon>
                                     </button>
-                                    <button (click)="deleteReminder(display.tickleID)"
+                                    <button (click)="deleteReminder(display.reminderID)"
                                         class="delete-reminder-btn">Delete
                                         <fa-icon [icon]="faTrashCan" size='1x'></fa-icon>
                                     </button>
@@ -988,3 +987,4 @@
         </form>
     </div>
 </ng-template>
+

@@ -27,6 +27,7 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
 import { ToastrModule } from 'ngx-toastr';
 import {MatDialogModule} from '@angular/material/dialog';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ChildComponentComponent } from './Components/child-component/child-component.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +38,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     UserRightsComponent,
     UserModulesComponent,
     NavbarComponent,
+    ChildComponentComponent,
   ],
   imports: [
     BrowserModule,

@@ -479,4 +479,20 @@ h4.mycompany-filterd-number{
 ngb-modal-window.d-block.modal.modal-xl.fade.show {
     background: #000000b8;
 }
-
+input.form-control {
+    height: 29px;
+}
+button.form-control {
+    height: 29px;
+    margin-bottom: 15px;
+}
+button.form-control:hover {
+    transform:scale(1.1);
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+    cursor:text;
+}
+button.form-control:not(:hover) {
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+}

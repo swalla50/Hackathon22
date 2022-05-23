@@ -1,0 +1,12 @@
+textarea.message-text {
+    width: 100%;
+    height: 100%;
+}
+app-child-component {
+    height: 100% !important;
+}
+.message-text-contatiner {
+    height: 100%;
+    padding-bottom: 7%;
+    padding-inline: 10%;
+}

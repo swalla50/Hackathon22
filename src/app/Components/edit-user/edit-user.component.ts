@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/Services/shared.service';
 import { faBuilding, faUser, faFingerprint, faPeopleGroup, faFolderTree, faEnvelopeCircleCheck, faXmark, faBell, faCalendarPlus, faTrashCan, faPencil, faCheck, faX } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { ChildComponentComponent } from '../child-component/child-component.component';
 declare var $: any;
 @Component({
   selector: 'app-edit-user',
@@ -102,9 +103,26 @@ export class EditUserComponent implements OnInit {
   ]
   constructor(public service: SharedService, private toastr: ToastrService, private modalService: NgbModal, private router: Router) { }
   //Opens Modals
+  //Opens Modals
+
+  dataPassToChild: any = null;
   openVerticallyCentered(content: any) {
     this.modalService.open(content, { centered: true, backdrop: false, size: 'lg', windowClass: 'modal-xl' });
   }
+  openChildComponentModel(content:any){
+
+    const modalRef = this.modalService.open(ChildComponentComponent, { centered: true, size: 'lg',backdrop:false });
+
+    (<ChildComponentComponent>modalRef.componentInstance).dataToTakeAsInput = content 
+    console.log("child",content)
+
+    modalRef.result.then((result) => {
+      console.log("result",result);
+    }).catch( (result) => {
+      console.log(result);
+    });
+  }
+
   //Updates tblTickler to isDeleted=1
   deleteReminder(value: any) {
     var rval = {
@@ -147,31 +165,31 @@ export class EditUserComponent implements OnInit {
   refreshContactReminder$ = new BehaviorSubject<boolean>(true);
 
   //UpdateContactReminder
-  updateContactReminder(value: any,byVal:any,freqval:any,messval:any,dateval:any) {
+  updateContactReminder(value: any,byVal:any,freqval:any,dateval:any) {
     console.log()
     var crval = {
       tickleID: this.tickleID = value,
       tickleBy: this.ticklerFrequency = byVal,
       ticklerFrequency: this.ticklerFrequency = freqval,
-      ticklerMessage: this.ticklerMessage = messval,
+      ticklerMessage: this.ticklerMessage,
       userDefinedDate: this.contactReminderDate = dateval,
       lastModifiedBy: this.userObj.contactID,
       lastModified: moment().format('YYYY-MM-DDTHH:MM:SS')
 
     }
-    this.service.updateContactR(crval).subscribe(
-      (res: any) => {
-        this.contacteditR = res;
-        this.save();
-        this.ngOnInit();
-        this.toastr.success('Edited Contact Reminder!');
-      },
-      err => {
-        if (err.status == 400)
-          this.toastr.error('Failed to update time.', 'Time update failed.')
-        else
-          console.log(err);
-      });
+    // this.service.updateContactR(crval).subscribe(
+    //   (res: any) => {
+    //     this.contacteditR = res;
+    //     this.save();
+    //     this.ngOnInit();
+    //     this.toastr.success('Edited Contact Reminder!');
+    //   },
+    //   err => {
+    //     if (err.status == 400)
+    //       this.toastr.error('Failed to update time.', 'Time update failed.')
+    //     else
+    //       console.log(err);
+    //   });
 
     console.log(crval)
   }
@@ -390,6 +408,7 @@ export class EditUserComponent implements OnInit {
     this.ngOnInit()
   }
   changeOT(val: any) {
+    
     if (val == "Company - Reminder") {
       this.showCompanyDrop = true;
       this.ngOnInit()
@@ -398,11 +417,23 @@ export class EditUserComponent implements OnInit {
       this.showLeaseDrop = true;
       this.ngOnInit()
     }
-    if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType == "Building - Reminder") {
-      this.showBuildingDrop = true;
+    
+    if (this.selectedOptionType.length > 0 && this.selectedOptionType != "Lease - Reminder") {
+      this.showCompanyDrop = false;
+      this.selectedBuilding = [];
+      this.showBuildingDrop = false;
       this.showLeaseDrop = false;
-      this.ngOnInit()
+      this.selectedCompany = [];
     }
+
+    if (this.selectedHierarchy.length ==1 && this.selectedOptionType == "Building - Reminder") {
+      this.ngOnInit()
+      this.showBuildingDrop = true;
+      this.showLeaseDrop = false; 
+    }
+    
+    
+    
     if (val.length === 0) {
       this.showCompanyDrop = false;
       this.selectedBuilding = [];
@@ -419,13 +450,7 @@ export class EditUserComponent implements OnInit {
       this.showBuildingDrop = false;
       this.selectedCompany = [];
     }
-    if (this.selectedOptionType.length > 0 && this.selectedOptionType != "Lease - Reminder") {
-      this.showCompanyDrop = false;
-      this.selectedBuilding = [];
-      this.showBuildingDrop = false;
-      this.showLeaseDrop = false;
-      this.selectedCompany = [];
-    }
+    
     this.ngOnInit();
   }
   reminderobj: any = [];
@@ -527,7 +552,7 @@ export class EditUserComponent implements OnInit {
                   (res: any) => {
                     this.AddReminderVal = res;
                     this.ngOnInit();
-                    this.toastr.success('Added Reminder for Lease ID: ' + this.allbuildings[j].buildingID)
+                    this.toastr.success('Added Reminder for Building ID: ' + this.allbuildings[j].buildingID)
                   },
                   err => {
                     if (err.status == 400)
