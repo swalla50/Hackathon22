@@ -1220,7 +1220,7 @@
                         <tr class="reminder-schedule-table-row">
                             <ng-container #timedata *ngIf="enableEditIndex != i">
                                 <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
-                                    {{display.objectID}}
+                                    {{display.reminderID}}
                                 </td>
                                 <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
                                     {{display.clientLeaseID}}
@@ -1257,9 +1257,6 @@
                                     *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
                                     <input #reminderFreq class="form-control" name="{{display.reminderFreq}}"
                                         type="number" [(ngModel)]="display.reminderFreq" />
-                                </td>
-                                <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
-                                    <input readonly [(ngModel)]="display.objectID" />
                                 </td>
                                 <td id={{display.reminderID}}
                                     *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
