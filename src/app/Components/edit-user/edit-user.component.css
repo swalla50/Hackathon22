@@ -182,7 +182,7 @@ li {
 
 .reminder-inputs {
     padding-inline: 10px;
-    height: 600px;    
+    height: 100%;    
     overflow-y: scroll;
     padding: 10%;
 }
@@ -270,9 +270,6 @@ button.btn.btn-dark {
     background: rgba(0, 0, 0, .3);
 }
 
-.modal-xl .modal-lg {
-    max-width: 90%;
-}
 
 button.myReminder-btn {
     height: 100%;
@@ -316,9 +313,7 @@ svg.fa-bell.fa-8x {
     left: 0;
     border-radius: 7px !important;
   }
-  .modal-dialog.modal-dialog-centered.modal-lg{
-      width: 100% !important;
-  }
+
   .modal-header {
     position: static;
     top: 0;
@@ -437,7 +432,7 @@ button.cancel-edit-reminder-btn:not(:hover) {
     transition: all 200ms ease-in-out;
 }
 .modal-lg {
-    max-width: 1150px !important;
+    max-width: 95% !important;
 }
 input.all-reminder-contact-search {
     width: 100%;

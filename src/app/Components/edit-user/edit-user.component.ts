@@ -56,7 +56,7 @@ export class EditUserComponent implements OnInit {
   allreminderlist: any;
   listoleases: any = [];
   listohierarchy: any;
-  listtoproject; any = [];
+  listtoproject: any = [];
   //for filter
   searchTerm = '';
   Companyterm = '';
@@ -64,6 +64,7 @@ export class EditUserComponent implements OnInit {
   Contactterm = '';
   Allterm = '';
   Leaseterm = '';
+  Projectterm = '';
   AllContacts = ''
   buildingName: any;
   leaseName: any;
@@ -85,8 +86,8 @@ export class EditUserComponent implements OnInit {
   selectedCompany: any = [];
   selectedBuilding: any = [];
   selectedLease: any = [];
-  selectedProject: any [];
-  selectedReport: any [];
+  selectedProject: any = [];
+  selectedReport: any = [];
   daysOut!: string;
   userdefineddate!: Date;
   Frequency!: string;
@@ -99,6 +100,7 @@ export class EditUserComponent implements OnInit {
   getUser: any;
   userObj: any;
   ticklerFrequency: any;
+  tickleBy: any;
   ticklerMessage: any;
   contactReminderDate: any;
   lastModifiedBy: any;
@@ -112,6 +114,7 @@ export class EditUserComponent implements OnInit {
     { date: '5/13/2022', frequency: 60, reminderType: 'User Defined' },
     { date: '3/15/2022', frequency: 120, reminderType: 'User Defined' },
   ]
+  projectrowtotal: any;
   constructor(public service: SharedService, private toastr: ToastrService, private modalService: NgbModal, private router: Router) { }
   //Opens Modals
   //Opens Modals
@@ -120,16 +123,16 @@ export class EditUserComponent implements OnInit {
   openVerticallyCentered(content: any) {
     this.modalService.open(content, { centered: true, backdrop: false, size: 'lg', windowClass: 'modal-xl' });
   }
-  openChildComponentModel(content:any){
+  openChildComponentModel(content: any) {
 
-    const modalRef = this.modalService.open(ChildComponentComponent, { centered: true, size: 'lg',backdrop:false });
+    const modalRef = this.modalService.open(ChildComponentComponent, { centered: true, size: 'lg', backdrop: false });
 
-    (<ChildComponentComponent>modalRef.componentInstance).dataToTakeAsInput = content 
-    console.log("child",content)
+    (<ChildComponentComponent>modalRef.componentInstance).dataToTakeAsInput = content
+    console.log("child", content)
 
     modalRef.result.then((result) => {
-      console.log("result",result);
-    }).catch( (result) => {
+      console.log("result", result);
+    }).catch((result) => {
       console.log(result);
     });
   }
@@ -176,33 +179,118 @@ export class EditUserComponent implements OnInit {
   refreshContactReminder$ = new BehaviorSubject<boolean>(true);
 
   //UpdateContactReminder
-  updateContactReminder(value: any,byVal:any,freqval:any,dateval:any) {
+  updateContactReminder(value: any, byVal: any, freqval: any,mval:any, dateval: any) {
     console.log()
     var crval = {
       tickleID: this.tickleID = value,
-      tickleBy: this.ticklerFrequency = byVal,
+      tickleBy: this.tickleBy = byVal,
       ticklerFrequency: this.ticklerFrequency = freqval,
-      ticklerMessage: this.ticklerMessage,
+      ticklerMessage: this.ticklerMessage =mval,
       userDefinedDate: this.contactReminderDate = dateval,
       lastModifiedBy: this.userObj.contactID,
       lastModified: moment().format('YYYY-MM-DDTHH:MM:SS')
 
     }
-    // this.service.updateContactR(crval).subscribe(
-    //   (res: any) => {
-    //     this.contacteditR = res;
-    //     this.save();
-    //     this.ngOnInit();
-    //     this.toastr.success('Edited Contact Reminder!');
-    //   },
-    //   err => {
-    //     if (err.status == 400)
-    //       this.toastr.error('Failed to update time.', 'Time update failed.')
-    //     else
-    //       console.log(err);
-    //   });
+    this.service.updateContactR(crval).subscribe(
+      (res: any) => {
+        this.contacteditR = res;
+        this.save();
+        this.ngOnInit();
+        this.toastr.success('Edited Contact Reminder!');
+      },
+      err => {
+        if (err.status == 400)
+          this.toastr.error('Failed to update contact reminder.', 'Time update failed.')
+        else
+          console.log(err);
+      });
 
     console.log(crval)
+  }
+  updateBuildingReminder(value: any, byVal: any, freqval: any,mval:any, dateval: any) {
+    console.log()
+    var brval = {
+      tickleID: this.tickleID = value,
+      tickleBy: this.tickleBy = byVal,
+      ticklerFreq: this.ticklerFrequency = freqval,
+      ticklerMessage: this.ticklerMessage = mval,
+      userDefinedDate: this.contactReminderDate = dateval,
+      lastModifiedBy: this.userObj.contactID,
+      lastModified: moment().format('YYYY-MM-DDTHH:MM:SS')
+
+    }
+    this.service.updateBuildingR(brval).subscribe(
+      (res: any) => {
+        this.contacteditR = res;
+        this.save();
+        this.ngOnInit();
+        this.toastr.success('Edited Building Reminder!');
+      },
+      err => {
+        if (err.status == 400)
+          this.toastr.error('Failed to update building reminder.', 'Time update failed.')
+        else
+          console.log(err);
+      });
+
+    console.log(brval)
+  }
+  updateLeaseReminder(value: any, byVal: any, freqval: any,mval:any, dateval: any) {
+    console.log()
+    var lrval = {
+      tickleID: this.tickleID = value,
+      tickleBy: this.tickleBy = byVal,
+      ticklerFrequency: this.ticklerFrequency = freqval,
+      ticklerMessage: this.ticklerMessage = mval,
+      userDefinedDate: this.contactReminderDate = dateval,
+      lastModifiedBy: this.userObj.contactID,
+      lastModified: moment().format('YYYY-MM-DDTHH:MM:SS')
+
+    }
+    this.service.updateLeaseR(lrval).subscribe(
+      (res: any) => {
+        this.contacteditR = res;
+        this.save();
+        this.ngOnInit();
+        this.toastr.success('Edited Lease Reminder!');
+      },
+      err => {
+        if (err.status == 400)
+          this.toastr.error('Failed to update lease reminder.', 'Time update failed.')
+        else
+          console.log(err);
+      });
+
+    console.log(lrval)
+  }
+
+  updateProjectReminder(value: any, byVal: any, freqval: any,mval:any, dateval: any) {
+    console.log()
+    var prval = {
+      tickleID: this.tickleID = value,
+      tickleBy: this.tickleBy = byVal,
+      ticklerFrequency: this.ticklerFrequency = freqval,
+      ticklerMessage: this.ticklerMessage = mval,
+      userDefinedDate: this.contactReminderDate = dateval,
+      lastModifiedBy: this.userObj.contactID,
+      lastModified: moment().format('YYYY-MM-DDTHH:MM:SS')
+
+    }
+    this.service.updateProjectR(prval).subscribe(
+      (res: any) => {
+        this.contacteditR = res;
+        this.save();
+        this.ngOnInit();
+        this.toastr.success('Edited Project Reminder!');
+      },
+      err => {
+        if (err.status == 400)
+          this.toastr.error('Failed to update project reminder.', 'Time update failed.')
+        else
+          console.log(err);
+      });
+
+    console.log(prval)
   }
   ngOnInit(): void {
 
@@ -284,37 +372,37 @@ export class EditUserComponent implements OnInit {
     })
 
 
-    this.service.getPH().subscribe(data => {
-      this.allprojects = data;
-      this.allprojects = this.allleases.filter((obj: any) => obj.companyID === this.userObj.companyID)
-      this.projectName = this.allleases.map((obj: any) => obj.leaseName)
-      console.log("projectname", this.projectName)
-      if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType.length !== 0) {
-        for (let j = 0; j < this.selectedHierarchy.length; j++) {
-          for (let i = 0; i < this.allprojects.length; i++) {
-            // console.log("building hierarchy", this.buildingHierearchy)
-            if (this.selectedHierarchy[j] === this.allprojects[i].hierarchy) {
-              this.projectName[i] = this.allprojects[i].leaseName;
-              this.listoprojects.push(this.projectName[i]);
-              let projectsetOfValue: any = new Set(this.listoprojects)
-              //   //distinct building name values from array
-              let uniqueprojectValues = [...projetcsetOfValue]
-              this.leaseName = uniqueprojectValues;
-            }
-            else {
-              this.projectName = []
-            }
+    // this.service.getPH().subscribe(data => {
+    //   this.allprojects = data;
+    //   this.allprojects = this.allleases.filter((obj: any) => obj.companyID === this.userObj.companyID)
+    //   this.projectName = this.allleases.map((obj: any) => obj.leaseName)
+    //   console.log("projectname", this.projectName)
+    //   if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType.length !== 0) {
+    //     for (let j = 0; j < this.selectedHierarchy.length; j++) {
+    //       for (let i = 0; i < this.allprojects.length; i++) {
+    //         // console.log("building hierarchy", this.buildingHierearchy)
+    //         if (this.selectedHierarchy[j] === this.allprojects[i].hierarchy) {
+    //           this.projectName[i] = this.allprojects[i].leaseName;
+    //           this.listoprojects.push(this.projectName[i]);
+    //           let projectsetOfValue: any = new Set(this.listoprojects)
+    //           //   //distinct building name values from array
+    //           let uniqueprojectValues = [...projetcsetOfValue]
+    //           this.leaseName = uniqueprojectValues;
+    //         }
+    //         else {
+    //           this.projectName = []
+    //         }
 
-          }
-        }
-      }
-    })
+    //       }
+    //     }
+    //   }
+    // })
 
     this.service.getContactReminders().subscribe(data => {
       this.contactReminders = data;
       this.contactReminders = this.contactReminders.filter((obj: any) => obj.isDeleted === false && obj.contactID === this.userObj.contactID)
       for (let i = 0; i < this.contactReminders.length; i++) {
-        this.contactReminders[i].userDefinedDate = new Date(this.contactReminders[i].userDefinedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
+        // this.contactReminders[i].userDefinedDate = new Date(this.contactReminders[i].userDefinedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
         const index = this.contactReminders.indexOf(this.contactReminders[i].isDeleted, 0);
         if (this.contactReminders[i].isDeleted !== false) {
           this.contactReminders = this.contactReminders.filter((obj: any) => obj.isDeleted === false && obj.contactID === this.userObj.contactID)
@@ -364,8 +452,9 @@ export class EditUserComponent implements OnInit {
       this.buildingreminders = data;
       this.buildingrowtotal = this.buildingreminders.length;
       this.buildingreminders = this.buildingreminders.filter((obj: any) => obj.isDeleted === false && obj.contactID === this.userObj.contactID)
+      console.log("building:", this.buildingreminders)
       for (let i = 0; i < this.buildingreminders.length; i++) {
-        this.buildingreminders[i].startDate = new Date(this.buildingreminders[i].startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
+        //this.buildingreminders[i].startDate = new Date(this.buildingreminders[i].startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
         const index = this.buildingreminders.indexOf(this.buildingreminders[i].isDeleted, 0);
         if (this.buildingreminders[i].isDeleted !== false) {
           this.buildingreminders = this.buildingreminders.filter((obj: any) => obj.isDeleted === false && obj.contactID === this.userObj.contactID)
@@ -377,6 +466,7 @@ export class EditUserComponent implements OnInit {
 
       this.leaserowtotal = this.leasereminders.length;
       this.leasereminders = this.leasereminders.filter((obj: any) => { return obj.isDeleted == false && obj.contactID == this.userObj.contactID })
+      console.log("lease:",this.leasereminders)
       for (let i = 0; i < this.leasereminders.length; i++) {
         for (let j = 0; j < this.userObj.length; j++) {
 
@@ -384,16 +474,20 @@ export class EditUserComponent implements OnInit {
 
           }
         }
-       
-      this.service.getProjectReminders().subscribe(data => {
-      this.projectreminders = data;
+      }
+    })
 
-      this.projectrowtotal = this.projectreminders.length;
-      this.projectreminders = this.projectreminders.filter((obj: any) => { return obj.isDeleted == false && obj.contactID == this.userObj.contactID })
-      for (let i = 0; i < this.projectreminders.length; i++) {
+
+    this.service.getProjectReminders().subscribe(data => {
+      this.projectReminders = data;
+
+      this.projectrowtotal = this.projectReminders.length;
+      this.projectReminders = this.projectReminders.filter((obj: any) => { return obj.isDeleted == false && obj.contactID == this.userObj.contactID })
+      console.log("Project:", this.projectReminders)
+      for (let i = 0; i < this.projectReminders.length; i++) {
         for (let j = 0; j < this.userObj.length; j++) {
 
-          if (this.projectreminders[i].isDeleted !== false) {
+          if (this.projectReminders[i].isDeleted !== false) {
 
           }
         }
@@ -402,6 +496,7 @@ export class EditUserComponent implements OnInit {
       }
     })
   }
+
   //functionality of getting the selected values of dropdown
   changeH(val: any) {
     if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType == "Building - Reminder") {
@@ -418,15 +513,15 @@ export class EditUserComponent implements OnInit {
     //if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType == "Project - Reminder") {
     //  this.listobuildings = []
     //  this.showBuildingDrop = false;
-   //   this.showLeaseDrop = true;
+    //   this.showLeaseDrop = true;
     //  this.ngOnInit()
- //   }
-   // if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType == "Report- Reminder") {
+    //   }
+    // if (this.selectedHierarchy.length > 0 && this.selectedHierarchy.length < 2 && this.selectedOptionType == "Report- Reminder") {
     //  this.listobuildings = []
     //  this.showBuildingDrop = false;
-   //   this.showLeaseDrop = true;
-   //   this.ngOnInit()
-  //  }
+    //   this.showLeaseDrop = true;
+    //   this.ngOnInit()
+
     if (this.selectedHierarchy.length > 1) {
       this.showBuildingDrop = false;
       this.showLeaseDrop = false;
@@ -469,7 +564,7 @@ export class EditUserComponent implements OnInit {
     }
     this.ngOnInit()
   }
-        changeProject(val: any) {
+  changeProject(val: any) {
     if (this.selectedOptionType.length === 0) {
       val = []
       this.ngOnInit()
@@ -477,7 +572,7 @@ export class EditUserComponent implements OnInit {
     this.ngOnInit()
   }
   changeOT(val: any) {
-    
+
     if (val == "Company - Reminder") {
       this.showCompanyDrop = true;
       this.ngOnInit()
@@ -486,7 +581,7 @@ export class EditUserComponent implements OnInit {
       this.showLeaseDrop = true;
       this.ngOnInit()
     }
-    
+
     if (this.selectedOptionType.length > 0 && this.selectedOptionType != "Lease - Reminder") {
       this.showCompanyDrop = false;
       this.selectedBuilding = [];
@@ -495,14 +590,14 @@ export class EditUserComponent implements OnInit {
       this.selectedCompany = [];
     }
 
-    if (this.selectedHierarchy.length ==1 && this.selectedOptionType == "Building - Reminder") {
+    if (this.selectedHierarchy.length == 1 && this.selectedOptionType == "Building - Reminder") {
       this.ngOnInit()
       this.showBuildingDrop = true;
-      this.showLeaseDrop = false; 
+      this.showLeaseDrop = false;
     }
-    
-    
-    
+
+
+
     if (val.length === 0) {
       this.showCompanyDrop = false;
       this.selectedBuilding = [];
@@ -519,7 +614,7 @@ export class EditUserComponent implements OnInit {
       this.showBuildingDrop = false;
       this.selectedCompany = [];
     }
-    
+
     this.ngOnInit();
   }
   reminderobj: any = [];
@@ -596,47 +691,47 @@ export class EditUserComponent implements OnInit {
         //   }
 
         // }
-        
-        
-         if (this.reminderobj[i].optionType == "Project - Reminder") {
-           for (let j = 0; j < this.projectReminders.length; j++) {
-             for (let k = 0; k < this.reminderobj[i].hierarchy.length; k++) {
-               if (this.reminderobj[i].hierarchy[k] == this.allprojects[j].hierarchy) {
-                 var rval = {
-                   tickleBy: this.Frequency,
-                   ticklerFrequency: this.Frequency,
-                   contactID: this.userObj.contactID,
-                   ticklerMessage: this.Message,
-                   ticklerTypeID: 6,
-                   objectID: this.projectReminders[j].objectID,
-                   objectTypeID: 2,
-                   ticklerDaysOut: this.reminderobj[i].daysOut,
-                   userDefinedDate: this.userdefineddate,
-                   isDeleted: false,
-                   LastModifiedBy: this.userObj.contactID,
-                   LastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
-                 }
-                 console.log("CONTACT: ", rval)
+
+
+        if (this.reminderobj[i].optionType == "Project - Reminder") {
+          for (let j = 0; j < this.projectReminders.length; j++) {
+            for (let k = 0; k < this.reminderobj[i].hierarchy.length; k++) {
+              if (this.reminderobj[i].hierarchy[k] == this.allprojects[j].hierarchy) {
+                var rval = {
+                  tickleBy: this.Frequency,
+                  ticklerFrequency: this.Frequency,
+                  contactID: this.userObj.contactID,
+                  ticklerMessage: this.Message,
+                  ticklerTypeID: 6,
+                  objectID: this.projectReminders[j].objectID,
+                  objectTypeID: 2,
+                  ticklerDaysOut: this.reminderobj[i].daysOut,
+                  userDefinedDate: this.userdefineddate,
+                  isDeleted: false,
+                  LastModifiedBy: this.userObj.contactID,
+                  LastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
+                }
+                console.log("CONTACT: ", rval)
 
                 this.service.addReminder(rval).subscribe(
-                    (res: any) => {
-                      this.AddReminderVal = res;
-                      this.ngOnInit();
-                      this.toastr.success('Added Reminder for Project ID: ' + this.allprojects[j].projectID)
-                    },
+                  (res: any) => {
+                    this.AddReminderVal = res;
+                    this.ngOnInit();
+                    this.toastr.success('Added Reminder for Project ID: ' + this.allprojects[j].projectID)
+                  },
                   err => {
                     if (err.status == 400)
                       this.toastr.error('Failed to update time.', 'Time update failed.')
                     else
                       console.log(err);
                   });
-               }
-             }
-           }
-         }
-        
-        
-         // if (this.reminderobj[i].optionType == "Report - Reminder") {
+              }
+            }
+          }
+        }
+
+
+        // if (this.reminderobj[i].optionType == "Report - Reminder") {
         //   for (let j = 0; j < this.reportReminders.length; j++) {
         //     for (let k = 0; k < this.reminderobj[i].hierarchy.length; k++) {
         //       if (this.reminderobj[i].hierarchy[k] == this.allbuildings[j].hierarchy) {
@@ -673,9 +768,9 @@ export class EditUserComponent implements OnInit {
         //   }
 
         // }
-        
-        
-        
+
+
+
 
         if (this.reminderobj[i].optionType == "Building - Reminder") {
           for (let j = 0; j < this.allbuildings.length; j++) {
@@ -840,165 +935,163 @@ export class EditUserComponent implements OnInit {
               }
             }
           }
-        }
-                  if (this.selectedOptionType[i] == "Project - Reminder") {
-            for (let j = 0; j < this.allprojects.length; j++) {
-              for (let k = 0; k < this.selectedHierarchy.length; k++) {
-                if (this.reminderobjh[k].hierarchy == this.selectedHierarchy[k]) {
-                  if (this.alllprojects[j].hierarchy == this.selectedHierarchy[k]) {
-                    var rval = {
-                      tickleBy: this.Frequency,
-                      ticklerFrequency: this.Frequency,
-                      contactID: this.userObj.contactID,
-                      ticklerMessage: this.Message,
-                      ticklerTypeID: 2,
-                      objectID: this.allleases[j].leaseID,
-                      objectTypeID: 3,
-                      ticklerDaysOut: this.reminderobj[i].daysOut,
-                      userDefinedDate: this.userdefineddate,
-                      isDeleted: false,
-                      LastModifiedBy: this.userObj.contactID,
-                      LastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
-                    }
-                    console.log("Projectrval", rval)
-                    this.service.addReminder(rval).subscribe(
-                      (res: any) => {
-                        this.AddReminderVal = res;
-                        this.ngOnInit();
-                        this.toastr.success('Added Reminder for Project ID: ' + this.allproject[j].projectName)
-                      },
-                      err => {
-                        if (err.status == 400)
-                          this.toastr.error('Failed to update time.', 'Time update failed.')
-                        else
-                          console.log(err);
-                      });
+        
+        //         if (this.selectedOptionType[i] == "Project - Reminder") {
+        //   for (let j = 0; j < this.allprojects.length; j++) {
+        //     for (let k = 0; k < this.selectedHierarchy.length; k++) {
+        //       if (this.reminderobjh[k].hierarchy == this.selectedHierarchy[k]) {
+        //         if (this.alllprojects[j].hierarchy == this.selectedHierarchy[k]) {
+        //           var rval = {
+        //             tickleBy: this.Frequency,
+        //             ticklerFrequency: this.Frequency,
+        //             contactID: this.userObj.contactID,
+        //             ticklerMessage: this.Message,
+        //             ticklerTypeID: 2,
+        //             objectID: this.allleases[j].leaseID,
+        //             objectTypeID: 3,
+        //             ticklerDaysOut: this.reminderobj[i].daysOut,
+        //             userDefinedDate: this.userdefineddate,
+        //             isDeleted: false,
+        //             LastModifiedBy: this.userObj.contactID,
+        //             LastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
+        //           }
+        //           console.log("Projectrval", rval)
+        //           this.service.addReminder(rval).subscribe(
+        //             (res: any) => {
+        //               this.AddReminderVal = res;
+        //               this.ngOnInit();
+        //               this.toastr.success('Added Reminder for Project ID: ' + this.allproject[j].projectName)
+        //             },
+        //             err => {
+        //               if (err.status == 400)
+        //                 this.toastr.error('Failed to update time.', 'Time update failed.')
+        //               else
+        //                 console.log(err);
+        //             });
 
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
+      
+      if (this.selectedOptionType[i] == "Report - Reminder") {
+        for (let j = 0; j < this.allreports.length; j++) {
+          for (let k = 0; k < this.selectedHierarchy.length; k++) {
+            if (this.reminderobjh[k].hierarchy == this.selectedHierarchy[k]) {
+              if (this.allreports[j].hierarchy == this.selectedHierarchy[k]) {
+                var rval = {
+                  tickleBy: this.Frequency,
+                  ticklerFrequency: this.Frequency,
+                  contactID: this.userObj.contactID,
+                  ticklerMessage: this.Message,
+                  ticklerTypeID: 2,
+                  objectID: this.allleases[j].leaseID,
+                  objectTypeID: 3,
+                  ticklerDaysOut: this.reminderobj[i].daysOut,
+                  userDefinedDate: this.userdefineddate,
+                  isDeleted: false,
+                  LastModifiedBy: this.userObj.contactID,
+                  LastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
+                }
+                console.log("Reportrval", rval)
+                this.service.addReminder(rval).subscribe(
+                  (res: any) => {
+                    this.AddReminderVal = res;
+                    this.ngOnInit();
+                    this.toastr.success('Added Reminder for Report ID: ' + this.allreports[j].reportName)
+                  },
+                  err => {
+                    if (err.status == 400)
+                      this.toastr.error('Failed to update time.', 'Time update failed.')
+                    else
+                      console.log(err);
+                  });
+
+              }
+            }
+          }
+        }
+      }
+    }
+
+    //Only 1 hierarchy
+    if (this.selectedHierarchy.length = 1) {
+      if (this.selectedOptionType == "Company - Reminder") {
+      }
+      if (this.reminderobj[i].optionType == "Building - Reminder") {
+        for (let j = 0; j < this.allbuildings.length; j++) {
+          for (let k = 0; k < this.selectedHierarchy.length; k++) {
+            for (let m = 0; m < this.selectedBuilding.length; m++) {
+              if (this.reminderobjh[k].hierarchy == this.selectedHierarchy[k]) {
+                if (this.allbuildings[j].buildingName == this.selectedBuilding[m]) {
+                  var rval = {
+                    tickleBy: this.Frequency,
+                    ticklerFrequency: this.Frequency,
+                    contactID: this.userObj.contactID,
+                    ticklerMessage: this.Message,
+                    ticklerTypeID: 2,
+                    objectID: this.allbuildings[j].buildingID,
+                    objectTypeID: 3,
+                    ticklerDaysOut: this.reminderobj[i].daysOut,
+                    userDefinedDate: this.userdefineddate,
+                    isDeleted: false,
+                    LastModifiedBy: this.userObj.contactID,
+                    LastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
                   }
+                  this.service.addReminder(rval).subscribe(
+                    (res: any) => {
+                      this.AddReminderVal = res;
+                      this.ngOnInit();
+                      this.toastr.success('Added Reminder for Building ID: ' + this.allbuildings[j].buildingName)
+                    },
+                    err => {
+                      if (err.status == 400)
+                        this.toastr.error('Failed to update time.', 'Time update failed.')
+                      else
+                        console.log(err);
+                    });
+
                 }
               }
             }
           }
         }
-                if (this.selectedOptionType[i] == "Report - Reminder") {
-            for (let j = 0; j < this.allreports.length; j++) {
-              for (let k = 0; k < this.selectedHierarchy.length; k++) {
-                if (this.reminderobjh[k].hierarchy == this.selectedHierarchy[k]) {
-                  if (this.allreports[j].hierarchy == this.selectedHierarchy[k]) {
-                    var rval = {
-                      tickleBy: this.Frequency,
-                      ticklerFrequency: this.Frequency,
-                      contactID: this.userObj.contactID,
-                      ticklerMessage: this.Message,
-                      ticklerTypeID: 2,
-                      objectID: this.allleases[j].leaseID,
-                      objectTypeID: 3,
-                      ticklerDaysOut: this.reminderobj[i].daysOut,
-                      userDefinedDate: this.userdefineddate,
-                      isDeleted: false,
-                      LastModifiedBy: this.userObj.contactID,
-                      LastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
-                    }
-                    console.log("Reportrval", rval)
-                    this.service.addReminder(rval).subscribe(
-                      (res: any) => {
-                        this.AddReminderVal = res;
-                        this.ngOnInit();
-                        this.toastr.success('Added Reminder for Report ID: ' + this.allreports[j].reportName)
-                      },
-                      err => {
-                        if (err.status == 400)
-                          this.toastr.error('Failed to update time.', 'Time update failed.')
-                        else
-                          console.log(err);
-                      });
-
+      }
+      if (this.reminderobj[i].optionType == "Lease - Reminder") {
+        for (let j = 0; j < this.allleases.length; j++) {
+          for (let k = 0; k < this.selectedHierarchy.length; k++) {
+            for (let m = 0; m < this.selectedLease.length; m++) {
+              if (this.reminderobjh[k].hierarchy == this.selectedHierarchy[k]) {
+                if (this.allleases[j].leaseName == this.selectedLease[m]) {
+                  var rval = {
+                    tickleBy: this.Frequency,
+                    ticklerFrequency: this.Frequency,
+                    contactID: this.userObj.contactID,
+                    ticklerMessage: this.Message,
+                    ticklerTypeID: 1,
+                    objectID: this.allleases[j].leaseID,
+                    objectTypeID: 4,
+                    ticklerDaysOut: this.reminderobj[i].daysOut,
+                    userDefinedDate: this.userdefineddate,
+                    isDeleted: false,
+                    LastModifiedBy: this.userObj.contactID,
+                    LastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
                   }
-                }
-              }
-            }
-          }
-        }
+                  console.log("Leaserval", rval)
+                  this.service.addReminder(rval).subscribe(
+                    (res: any) => {
+                      this.AddReminderVal = res;
+                      this.ngOnInit();
+                      this.toastr.success('Added Reminder for Lease ID: ' + this.allleases[j].leaseName)
+                    },
+                    err => {
+                      if (err.status == 400)
+                        this.toastr.error('Failed to update time.', 'Time update failed.')
+                      else
+                        console.log(err);
+                    });
 
-        //Only 1 hierarchy
-        if (this.selectedHierarchy.length = 1) {
-          if (this.selectedOptionType == "Company - Reminder") {
-          }
-          if (this.reminderobj[i].optionType == "Building - Reminder") {
-            for (let j = 0; j < this.allbuildings.length; j++) {
-              for (let k = 0; k < this.selectedHierarchy.length; k++) {
-                for (let m = 0; m < this.selectedBuilding.length; m++) {
-                  if (this.reminderobjh[k].hierarchy == this.selectedHierarchy[k]) {
-                    if (this.allbuildings[j].buildingName == this.selectedBuilding[m]) {
-                      var rval = {
-                        tickleBy: this.Frequency,
-                        ticklerFrequency: this.Frequency,
-                        contactID: this.userObj.contactID,
-                        ticklerMessage: this.Message,
-                        ticklerTypeID: 2,
-                        objectID: this.allbuildings[j].buildingID,
-                        objectTypeID: 3,
-                        ticklerDaysOut: this.reminderobj[i].daysOut,
-                        userDefinedDate: this.userdefineddate,
-                        isDeleted: false,
-                        LastModifiedBy: this.userObj.contactID,
-                        LastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
-                      }
-                      this.service.addReminder(rval).subscribe(
-                        (res: any) => {
-                          this.AddReminderVal = res;
-                          this.ngOnInit();
-                          this.toastr.success('Added Reminder for Building ID: ' + this.allbuildings[j].buildingName)
-                        },
-                        err => {
-                          if (err.status == 400)
-                            this.toastr.error('Failed to update time.', 'Time update failed.')
-                          else
-                            console.log(err);
-                        });
-
-                    }
-                  }
-                }
-              }
-            }
-          }
-          if (this.reminderobj[i].optionType == "Lease - Reminder") {
-            for (let j = 0; j < this.allleases.length; j++) {
-              for (let k = 0; k < this.selectedHierarchy.length; k++) {
-                for (let m = 0; m < this.selectedLease.length; m++) {
-                  if (this.reminderobjh[k].hierarchy == this.selectedHierarchy[k]) {
-                    if (this.allleases[j].leaseName == this.selectedLease[m]) {
-                      var rval = {
-                        tickleBy: this.Frequency,
-                        ticklerFrequency: this.Frequency,
-                        contactID: this.userObj.contactID,
-                        ticklerMessage: this.Message,
-                        ticklerTypeID: 2,
-                        objectID: this.allleases[j].leaseID,
-                        objectTypeID: 3,
-                        ticklerDaysOut: this.reminderobj[i].daysOut,
-                        userDefinedDate: this.userdefineddate,
-                        isDeleted: false,
-                        LastModifiedBy: this.userObj.contactID,
-                        LastModified: moment().format('YYYY-MM-DDTHH:mm:ss')
-                      }
-                      console.log("Leaserval", rval)
-                      this.service.addReminder(rval).subscribe(
-                        (res: any) => {
-                          this.AddReminderVal = res;
-                          this.ngOnInit();
-                          this.toastr.success('Added Reminder for Building ID: ' + this.allleases[j].leaseName)
-                        },
-                        err => {
-                          if (err.status == 400)
-                            this.toastr.error('Failed to update time.', 'Time update failed.')
-                          else
-                            console.log(err);
-                        });
-
-                    }
-                  }
                 }
               }
             }
@@ -1006,5 +1099,7 @@ export class EditUserComponent implements OnInit {
         }
       }
     }
+  }
+}
   }
 }

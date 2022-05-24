@@ -38,6 +38,9 @@ export class SharedService {
   getLeaseReminders():Observable<any[]>{
     return this.http.get<any>(this.APIUrl+'getleasereminders/reminders');
   }
+  getProjectReminders():Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'getprojectreminder/reminders');
+  }
   getAllBuildings():Observable<any[]>{
     return this.http.get<any>(this.APIUrl+'getbuildings/buildings');
   }
@@ -62,6 +65,15 @@ export class SharedService {
   }
   updateContactR(val:any):Observable<any[]>{
     return this.http.put<any>(this.APIUrl + 'updatecontactreminder/update',val)
+  }
+  updateLeaseR(val:any):Observable<any[]>{
+    return this.http.put<any>(this.APIUrl + 'updateleasereminder/update',val)
+  }
+  updateProjectR(val:any):Observable<any[]>{
+    return this.http.put<any>(this.APIUrl + 'updateprojectreminder/update',val)
+  }
+  updateBuildingR(val:any):Observable<any[]>{
+    return this.http.put<any>(this.APIUrl + 'updatebuildingreminder/update',val)
   }
 
 }
