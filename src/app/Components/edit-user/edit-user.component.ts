@@ -1,13 +1,14 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/Services/shared.service';
-import { faBuilding, faUser, faFingerprint, faPeopleGroup, faFolderTree, faEnvelopeCircleCheck, faXmark, faBell, faCalendarPlus, faTrashCan, faPencil, faCheck, faX } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faUser, faFingerprint, faPeopleGroup, faFolderTree, faEnvelopeCircleCheck, faXmark, faFileExcel, faBell, faCalendarPlus, faTrashCan, faPencil, faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { ChildComponentComponent } from '../child-component/child-component.component';
+import * as XLSX from 'xlsx';
 declare var $: any;
 @Component({
   selector: 'app-edit-user',
@@ -30,6 +31,7 @@ export class EditUserComponent implements OnInit {
   faPencil = faPencil;
   faCheck = faCheck;
   faX = faX;
+  faFileExcel=faFileExcel;
   //arrays
   hierarchy: any;
   optiontype: any;
@@ -106,6 +108,74 @@ export class EditUserComponent implements OnInit {
   lastModifiedBy: any;
   contacteditR: any;
 
+
+
+  leaseexportexcel(): void {
+    var Title = "Lease Reminders";
+    var fileName = "MyLeaseReminders.xlsx";
+    let element = document.getElementById("lease-excel-table");
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    delete ws[5]
+    /* O1 is your Column in Excel*/
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    /* save file */
+    XLSX.writeFile(wb, fileName);
+  }
+  contactexportexcel(): void {
+    var Title = "Contact Reminders";
+    var fileName = "MyContactReminders.xlsx";
+    let element = document.getElementById("contact-excel-table");
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    delete ws[5]
+    /* O1 is your Column in Excel*/
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    /* save file */
+    XLSX.writeFile(wb, fileName);
+  }
+  companyexportexcel(): void {
+    var Title = "Company Reminders";
+    var fileName = "MyCompanyReminders.xlsx";
+    let element = document.getElementById("company-excel-table");
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    delete ws[5]
+    /* O1 is your Column in Excel*/
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    /* save file */
+    XLSX.writeFile(wb, fileName);
+  }
+  buildingexportexcel(): void {
+    var Title = "Building Reminders";
+    var fileName = "MyBuildingReminders.xlsx";
+    let element = document.getElementById("building-excel-table");
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    delete ws[5]
+    /* O1 is your Column in Excel*/
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    /* save file */
+    XLSX.writeFile(wb, fileName);
+  }
+  projectexportexcel(): void {
+    var Title = "Project Reminders";
+    var fileName = "MyProjectReminders.xlsx";
+    let element = document.getElementById("project-excel-table");
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    delete ws[5]
+    /* O1 is your Column in Excel*/
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    /* save file */
+    XLSX.writeFile(wb, fileName);
+  }
+
   displayreminder: any = [
     { date: '2/13/2022', frequency: 3, reminderType: 'User Defined' },
     { date: '4/13/2022', frequency: 4, reminderType: 'User Defined' },
@@ -157,24 +227,101 @@ export class EditUserComponent implements OnInit {
       });
   }
 
-  //Switching between myreminder views edit and read
-  isEditing: boolean = false;
-  enableEditIndex = null;
-  i: any;
-  switchEditMode(i: any) {
-    this.isEditing = true;
-    this.enableEditIndex = i;
+  //Switching between Contactmyreminder views edit and read
+  isEditingContact: boolean = false;
+  enableEditIndexContact = null;
+  iContact: any;
+  switchEditModeContact(iContact: any) {
+    this.isEditingContact = true;
+    this.enableEditIndexContact= iContact;
   }
 
-  save() {
-    this.isEditing = false;
-    this.enableEditIndex = null;
+  saveContact() {
+    this.isEditingContact = false;
+    this.enableEditIndexContact = null;
   }
 
-  cancel() {
-    this.isEditing = false;
-    this.enableEditIndex = null;
+  cancelContact() {
+    this.isEditingContact = false;
+    this.enableEditIndexContact = null;
   }
+  //Switching between Buildingmyreminder views edit and read
+  isEditingBuilding: boolean = false;
+  enableEditIndexBuilding = null;
+  iBuilding: any;
+  switchEditModeBuilding(iBuilding: any) {
+    this.isEditingBuilding = true;
+    this.enableEditIndexBuilding = iBuilding;
+  }
+
+  saveBuidling() {
+    this.isEditingBuilding = false;
+    this.enableEditIndexBuilding = null;
+  }
+
+  cancelBuilding() {
+    this.isEditingBuilding = false;
+    this.enableEditIndexBuilding = null;
+  }
+   //Switching between Companygmyreminder views edit and read
+  isEditingCompany: boolean = false;
+  enableEditIndexCompany = null;
+  iCompany: any;
+  switchEditModeCompany(iCompany: any) {
+    this.isEditingCompany = true;
+    this.enableEditIndexCompany = iCompany;
+  }
+
+  saveCompany() {
+    this.isEditingCompany = false;
+    this.enableEditIndexCompany = null;
+  }
+
+  cancelCompany() {
+    this.isEditingCompany = false;
+    this.enableEditIndexCompany = null;
+  }
+
+     //Switching between Leasegmyreminder views edit and read
+     isEditingLease: boolean = false;
+     enableEditIndexLease = null;
+     iLease: any;
+     switchEditModeLease(iLease: any) {
+       this.isEditingLease = true;
+       this.enableEditIndexLease = iLease;
+     }
+   
+     saveLease() {
+       this.isEditingLease = false;
+       this.enableEditIndexLease = null;
+     }
+   
+     cancelLease() {
+       this.isEditingLease = false;
+       this.enableEditIndexLease = null;
+     }
+
+
+        //Switching between Projectgmyreminder views edit and read
+  isEditingProjects: boolean = false;
+  enableEditIndexProjects = null;
+  iProjects: any;
+  switchEditModeProjects(iProjects: any) {
+    this.isEditingProjects = true;
+    this.enableEditIndexCompany = iProjects;
+  }
+
+  saveProjects() {
+    this.isEditingProjects = false;
+    this.enableEditIndexProjects = null;
+  }
+
+  cancelProjects() {
+    this.isEditingProjects = false;
+    this.enableEditIndexProjects = null;
+  }
+
+     
   //Refreshed the contactmodule
   refreshContactReminder$ = new BehaviorSubject<boolean>(true);
 
@@ -194,7 +341,7 @@ export class EditUserComponent implements OnInit {
     this.service.updateContactR(crval).subscribe(
       (res: any) => {
         this.contacteditR = res;
-        this.save();
+        this.saveContact();
         this.ngOnInit();
         this.toastr.success('Edited Contact Reminder!');
       },
@@ -222,7 +369,7 @@ export class EditUserComponent implements OnInit {
     this.service.updateBuildingR(brval).subscribe(
       (res: any) => {
         this.contacteditR = res;
-        this.save();
+        this.saveBuidling();
         this.ngOnInit();
         this.toastr.success('Edited Building Reminder!');
       },
@@ -250,7 +397,7 @@ export class EditUserComponent implements OnInit {
     this.service.updateLeaseR(lrval).subscribe(
       (res: any) => {
         this.contacteditR = res;
-        this.save();
+        this.saveLease();
         this.ngOnInit();
         this.toastr.success('Edited Lease Reminder!');
       },
@@ -279,7 +426,7 @@ export class EditUserComponent implements OnInit {
     this.service.updateProjectR(prval).subscribe(
       (res: any) => {
         this.contacteditR = res;
-        this.save();
+        this.saveProjects();
         this.ngOnInit();
         this.toastr.success('Edited Project Reminder!');
       },

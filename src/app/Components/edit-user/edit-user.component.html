@@ -44,386 +44,9 @@
 
 
         <div class="row2-edit-user">
-            <div class="row2-container-left" >
+            <div class="row2-container-left">
                 <h4>Edit Contact Information: </h4>
-                <ng-container *ngIf="enableEditIndex != i">
-                <div class="user-info-input-container">
-                    <div class="input-group mb-3" *ngIf="userObj">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">
-                                <fa-icon [icon]="faFingerprint" size='sm'></fa-icon> &nbsp;System Contact ID:
-                            </span>
-                        </div>
-                        <input disabled type="text" class="form-control disabled" placeholder="{{userObj.contactID}}"
-                            aria-label="SystemContactID" aria-describedby="basic-addon1">
-
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">
-                                <fa-icon [icon]="faUser" size='sm'></fa-icon>
-                            </span>
-                        </div>
-                        <select disabled class="custom-select" id="inputGroupSelect02">
-                            <option value="-1">[Select a Salutation]</option>
-                            <option value="Mr.">Mr.</option>
-                            <option value="Mrs.">Mrs.</option>
-                            <option value="Ms.">Ms.</option>
-                            <option value="Dr.">Dr.</option>
-                        </select>
-
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">
-                                <fa-icon [icon]="faUser" size='sm'></fa-icon>
-                            </span>
-                        </div>
-                        <select  class="custom-select" id="inputGroupSelect02">
-                            <option value="-1">[Select a Suffix]</option>
-                            <option value="Jr.">Jr.</option>
-                            <option value="Sr.">Sr.</option>
-                            <option value="I">I</option>
-                            <option value="II">II</option>
-                            <option value="III">II</option>
-                        </select>
-
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">
-                                <fa-icon [icon]="faUser" size='sm'></fa-icon>
-                            </span>
-                        </div>
-                        <input disabled type="text" class="form-control" placeholder="{{userObj.contactFirstName}}"
-                            aria-label="contactFirstName" aria-describedby="basic-addon1">
-
-                    </div>
-
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">
-                                <fa-icon [icon]="faUser" size='sm'></fa-icon>
-                            </span>
-                        </div>
-                        <input disabled type="text" class="form-control" placeholder="{{userObj.contactMiddleName}}"
-                            aria-label="contactMiddleName" aria-describedby="basic-addon1">
-
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">
-                                <fa-icon [icon]="faUser" size='sm'></fa-icon>
-                            </span>
-                        </div>
-                        <input disabled type="text" class="form-control" placeholder="{{userObj.contactLastName}}"
-                            aria-label="LastName" aria-describedby="basic-addon1">
-
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">
-                                <fa-icon [icon]="faUser" size='sm'></fa-icon>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="{{userObj.contactTitle}}"
-                            aria-label="contactTitle" aria-describedby="basic-addon1">
-
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">
-                                <fa-icon [icon]="faBuilding" size='sm'></fa-icon>
-                            </span>
-                        </div>
-                        <select class="custom-select" id="inputGroupSelect02">
-                            <option value="-1">[Select a Company]</option>
-                            <option *ngFor="let ucompany of companyname " placeholder="" value="{{ucompany}}">
-                                {{ucompany.companyName}}
-                            </option>
-                        </select>
-
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">
-                                <fa-icon [icon]="faPeopleGroup" size='sm'></fa-icon>
-                            </span>
-                        </div>
-                        <select class="custom-select" id="inputGroupSelect02">
-                            <option value="-1">[Select a Primary Group]</option>
-                            <option value="16480">1 Clean Port</option>
-                            <option value="2423">Accounting - View Only Test</option>
-                            <option value="291">ACME</option>
-                            <option value="16796">ACME</option>
-                            <option value="16711">ACME</option>
-                            <option value="16563">ACME</option>
-                            <option value="16565">ACME</option>
-                            <option value="2037">ACME Consumer Products - View Only</option>
-                            <option value="306">ACME Financial</option>
-                            <option value="2054">Acme Technology</option>
-                            <option value="2206">Acme Technology - View Only</option>
-                            <option value="2160">Acme View Only Test 1</option>
-                            <option value="16785">Addl Obj Portfolio</option>
-                            <option value="16787">Addl Obj Records</option>
-                            <option value="16786">Addl Obj User</option>
-                            <option value="16446">ATL_Braves</option>
-                            <option value="16632">Background</option>
-                            <option value="16753">Becca No Access</option>
-                            <option value="2355">BLoop</option>
-                            <option value="2398">Broom Test 2</option>
-                            <option value="2304">Broomfield (Test Portfolio Security Group)</option>
-                            <option value="2509">Carmen scott</option>
-                            <option value="16803">CD New Portfolio</option>
-                            <option value="16805">CD New Records</option>
-                            <option value="16804">CD New Users</option>
-                            <option value="2195">CGC Test</option>
-                            <option value="2400">Costar test rt</option>
-                            <option value="2232">COSTAR TEST System Admin Child GROUP -2</option>
-                            <option value="2218">Custom Calendar portfolio</option>
-                            <option value="2387">dave P Sample Portfolio</option>
-                            <option value="16866">DC New Language</option>
-                            <option value="16868">DC New Language Records</option>
-                            <option value="16867">DC New Language Users</option>
-                            <option value="16767">DC New Records</option>
-                            <option value="16766">DC New Users</option>
-                            <option value="2399">DC Portfolio</option>
-                            <option value="2371">DC Portfolio</option>
-                            <option value="2372">DC Portfolio</option>
-                            <option value="2373">DC Portfolio</option>
-                            <option value="2370">DC Portfolio RMV</option>
-                            <option value="16445">DC Test Portfolio</option>
-                            <option value="16791">DC Test Records</option>
-                            <option value="16790">DC Test Users</option>
-                            <option value="2369">DC-QA Portfolio I</option>
-                            <option value="2252">DelBosque Sample 001</option>
-                            <option value="2259">DelBosque Sample Group 002</option>
-                            <option value="2253">DelBosque Security Group 1</option>
-                            <option value="2254">DelBosque Security Group 2</option>
-                            <option value="2273">DelBosque Training Group</option>
-                            <option value="2060">DO NOT USE - RESERVED FOR CLIENT PORTFOLIO</option>
-                            <option value="2209">Equipment Lease Admin</option>
-                            <option value="2245">Equipment Portfolio</option>
-                            <option value="2045">FASCO</option>
-                            <option value="2059">Filler - DO NOT USE - RESERVED FOR CLIENT PORTFOLIO</option>
-                            <option value="290">Filler-Group</option>
-                            <option value="299">Filler-New Client Name</option>
-                            <option value="2205">Financial User</option>
-                            <option value="2231">GGTest</option>
-                            <option value="16419">goot</option>
-                            <option value="16825">GrpGrp11</option>
-                            <option value="16818">Hierarchy Test</option>
-                            <option value="16771">Hk Addsubgroup</option>
-                            <option value="16869">HkSecA</option>
-                            <option value="2396">Jason Trkovsky</option>
-                            <option value="2236">JJ Security Group Test</option>
-                            <option value="2397">JT</option>
-                            <option value="2431">JT Group</option>
-                            <option value="16802">JT Records</option>
-                            <option value="16801">JT Users</option>
-                            <option value="2305">LBroom</option>
-                            <option value="2317">LBroom 2</option>
-                            <option value="2338">LBroom Security Group 2</option>
-                            <option value="2339">LBroom Security Group 3</option>
-                            <option value="2337">LBroom3</option>
-                            <option value="16800">LBroom3 Records</option>
-                            <option value="16799">LBroom3 Users</option>
-                            <option value="2155">Lease Accounting</option>
-                            <option value="2536">Lease Administration</option>
-                            <option value="300">Lease Services</option>
-                            <option value="301">Lease Services: Admin</option>
-                            <option value="2375">Lease Verification</option>
-                            <option value="2460">Morrow - Edit</option>
-                            <option value="2461">Morrow - View</option>
-                            <option value="16756">New Equipment Sec Group</option>
-                            <option value="16863">New Portfolio Language</option>
-                            <option value="16865">New Portfolio Language Records</option>
-                            <option value="16864">New Portfolio Language Users</option>
-                            <option value="2364">New Portfolio Test</option>
-                            <option value="2365">New Test Portfolio</option>
-                            <option value="2159">North America</option>
-                            <option value="2170">Novelis</option>
-                            <option value="16522">one line</option>
-                            <option value="2207">patrick's</option>
-                            <option value="2248">Philip New Test Portfolio</option>
-                            <option value="2241">Philip Test Security Group</option>
-                            <option value="16840">PKTestPortfolio</option>
-                            <option value="16633">Plopper</option>
-                            <option value="2356">PLOPRE</option>
-                            <option value="2216">Portfolio Financials Training</option>
-                            <option value="2215">Portfolio Training</option>
-                            <option value="2533">QA DC Test Portfolio</option>
-                            <option value="2203">R &amp; D</option>
-                            <option value="2196">RE Admin</option>
-                            <option value="2197">RE Admin</option>
-                            <option value="2210">RE Lease Admin</option>
-                            <option value="2088">RESERVED FOR CLIENT PORTFOLIO- View Only</option>
-                            <option value="2242">Restricted Admin Links Group</option>
-                            <option value="2194">Restricted Module Group</option>
-                            <option value="2191">Retail Acme - rename</option>
-                            <option value="12357">RG Test Group</option>
-                            <option value="2188">RS Test Group</option>
-                            <option value="16856">Sarah's Test Portfolio</option>
-                            <option value="2374">SC New Portfolio</option>
-                            <option value="16815">subgrp</option>
-                            <option value="2506">SW Test Portfolio</option>
-                            <option value="16806">SW Test Users</option>
-                            <option value="16860">Tali's Admin Group</option>
-                            <option value="16861">Tali's Sub Group</option>
-                            <option value="16437">Tali's Testing environment</option>
-                            <option value="16439">Tali's Training Security</option>
-                            <option value="16814">TCBatchAccounting - FOR AUTOMATION DO NOT DELETE</option>
-                            <option value="2406">TCCustomCalendarDailyAM</option>
-                            <option value="2405">TCCustomCalendarPeriodicAM - FOR AUTOMATION DO NOT ARCHIVE</option>
-                            <option value="16920">TCListPages - DO NOT CHANGE</option>
-                            <option value="2348">TCStandardCalendar</option>
-                            <option value="2347">TCStandardCalendar-FOR AUTOMATION DO NOT CHANGE</option>
-                            <option value="16626">te</option>
-                            <option value="16438">Test</option>
-                            <option value="16759">Test</option>
-                            <option value="2383">test</option>
-                            <option value="16407">Test 482021</option>
-                            <option value="16408">Test 482021</option>
-                            <option value="16409">Test 482021</option>
-                            <option value="16410">Test 482021</option>
-                            <option value="16859">Test Case</option>
-                            <option value="16436">Test EJupiter</option>
-                            <option value="16411">TEST Group</option>
-                            <option value="16412">TEST Group</option>
-                            <option value="16413">TEST Group</option>
-                            <option value="16428">TEST Group</option>
-                            <option value="16430">TEST Group</option>
-                            <option value="16434">TEST Group</option>
-                            <option value="16456">TEST Group</option>
-                            <option value="16458">TEST Group</option>
-                            <option value="16461">TEST Group</option>
-                            <option value="16464">TEST Group</option>
-                            <option value="16498">TEST Group</option>
-                            <option value="16501">TEST Group</option>
-                            <option value="16502">TEST Group</option>
-                            <option value="16514">TEST Group</option>
-                            <option value="16516">TEST Group</option>
-                            <option value="16519">TEST Group</option>
-                            <option value="2502">TEST Group</option>
-                            <option value="2503">TEST Group</option>
-                            <option value="2504">TEST Group</option>
-                            <option value="2505">TEST Group</option>
-                            <option value="2448">TEST Group</option>
-                            <option value="2449">TEST Group</option>
-                            <option value="2450">TEST Group</option>
-                            <option value="2451">TEST Group</option>
-                            <option value="2452">TEST Group</option>
-                            <option value="2453">TEST Group</option>
-                            <option value="2528">TEST Group</option>
-                            <option value="12358">TEST Group</option>
-                            <option value="12362">TEST Group</option>
-                            <option value="12363">TEST Group</option>
-                            <option value="13849">TEST Group</option>
-                            <option value="12327">TEST Group</option>
-                            <option value="12328">TEST Group</option>
-                            <option value="12329">TEST Group</option>
-                            <option value="12330">TEST Group</option>
-                            <option value="12331">TEST Group</option>
-                            <option value="12332">TEST Group</option>
-                            <option value="12334">TEST Group</option>
-                            <option value="12335">TEST Group</option>
-                            <option value="12340">TEST Group</option>
-                            <option value="12341">TEST Group</option>
-                            <option value="12342">TEST Group</option>
-                            <option value="12343">TEST Group</option>
-                            <option value="12344">TEST Group</option>
-                            <option value="12345">TEST Group</option>
-                            <option value="12346">TEST Group</option>
-                            <option value="12347">TEST Group</option>
-                            <option value="12348">TEST Group</option>
-                            <option value="12349">TEST Group</option>
-                            <option value="12350">TEST Group</option>
-                            <option value="12351">TEST Group</option>
-                            <option value="12352">TEST Group</option>
-                            <option value="12353">TEST Group</option>
-                            <option value="12354">TEST Group</option>
-                            <option value="12355">TEST Group</option>
-                            <option value="12356">TEST Group</option>
-                            <option value="2227">Test Group 1</option>
-                            <option value="2174">Test Group 2 &amp;</option>
-                            <option value="2175">Test Group 3</option>
-                            <option value="2228">Test Group 3</option>
-                            <option value="2176">Test Group 4</option>
-                            <option value="2177">Test Group 5</option>
-                            <option value="16739">test group profile</option>
-                            <option value="2173">Test Group1</option>
-                            <option value="2226">Test Group2</option>
-                            <option value="2193">Test GRP 1</option>
-                            <option value="16405">test port 48</option>
-                            <option value="16406">Test port 48 2</option>
-                            <option value="2362">test portfolio</option>
-                            <option value="2363">test portfolio</option>
-                            <option value="2361">test portfolio - tj</option>
-                            <option value="16414">Test Portfolio Sep 23 2020</option>
-                            <option value="16415">Test Portfolio Sep 23 2020</option>
-                            <option value="16416">Test Portfolio Sep 23 2020</option>
-                            <option value="16417">Test Portfolio Sep 23 2021</option>
-                            <option value="16418">Test Portfolio Sep 23 2021</option>
-                        </select>
-
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">
-                                <fa-icon [icon]="faFingerprint" size='sm'></fa-icon>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="{{userObj.contactUserID}}"
-                            aria-label="UserID" aria-describedby="basic-addon1">
-
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">
-                                <fa-icon [icon]="faEnvelopeCircleCheck" size='sm'></fa-icon>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="{{userObj.contactEmailAddress}}"
-                            aria-label="Email" aria-describedby="basic-addon1">
-
-                    </div>
-                    <div class="input-group mb-3">
-
-                        <div class="form-check form-check-inline">
-                            <label class="form-check-label" for="inlineCheckbox1">Allow Log On: </label>
-                            <input class="form-check-input" *ngIf="userObj.allowLogon === true" type="checkbox"
-                                id="inlineCheckbox1" value="option1" disabled checked>
-                            <input class="form-check-input" *ngIf="userObj.allowLogon === false" type="checkbox"
-                                id="inlineCheckbox1" value="option1" disabled readonly>
-
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <label class="form-check-label" for="inlineCheckbox2">Contact Active: </label>
-                            <input class="form-check-input" *ngIf="userObj.contactActive === true" type="checkbox"
-                                id="inlineCheckbox2" value="option2" disabled checked>
-                            <input class="form-check-input" *ngIf="userObj.contactActive === false" type="checkbox"
-                                id="inlineCheckbox2" value="option2" disabled>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <label class="form-check-label" for="inlineCheckbox3">Hide Default login when using
-                                Profiles: </label>
-                            <input class="form-check-input" *ngIf="userObj.hideLogin === true" type="checkbox"
-                                id="inlineCheckbox3" value="option3" disabled checked>
-                            <input class="form-check-input" *ngIf="userObj.hideLogin === false" type="checkbox"
-                                id="inlineCheckbox3" value="option3" disabled>
-
-                        </div>
-
-                    </div>
-                </div>
-                </ng-container>
-                
-                
-
-
-
-
-                <ng-container *ngIf="enableEditIndex == i">
+                <ng-container>
                     <div class="user-info-input-container">
                         <div class="input-group mb-3" *ngIf="userObj">
                             <div class="input-group-prepend">
@@ -431,9 +54,10 @@
                                     <fa-icon [icon]="faFingerprint" size='sm'></fa-icon> &nbsp;System Contact ID:
                                 </span>
                             </div>
-                            <input disabled type="text" class="form-control disabled" placeholder="{{userObj.contactID}}"
-                                aria-label="SystemContactID" aria-describedby="basic-addon1">
-    
+                            <input disabled type="text" class="form-control disabled"
+                                placeholder="{{userObj.contactID}}" aria-label="SystemContactID"
+                                aria-describedby="basic-addon1">
+
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -441,14 +65,14 @@
                                     <fa-icon [icon]="faUser" size='sm'></fa-icon>
                                 </span>
                             </div>
-                            <select class="custom-select" id="inputGroupSelect02">
+                            <select disabled class="custom-select" id="inputGroupSelect02">
                                 <option value="-1">[Select a Salutation]</option>
                                 <option value="Mr.">Mr.</option>
                                 <option value="Mrs.">Mrs.</option>
                                 <option value="Ms.">Ms.</option>
                                 <option value="Dr.">Dr.</option>
                             </select>
-    
+
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -464,7 +88,7 @@
                                 <option value="II">II</option>
                                 <option value="III">II</option>
                             </select>
-    
+
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -472,20 +96,20 @@
                                     <fa-icon [icon]="faUser" size='sm'></fa-icon>
                                 </span>
                             </div>
-                            <input type="text" class="form-control" placeholder="{{userObj.contactFirstName}}"
+                            <input disabled type="text" class="form-control" placeholder="{{userObj.contactFirstName}}"
                                 aria-label="contactFirstName" aria-describedby="basic-addon1">
-    
+
                         </div>
-    
+
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">
                                     <fa-icon [icon]="faUser" size='sm'></fa-icon>
                                 </span>
                             </div>
-                            <input type="text" class="form-control" placeholder="{{userObj.contactMiddleName}}"
+                            <input disabled type="text" class="form-control" placeholder="{{userObj.contactMiddleName}}"
                                 aria-label="contactMiddleName" aria-describedby="basic-addon1">
-    
+
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -493,9 +117,9 @@
                                     <fa-icon [icon]="faUser" size='sm'></fa-icon>
                                 </span>
                             </div>
-                            <input type="text" class="form-control" placeholder="{{userObj.contactLastName}}"
+                            <input disabled type="text" class="form-control" placeholder="{{userObj.contactLastName}}"
                                 aria-label="LastName" aria-describedby="basic-addon1">
-    
+
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -505,7 +129,7 @@
                             </div>
                             <input type="text" class="form-control" placeholder="{{userObj.contactTitle}}"
                                 aria-label="contactTitle" aria-describedby="basic-addon1">
-    
+
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -519,7 +143,7 @@
                                     {{ucompany.companyName}}
                                 </option>
                             </select>
-    
+
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -742,7 +366,7 @@
                                 <option value="16417">Test Portfolio Sep 23 2021</option>
                                 <option value="16418">Test Portfolio Sep 23 2021</option>
                             </select>
-    
+
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -752,7 +376,7 @@
                             </div>
                             <input type="text" class="form-control" placeholder="{{userObj.contactUserID}}"
                                 aria-label="UserID" aria-describedby="basic-addon1">
-    
+
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -762,17 +386,17 @@
                             </div>
                             <input type="text" class="form-control" placeholder="{{userObj.contactEmailAddress}}"
                                 aria-label="Email" aria-describedby="basic-addon1">
-    
+
                         </div>
                         <div class="input-group mb-3">
-    
+
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label" for="inlineCheckbox1">Allow Log On: </label>
                                 <input class="form-check-input" *ngIf="userObj.allowLogon === true" type="checkbox"
                                     id="inlineCheckbox1" value="option1" disabled checked>
                                 <input class="form-check-input" *ngIf="userObj.allowLogon === false" type="checkbox"
                                     id="inlineCheckbox1" value="option1" disabled readonly>
-    
+
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label" for="inlineCheckbox2">Contact Active: </label>
@@ -788,12 +412,390 @@
                                     id="inlineCheckbox3" value="option3" disabled checked>
                                 <input class="form-check-input" *ngIf="userObj.hideLogin === false" type="checkbox"
                                     id="inlineCheckbox3" value="option3" disabled>
-    
+
                             </div>
-    
+
                         </div>
                     </div>
-                    </ng-container> 
+                </ng-container>
+
+
+
+
+
+
+                <ng-container>
+                    <div class="user-info-input-container">
+                        <div class="input-group mb-3" *ngIf="userObj">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <fa-icon [icon]="faFingerprint" size='sm'></fa-icon> &nbsp;System Contact ID:
+                                </span>
+                            </div>
+                            <input disabled type="text" class="form-control disabled"
+                                placeholder="{{userObj.contactID}}" aria-label="SystemContactID"
+                                aria-describedby="basic-addon1">
+
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <fa-icon [icon]="faUser" size='sm'></fa-icon>
+                                </span>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect02">
+                                <option value="-1">[Select a Salutation]</option>
+                                <option value="Mr.">Mr.</option>
+                                <option value="Mrs.">Mrs.</option>
+                                <option value="Ms.">Ms.</option>
+                                <option value="Dr.">Dr.</option>
+                            </select>
+
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <fa-icon [icon]="faUser" size='sm'></fa-icon>
+                                </span>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect02">
+                                <option value="-1">[Select a Suffix]</option>
+                                <option value="Jr.">Jr.</option>
+                                <option value="Sr.">Sr.</option>
+                                <option value="I">I</option>
+                                <option value="II">II</option>
+                                <option value="III">II</option>
+                            </select>
+
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <fa-icon [icon]="faUser" size='sm'></fa-icon>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="{{userObj.contactFirstName}}"
+                                aria-label="contactFirstName" aria-describedby="basic-addon1">
+
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <fa-icon [icon]="faUser" size='sm'></fa-icon>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="{{userObj.contactMiddleName}}"
+                                aria-label="contactMiddleName" aria-describedby="basic-addon1">
+
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <fa-icon [icon]="faUser" size='sm'></fa-icon>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="{{userObj.contactLastName}}"
+                                aria-label="LastName" aria-describedby="basic-addon1">
+
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <fa-icon [icon]="faUser" size='sm'></fa-icon>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="{{userObj.contactTitle}}"
+                                aria-label="contactTitle" aria-describedby="basic-addon1">
+
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <fa-icon [icon]="faBuilding" size='sm'></fa-icon>
+                                </span>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect02">
+                                <option value="-1">[Select a Company]</option>
+                                <option *ngFor="let ucompany of companyname " placeholder="" value="{{ucompany}}">
+                                    {{ucompany.companyName}}
+                                </option>
+                            </select>
+
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <fa-icon [icon]="faPeopleGroup" size='sm'></fa-icon>
+                                </span>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect02">
+                                <option value="-1">[Select a Primary Group]</option>
+                                <option value="16480">1 Clean Port</option>
+                                <option value="2423">Accounting - View Only Test</option>
+                                <option value="291">ACME</option>
+                                <option value="16796">ACME</option>
+                                <option value="16711">ACME</option>
+                                <option value="16563">ACME</option>
+                                <option value="16565">ACME</option>
+                                <option value="2037">ACME Consumer Products - View Only</option>
+                                <option value="306">ACME Financial</option>
+                                <option value="2054">Acme Technology</option>
+                                <option value="2206">Acme Technology - View Only</option>
+                                <option value="2160">Acme View Only Test 1</option>
+                                <option value="16785">Addl Obj Portfolio</option>
+                                <option value="16787">Addl Obj Records</option>
+                                <option value="16786">Addl Obj User</option>
+                                <option value="16446">ATL_Braves</option>
+                                <option value="16632">Background</option>
+                                <option value="16753">Becca No Access</option>
+                                <option value="2355">BLoop</option>
+                                <option value="2398">Broom Test 2</option>
+                                <option value="2304">Broomfield (Test Portfolio Security Group)</option>
+                                <option value="2509">Carmen scott</option>
+                                <option value="16803">CD New Portfolio</option>
+                                <option value="16805">CD New Records</option>
+                                <option value="16804">CD New Users</option>
+                                <option value="2195">CGC Test</option>
+                                <option value="2400">Costar test rt</option>
+                                <option value="2232">COSTAR TEST System Admin Child GROUP -2</option>
+                                <option value="2218">Custom Calendar portfolio</option>
+                                <option value="2387">dave P Sample Portfolio</option>
+                                <option value="16866">DC New Language</option>
+                                <option value="16868">DC New Language Records</option>
+                                <option value="16867">DC New Language Users</option>
+                                <option value="16767">DC New Records</option>
+                                <option value="16766">DC New Users</option>
+                                <option value="2399">DC Portfolio</option>
+                                <option value="2371">DC Portfolio</option>
+                                <option value="2372">DC Portfolio</option>
+                                <option value="2373">DC Portfolio</option>
+                                <option value="2370">DC Portfolio RMV</option>
+                                <option value="16445">DC Test Portfolio</option>
+                                <option value="16791">DC Test Records</option>
+                                <option value="16790">DC Test Users</option>
+                                <option value="2369">DC-QA Portfolio I</option>
+                                <option value="2252">DelBosque Sample 001</option>
+                                <option value="2259">DelBosque Sample Group 002</option>
+                                <option value="2253">DelBosque Security Group 1</option>
+                                <option value="2254">DelBosque Security Group 2</option>
+                                <option value="2273">DelBosque Training Group</option>
+                                <option value="2060">DO NOT USE - RESERVED FOR CLIENT PORTFOLIO</option>
+                                <option value="2209">Equipment Lease Admin</option>
+                                <option value="2245">Equipment Portfolio</option>
+                                <option value="2045">FASCO</option>
+                                <option value="2059">Filler - DO NOT USE - RESERVED FOR CLIENT PORTFOLIO</option>
+                                <option value="290">Filler-Group</option>
+                                <option value="299">Filler-New Client Name</option>
+                                <option value="2205">Financial User</option>
+                                <option value="2231">GGTest</option>
+                                <option value="16419">goot</option>
+                                <option value="16825">GrpGrp11</option>
+                                <option value="16818">Hierarchy Test</option>
+                                <option value="16771">Hk Addsubgroup</option>
+                                <option value="16869">HkSecA</option>
+                                <option value="2396">Jason Trkovsky</option>
+                                <option value="2236">JJ Security Group Test</option>
+                                <option value="2397">JT</option>
+                                <option value="2431">JT Group</option>
+                                <option value="16802">JT Records</option>
+                                <option value="16801">JT Users</option>
+                                <option value="2305">LBroom</option>
+                                <option value="2317">LBroom 2</option>
+                                <option value="2338">LBroom Security Group 2</option>
+                                <option value="2339">LBroom Security Group 3</option>
+                                <option value="2337">LBroom3</option>
+                                <option value="16800">LBroom3 Records</option>
+                                <option value="16799">LBroom3 Users</option>
+                                <option value="2155">Lease Accounting</option>
+                                <option value="2536">Lease Administration</option>
+                                <option value="300">Lease Services</option>
+                                <option value="301">Lease Services: Admin</option>
+                                <option value="2375">Lease Verification</option>
+                                <option value="2460">Morrow - Edit</option>
+                                <option value="2461">Morrow - View</option>
+                                <option value="16756">New Equipment Sec Group</option>
+                                <option value="16863">New Portfolio Language</option>
+                                <option value="16865">New Portfolio Language Records</option>
+                                <option value="16864">New Portfolio Language Users</option>
+                                <option value="2364">New Portfolio Test</option>
+                                <option value="2365">New Test Portfolio</option>
+                                <option value="2159">North America</option>
+                                <option value="2170">Novelis</option>
+                                <option value="16522">one line</option>
+                                <option value="2207">patrick's</option>
+                                <option value="2248">Philip New Test Portfolio</option>
+                                <option value="2241">Philip Test Security Group</option>
+                                <option value="16840">PKTestPortfolio</option>
+                                <option value="16633">Plopper</option>
+                                <option value="2356">PLOPRE</option>
+                                <option value="2216">Portfolio Financials Training</option>
+                                <option value="2215">Portfolio Training</option>
+                                <option value="2533">QA DC Test Portfolio</option>
+                                <option value="2203">R &amp; D</option>
+                                <option value="2196">RE Admin</option>
+                                <option value="2197">RE Admin</option>
+                                <option value="2210">RE Lease Admin</option>
+                                <option value="2088">RESERVED FOR CLIENT PORTFOLIO- View Only</option>
+                                <option value="2242">Restricted Admin Links Group</option>
+                                <option value="2194">Restricted Module Group</option>
+                                <option value="2191">Retail Acme - rename</option>
+                                <option value="12357">RG Test Group</option>
+                                <option value="2188">RS Test Group</option>
+                                <option value="16856">Sarah's Test Portfolio</option>
+                                <option value="2374">SC New Portfolio</option>
+                                <option value="16815">subgrp</option>
+                                <option value="2506">SW Test Portfolio</option>
+                                <option value="16806">SW Test Users</option>
+                                <option value="16860">Tali's Admin Group</option>
+                                <option value="16861">Tali's Sub Group</option>
+                                <option value="16437">Tali's Testing environment</option>
+                                <option value="16439">Tali's Training Security</option>
+                                <option value="16814">TCBatchAccounting - FOR AUTOMATION DO NOT DELETE</option>
+                                <option value="2406">TCCustomCalendarDailyAM</option>
+                                <option value="2405">TCCustomCalendarPeriodicAM - FOR AUTOMATION DO NOT ARCHIVE</option>
+                                <option value="16920">TCListPages - DO NOT CHANGE</option>
+                                <option value="2348">TCStandardCalendar</option>
+                                <option value="2347">TCStandardCalendar-FOR AUTOMATION DO NOT CHANGE</option>
+                                <option value="16626">te</option>
+                                <option value="16438">Test</option>
+                                <option value="16759">Test</option>
+                                <option value="2383">test</option>
+                                <option value="16407">Test 482021</option>
+                                <option value="16408">Test 482021</option>
+                                <option value="16409">Test 482021</option>
+                                <option value="16410">Test 482021</option>
+                                <option value="16859">Test Case</option>
+                                <option value="16436">Test EJupiter</option>
+                                <option value="16411">TEST Group</option>
+                                <option value="16412">TEST Group</option>
+                                <option value="16413">TEST Group</option>
+                                <option value="16428">TEST Group</option>
+                                <option value="16430">TEST Group</option>
+                                <option value="16434">TEST Group</option>
+                                <option value="16456">TEST Group</option>
+                                <option value="16458">TEST Group</option>
+                                <option value="16461">TEST Group</option>
+                                <option value="16464">TEST Group</option>
+                                <option value="16498">TEST Group</option>
+                                <option value="16501">TEST Group</option>
+                                <option value="16502">TEST Group</option>
+                                <option value="16514">TEST Group</option>
+                                <option value="16516">TEST Group</option>
+                                <option value="16519">TEST Group</option>
+                                <option value="2502">TEST Group</option>
+                                <option value="2503">TEST Group</option>
+                                <option value="2504">TEST Group</option>
+                                <option value="2505">TEST Group</option>
+                                <option value="2448">TEST Group</option>
+                                <option value="2449">TEST Group</option>
+                                <option value="2450">TEST Group</option>
+                                <option value="2451">TEST Group</option>
+                                <option value="2452">TEST Group</option>
+                                <option value="2453">TEST Group</option>
+                                <option value="2528">TEST Group</option>
+                                <option value="12358">TEST Group</option>
+                                <option value="12362">TEST Group</option>
+                                <option value="12363">TEST Group</option>
+                                <option value="13849">TEST Group</option>
+                                <option value="12327">TEST Group</option>
+                                <option value="12328">TEST Group</option>
+                                <option value="12329">TEST Group</option>
+                                <option value="12330">TEST Group</option>
+                                <option value="12331">TEST Group</option>
+                                <option value="12332">TEST Group</option>
+                                <option value="12334">TEST Group</option>
+                                <option value="12335">TEST Group</option>
+                                <option value="12340">TEST Group</option>
+                                <option value="12341">TEST Group</option>
+                                <option value="12342">TEST Group</option>
+                                <option value="12343">TEST Group</option>
+                                <option value="12344">TEST Group</option>
+                                <option value="12345">TEST Group</option>
+                                <option value="12346">TEST Group</option>
+                                <option value="12347">TEST Group</option>
+                                <option value="12348">TEST Group</option>
+                                <option value="12349">TEST Group</option>
+                                <option value="12350">TEST Group</option>
+                                <option value="12351">TEST Group</option>
+                                <option value="12352">TEST Group</option>
+                                <option value="12353">TEST Group</option>
+                                <option value="12354">TEST Group</option>
+                                <option value="12355">TEST Group</option>
+                                <option value="12356">TEST Group</option>
+                                <option value="2227">Test Group 1</option>
+                                <option value="2174">Test Group 2 &amp;</option>
+                                <option value="2175">Test Group 3</option>
+                                <option value="2228">Test Group 3</option>
+                                <option value="2176">Test Group 4</option>
+                                <option value="2177">Test Group 5</option>
+                                <option value="16739">test group profile</option>
+                                <option value="2173">Test Group1</option>
+                                <option value="2226">Test Group2</option>
+                                <option value="2193">Test GRP 1</option>
+                                <option value="16405">test port 48</option>
+                                <option value="16406">Test port 48 2</option>
+                                <option value="2362">test portfolio</option>
+                                <option value="2363">test portfolio</option>
+                                <option value="2361">test portfolio - tj</option>
+                                <option value="16414">Test Portfolio Sep 23 2020</option>
+                                <option value="16415">Test Portfolio Sep 23 2020</option>
+                                <option value="16416">Test Portfolio Sep 23 2020</option>
+                                <option value="16417">Test Portfolio Sep 23 2021</option>
+                                <option value="16418">Test Portfolio Sep 23 2021</option>
+                            </select>
+
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <fa-icon [icon]="faFingerprint" size='sm'></fa-icon>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="{{userObj.contactUserID}}"
+                                aria-label="UserID" aria-describedby="basic-addon1">
+
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <fa-icon [icon]="faEnvelopeCircleCheck" size='sm'></fa-icon>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="{{userObj.contactEmailAddress}}"
+                                aria-label="Email" aria-describedby="basic-addon1">
+
+                        </div>
+                        <div class="input-group mb-3">
+
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label" for="inlineCheckbox1">Allow Log On: </label>
+                                <input class="form-check-input" *ngIf="userObj.allowLogon === true" type="checkbox"
+                                    id="inlineCheckbox1" value="option1" disabled checked>
+                                <input class="form-check-input" *ngIf="userObj.allowLogon === false" type="checkbox"
+                                    id="inlineCheckbox1" value="option1" disabled readonly>
+
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label" for="inlineCheckbox2">Contact Active: </label>
+                                <input class="form-check-input" *ngIf="userObj.contactActive === true" type="checkbox"
+                                    id="inlineCheckbox2" value="option2" disabled checked>
+                                <input class="form-check-input" *ngIf="userObj.contactActive === false" type="checkbox"
+                                    id="inlineCheckbox2" value="option2" disabled>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label" for="inlineCheckbox3">Hide Default login when using
+                                    Profiles: </label>
+                                <input class="form-check-input" *ngIf="userObj.hideLogin === true" type="checkbox"
+                                    id="inlineCheckbox3" value="option3" disabled checked>
+                                <input class="form-check-input" *ngIf="userObj.hideLogin === false" type="checkbox"
+                                    id="inlineCheckbox3" value="option3" disabled>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-container>
 
 
 
@@ -880,9 +882,16 @@
 
 <ng-template #content let-modal style="z-index: 1000; width: 2000px;">
     <div class="modal-header">
-        <button type="button" class="btn btn-dark" (click)="modal.close('Close click'); cancel()">
-            <fa-icon [icon]="faXmark" size='sm'></fa-icon>
-        </button>
+        <div class="modal-header-left">
+            <button type="button" class="btn btn-dark"
+                (click)="modal.close('Close click'); cancelBuilding(); cancelLease();cancelProjects(); cancelCompany()">
+                <fa-icon [icon]="faXmark" size='sm'></fa-icon>
+            </button>
+        </div>
+        <div class="modal-header-right">
+            <img class="modal-header-logo" src="assets/Images/homelogocopy.png" />
+            <h1 class="header-logo-text">| Real Estate Manager</h1>
+        </div>
     </div>
 
     <h4>Scheduled Reminders: </h4>
@@ -896,36 +905,37 @@
                         Contact <h4 class="mycompany-filterd-number">({{(contactReminders |
                             filter:Contactterm)?.length}})</h4>
                     </mat-panel-title>
+                    <button class="excelexport-btn" (click)="contactexportexcel()"><fa-icon class="excel-icon" [icon]="faFileExcel" size='1x'></fa-icon> Export</button>
                     <!-- <mat-panel-description>
                         Reminders
                     </mat-panel-description> -->
                 </mat-expansion-panel-header>
                 <input type="text" class="building-reminder-schedule-search" placeholder="Search Contact Reminders"
                     [(ngModel)]="Contactterm">
-                <table class="reminder-schedule-table table-striped">
-                    <thead class="reminder-thead">
-                        <td>
+                <table class="reminder-schedule-table table-striped" id="contact-excel-table">
+                    <tr class="reminder-thead">
+                        <th>
                             Contact
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Reminder Type
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Frequency
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Message
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Date
-                        </td>
-                        <td>
+                        </th>
+                        <th>
 
-                        </td>
-                    </thead>
-                    <tbody *ngFor="let display of contactReminders |  filter: Contactterm; index as i">
+                        </th>
+                    </tr>
+                    <tbody *ngFor="let display of contactReminders |  filter: Contactterm; index as iContact">
                         <tr class="reminder-schedule-table-row">
-                            <ng-container #timedata *ngIf="enableEditIndex != i">
+                            <ng-container #timedata *ngIf="enableEditIndexContact != iContact">
                                 <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                     {{display.createdBy}}
                                 </td>
@@ -943,7 +953,7 @@
                                 </td>
                                 <td id="{{display.tickleID}}"
                                     *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                    <button (click)="switchEditMode(i)" class="edit-reminder-btn">Edit
+                                    <button (click)="switchEditModeContact(iContact)" class="edit-reminder-btn">Edit
                                         <fa-icon [icon]="faPencil" size='1x'></fa-icon>
                                     </button>
                                     <button (click)="deleteReminder(display.tickleID)"
@@ -952,7 +962,7 @@
                                     </button>
                                 </td>
                             </ng-container>
-                            <ng-container *ngIf="enableEditIndex == i">
+                            <ng-container *ngIf="enableEditIndexContact == iContact">
                                 <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                     <input class="contact-reminder-input" readonly [(ngModel)]="display.createdBy" />
                                 </td>
@@ -983,7 +993,7 @@
                                         class="save-edit-reminder-btn">Save
                                         <fa-icon [icon]="faCheck" size='1x'></fa-icon>
                                     </button>
-                                    <button (click)="cancel()" class="cancel-edit-reminder-btn">Cancel
+                                    <button (click)="cancelContact()" class="cancel-edit-reminder-btn">Cancel
                                         <fa-icon [icon]="faX" size='1x'></fa-icon>
                                     </button>
                                 </td>
@@ -999,36 +1009,37 @@
                         Building <h4 class="mycompany-filterd-number">({{(buildingreminders |
                             filter:Buildingterm)?.length}})</h4>
                     </mat-panel-title>
+                    <button class="excelexport-btn" (click)="buildingexportexcel()"><fa-icon class="excel-icon" [icon]="faFileExcel" size='1x'></fa-icon> Export</button>
                     <!-- <mat-panel-description>
                         Reminders
                     </mat-panel-description> -->
                 </mat-expansion-panel-header>
                 <input type="text" class="building-reminder-schedule-search" placeholder="Search Building Reminders"
                     [(ngModel)]="Buildingterm">
-                <table class="reminder-schedule-table table-striped">
-                    <thead class="reminder-thead">
-                        <td>
+                <table class="reminder-schedule-table table-striped" id="building-excel-table">
+                    <tr class="reminder-thead">
+                        <th>
                             Building ID
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Frequency
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Building Name
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Reminder Message
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Message Date (start)
-                        </td>
-                        <td>
+                        </th>
+                        <th>
 
-                        </td>
-                    </thead>
-                    <tbody *ngFor="let display of buildingreminders | filter: Buildingterm;  index as i">
+                        </th>
+                    </tr>
+                    <tbody *ngFor="let display of buildingreminders | filter: Buildingterm;  index as iBuilding">
                         <tr class="reminder-schedule-table-row">
-                            <ng-container #timedata *ngIf="enableEditIndex != i">
+                            <ng-container #timedata *ngIf="enableEditIndexBuilding != iBuilding">
                                 <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                     {{display.buildingID}}
                                 </td>
@@ -1046,7 +1057,7 @@
                                 </td>
                                 <td id="{{display.tickleID}}"
                                     *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                    <button (click)="switchEditMode(i)" class="edit-reminder-btn">Edit
+                                    <button (click)="switchEditModeBuilding(iBuilding)" class="edit-reminder-btn">Edit
                                         <fa-icon [icon]="faPencil" size='1x'></fa-icon>
                                     </button>
                                     <button (click)="deleteReminder(display.tickleID)"
@@ -1056,7 +1067,7 @@
 
                                 </td>
                             </ng-container>
-                            <ng-container #timedata *ngIf="enableEditIndex == i">
+                            <ng-container #timedata *ngIf="enableEditIndexBuilding == iBuilding">
                                 <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                     <input readonly [(ngModel)]="display.buildingID" />
                                 </td>
@@ -1086,7 +1097,7 @@
                                         class="save-edit-reminder-btn">Save
                                         <fa-icon [icon]="faCheck" size='1x'></fa-icon>
                                     </button>
-                                    <button (click)="cancel()" class="cancel-edit-reminder-btn">Cancel
+                                    <button (click)="cancelBuilding()" class="cancel-edit-reminder-btn">Cancel
                                         <fa-icon [icon]="faX" size='1x'></fa-icon>
                                     </button>
                                 </td>
@@ -1101,34 +1112,36 @@
                     <mat-panel-title *ngIf="companyreminders">
                         Company <h4 class="mycompany-filterd-number">({{(companyreminders |
                             filter:Companyterm)?.length}})</h4>
+                            
                     </mat-panel-title>
+                    <button class="excelexport-btn" (click)="companyexportexcel()"><fa-icon class="excel-icon" [icon]="faFileExcel" size='1x'></fa-icon> Export</button>
                     <!-- <mat-panel-description>
                         Reminders
                     </mat-panel-description> -->
                 </mat-expansion-panel-header>
                 <input type="text" class="company-reminder-schedule-search" placeholder="Search Company Reminders"
                     [(ngModel)]="Companyterm">
-                <table class="company-reminder-schedule-table table-striped">
-                    <thead class="reminder-thead">
-                        <td>
+                <table class="company-reminder-schedule-table table-striped" id="company-excel-table">
+                    <tr class="reminder-thead">
+                        <th>
                             Date
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Frequency
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Company ID
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Company Name
-                        </td>
-                        <td>
+                        </th>
+                        <th>
 
-                        </td>
-                    </thead>
-                    <tbody *ngFor="let display of companyreminders | filter: Companyterm; index as i">
+                        </th>
+                    </tr>
+                    <tbody *ngFor="let display of companyreminders | filter: Companyterm; index as iCompany">
                         <tr class="reminder-schedule-table-row">
-                            <ng-container #timedata *ngIf="enableEditIndex != i">
+                            <ng-container #timedata *ngIf="enableEditIndexCompany != iCompany">
                                 <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                     {{display.startDate}}
                                 </td>
@@ -1142,7 +1155,7 @@
                                     {{display.companyName}}
                                 </td>
                                 <td *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
-                                    <button (click)="switchEditMode(i)" class="edit-reminder-btn">Edit
+                                    <button (click)="switchEditModeCompany(iCompany)" class="edit-reminder-btn">Edit
                                         <fa-icon [icon]="faPencil" size='1x'></fa-icon>
                                     </button>
                                     <button (click)="deleteReminder(display.tickleID)"
@@ -1151,7 +1164,7 @@
                                     </button>
                                 </td>
                             </ng-container>
-                            <ng-container #timedata *ngIf="enableEditIndex == i">
+                            <ng-container #timedata *ngIf="enableEditIndexCompany == iCompany">
                                 <td id={{display.tickleID}
                                     *ngIf="display.isDeleted == false  && display.contactID == userObj.contactID">
                                     <input #startDate class="form-control" name="{{display.startDate}}"
@@ -1173,7 +1186,7 @@
                                     <button class="save-edit-reminder-btn">Save
                                         <fa-icon [icon]="faCheck" size='1x'></fa-icon>
                                     </button>
-                                    <button (click)="cancel()" class="cancel-edit-reminder-btn">Cancel
+                                    <button (click)="cancelCompany()" class="cancel-edit-reminder-btn">Cancel
                                         <fa-icon [icon]="faX" size='1x'></fa-icon>
                                     </button>
                                 </td>
@@ -1186,39 +1199,41 @@
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        Lease <h4 class="mycompany-filterd-number">({{(leasereminders | filter:Leaseterm)?.length}})
-                        </h4>
+                        Lease <h4 class="mycompany-filterd-number">({{(leasereminders | filter:Leaseterm)?.length}})</h4>
+                        
                     </mat-panel-title>
+                    <button class="excelexport-btn" (click)="leaseexportexcel()"><fa-icon class="excel-icon" [icon]="faFileExcel" size='1x'></fa-icon> Export</button>
                     <!-- <mat-panel-description>
                         Reminders
                     </mat-panel-description> -->
                 </mat-expansion-panel-header>
                 <input type="text" class="company-reminder-schedule-search" placeholder="Search Company Reminders"
                     [(ngModel)]="Leaseterm">
-                <table class="company-reminder-schedule-table table-striped">
-                    <thead class="reminder-thead">
-                        <td>
-                            Lease ID
-                        </td>
-                        <td>
-                            Client Lease ID
-                        </td>
-                        <td>
-                            Reminder Frequency
-                        </td>
-                        <td>
-                            Reminder Message
-                        </td>
-                        <td>
-                            Reminder Date
-                        </td>
-                        <td>
+                <table class="company-reminder-schedule-table table-striped" id="lease-excel-table">
+                    <tr class="reminder-thead">
+                            <th>
+                                Lease ID
+                            </th>
+                            <th>
+                                Client Lease ID
+                            </th>
+                            <th>
+                                Reminder Frequency
+                            </th>
+                            <th>
+                                Reminder Message
+                            </th>
+                            <th>
+                                Reminder Date
+                            </th>
+                            <th>
 
-                        </td>
-                    </thead>
-                    <tbody *ngFor="let display of leasereminders| filter: Leaseterm; index as i">
+                            </th>
+                        </tr>
+
+                    <tbody *ngFor="let display of leasereminders| filter: Leaseterm; index as iLease">
                         <tr class="reminder-schedule-table-row">
-                            <ng-container #timedata *ngIf="enableEditIndex != i">
+                            <ng-container #timedata *ngIf="enableEditIndexLease != iLease">
                                 <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
                                     {{display.reminderID}}
                                 </td>
@@ -1236,7 +1251,7 @@
                                     {{display.startDate | date:'MMM d, yyyy h:ss aa'}}
                                 </td>
                                 <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
-                                    <button (click)="switchEditMode(i)" class="edit-reminder-btn">Edit
+                                    <button (click)="switchEditModeLease(iLease)" class="edit-reminder-btn">Edit
                                         <fa-icon [icon]="faPencil" size='1x'></fa-icon>
                                     </button>
                                     <button (click)="deleteReminder(display.reminderID)"
@@ -1245,7 +1260,7 @@
                                     </button>
                                 </td>
                             </ng-container>
-                            <ng-container #timedata *ngIf="enableEditIndex == i">
+                            <ng-container #timedata *ngIf="enableEditIndexLease == iLease">
                                 <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
                                     <input readonly [(ngModel)]="display.reminderID" />
                                 </td>
@@ -1275,7 +1290,7 @@
                                         class="save-edit-reminder-btn">Save
                                         <fa-icon [icon]="faCheck" size='1x'></fa-icon>
                                     </button>
-                                    <button (click)="cancel()" class="cancel-edit-reminder-btn">Cancel
+                                    <button (click)="cancelLease()" class="cancel-edit-reminder-btn">Cancel
                                         <fa-icon [icon]="faX" size='1x'></fa-icon>
                                     </button>
                                 </td>
@@ -1290,6 +1305,7 @@
                     <mat-panel-title>
                         Report
                     </mat-panel-title>
+                    <button class="excelexport-btn" ><fa-icon class="excel-icon" [icon]="faFileExcel" size='1x'></fa-icon> Export</button>
                     <!-- <mat-panel-description>
                         Reminders
                     </mat-panel-description> -->
@@ -1308,39 +1324,42 @@
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        Projects <h4 class="mycompany-filterd-number">({{(projectReminders | filter:Projectterm)?.length}})
+                        Projects <h4 class="mycompany-filterd-number">({{(projectReminders |
+                            filter:Projectterm)?.length}})
                         </h4>
                     </mat-panel-title>
+                    <button class="excelexport-btn" (click)="projectexportexcel()"><fa-icon class="excel-icon" [icon]="faFileExcel" size='1x'></fa-icon> Export</button>
                     <!-- <mat-panel-description>
                         Reminders
                     </mat-panel-description> -->
                 </mat-expansion-panel-header>
                 <input type="text" class="company-reminder-schedule-search" placeholder="Search Company Reminders"
-                    [(ngModel)]="Leaseterm">
-                <table class="company-reminder-schedule-table table-striped">
-                    <thead class="reminder-thead">
-                        <td>
+                    [(ngModel)]="Projectterm">
+                <table class="company-reminder-schedule-table table-striped" id="project-excel-table">
+                    <tr class="reminder-thead">
+                        <th>
                             Project ID
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Project Name
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Reminder Frequency
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Reminder Message
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Reminder Date
-                        </td>
+                        </th>
+                    </tr>
                         <td>
 
                         </td>
-                    </thead>
-                    <tbody *ngFor="let display of projectReminders| filter: Projectterm; index as i">
+                    
+                    <tbody *ngFor="let display of projectReminders| filter: Projectterm; index as iProjects">
                         <tr class="reminder-schedule-table-row">
-                            <ng-container #timedata *ngIf="enableEditIndex != i">
+                            <ng-container #timedata *ngIf="enableEditIndexProjects != iProjects">
                                 <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
                                     {{display.projectID}}
                                 </td>
@@ -1358,7 +1377,7 @@
                                     {{display.userDefinedDate | date:'MMM d, yyyy h:ss aa'}}
                                 </td>
                                 <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
-                                    <button (click)="switchEditMode(i)" class="edit-reminder-btn">Edit
+                                    <button (click)="switchEditModeProjects(iProjects)" class="edit-reminder-btn">Edit
                                         <fa-icon [icon]="faPencil" size='1x'></fa-icon>
                                     </button>
                                     <button (click)="deleteReminder(display.reminderID)"
@@ -1367,7 +1386,7 @@
                                     </button>
                                 </td>
                             </ng-container>
-                            <ng-container #timedata *ngIf="enableEditIndex == i">
+                            <ng-container #timedata *ngIf="enableEditIndexProjects == iProjects">
                                 <td *ngIf="display.isDeleted == false && display.contactID == userObj.contactID">
                                     <input readonly [(ngModel)]="display.projectID" />
                                 </td>
@@ -1397,7 +1416,7 @@
                                         class="save-edit-reminder-btn">Save
                                         <fa-icon [icon]="faCheck" size='1x'></fa-icon>
                                     </button>
-                                    <button (click)="cancel()" class="cancel-edit-reminder-btn">Cancel
+                                    <button (click)="cancelProjects()" class="cancel-edit-reminder-btn">Cancel
                                         <fa-icon [icon]="faX" size='1x'></fa-icon>
                                     </button>
                                 </td>
@@ -1411,9 +1430,16 @@
 </ng-template>
 <ng-template #content1 let-modal style="z-index: 1000;">
     <div class="modal-header">
-        <button type="button" class="btn btn-dark" (click)="modal.close('Close click')">
-            <fa-icon [icon]="faXmark" size='sm'></fa-icon>
-        </button>
+        <div class="modal-header-left">
+            <button type="button" class="btn btn-dark"
+                (click)="modal.close('Close click'); cancelBuilding(); cancelLease();cancelProjects(); cancelCompany()">
+                <fa-icon [icon]="faXmark" size='sm'></fa-icon>
+            </button>
+        </div>
+        <div class="modal-header-right">
+            <img class="modal-header-logo" src="assets/Images/homelogocopy.png" />
+            <h1 class="header-logo-text">| Real Estate Manager</h1>
+        </div>
     </div>
 
     <h4>Contact Reminder Selection: </h4>
