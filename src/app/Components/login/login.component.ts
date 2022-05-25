@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   LoggedIn = 'true';
   ngOnInit(): void {
-    console.log(this.ContactUserID, this.ContactPassword)
+    console.log(this.contactdata)
   }
 
   login() {

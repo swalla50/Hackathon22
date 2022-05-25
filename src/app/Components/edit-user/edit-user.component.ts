@@ -108,7 +108,19 @@ export class EditUserComponent implements OnInit {
   lastModifiedBy: any;
   contacteditR: any;
 
+    allexportexcel(): void {
+    var Title = "All Reminders";
+    var fileName = "AllReminders.xlsx";
+    let element = document.getElementById("all-excel-table");
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    delete ws[5]
+    /* O1 is your Column in Excel*/
 
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    /* save file */
+    XLSX.writeFile(wb, fileName);
+  }
 
   leaseexportexcel(): void {
     var Title = "Lease Reminders";
@@ -218,6 +230,7 @@ export class EditUserComponent implements OnInit {
         this.deltedReminderval = res;
         this.ngOnInit();
         this.toastr.success('Deleted Reminder!');
+        console.log('delete',rval)
       },
       err => {
         if (err.status == 400)
@@ -225,6 +238,30 @@ export class EditUserComponent implements OnInit {
         else
           console.log(err);
       });
+  }
+
+  //Switching between Contactinfo views edit and read
+  isEditingContactinfo: boolean = false;
+  enableEditIndexContactinfo = null;
+  iContactinfo: any;
+  switchEditModeContactinfo(iContactinfo: any) {
+    this.isEditingContactinfo = true;
+    this.enableEditIndexContactinfo = iContactinfo;
+    console.log(this.isEditingContactinfo)
+  }
+  switchEditModeContactinfofalse(iContactinfo: any) {
+    this.isEditingContactinfo = false;
+    this.enableEditIndexContactinfo = iContactinfo;
+    console.log(this.isEditingContactinfo)
+  }
+  saveContactinfo() {
+    this.isEditingContactinfo = false;
+    this.enableEditIndexContactinfo = null;
+  }
+
+  cancelContactinfo() {
+    this.isEditingContactinfo = false;
+    this.enableEditIndexContactinfo = null;
   }
 
   //Switching between Contactmyreminder views edit and read
@@ -581,6 +618,8 @@ export class EditUserComponent implements OnInit {
     })
     this.service.getCompanyList().subscribe(data => {
       this.companyname = data;
+      this.companyname = this.companyname.map((obj: any) =>obj.companyName)
+
       console.log("companyname:", this.companyname)
     })
     this.service.getCompanyReminders().subscribe(data => {
@@ -594,6 +633,7 @@ export class EditUserComponent implements OnInit {
 
         }
       }
+      console.log("company reminders",this.companyreminders)
     })
     this.service.getBuildingReminders().subscribe(data => {
       this.buildingreminders = data;
@@ -720,10 +760,7 @@ export class EditUserComponent implements OnInit {
   }
   changeOT(val: any) {
 
-    if (val == "Company - Reminder") {
-      this.showCompanyDrop = true;
-      this.ngOnInit()
-    }
+    
     if (val == "Lease - Reminder" && this.selectedHierarchy.length > 0) {
       this.showLeaseDrop = true;
       this.ngOnInit()
@@ -761,7 +798,11 @@ export class EditUserComponent implements OnInit {
       this.showBuildingDrop = false;
       this.selectedCompany = [];
     }
-
+if (this.selectedOptionType == "Company - Reminder") {
+      this.showCompanyDrop = true;
+      this.ngOnInit()
+      
+    }
     this.ngOnInit();
   }
   reminderobj: any = [];
