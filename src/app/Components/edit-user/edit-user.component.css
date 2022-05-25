@@ -513,8 +513,45 @@ button.excelexport-btn {
     background: #09ad34;
     border: none;
     color: white;
-    border-radius: 50px;
+    border-radius: 10px;
     width: 90px;
     height: 40px;
     margin-right: 20px;
+    box-shadow: 0.5px 10px 15px 0 rgb(0 0 0 / 39%);
+}
+button.excelexport-btn:hover {
+    transform: translateY(5px);
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+    cursor:pointer;
+}
+button.excelexport-btn:not(:hover) {
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+}
+button.excelexport-btn1 {
+    background: #09ad34;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    width: 90px;
+    float: right;
+    margin-bottom: 10px;
+    height: 40px;
+    margin-right: 20px;
+    box-shadow: 0.5px 10px 15px 0 rgb(0 0 0 / 39%);
+}
+button.excelexport-btn1:hover {
+    transform: translateY(5px);
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+    cursor:pointer;
+}
+button.excelexport-btn1:not(:hover) {
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+}
+
+.mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+    height: 45px;
 }

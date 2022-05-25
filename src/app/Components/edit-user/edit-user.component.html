@@ -780,6 +780,7 @@
             </div>
             <div class="row2-container-right" *ngIf="userObj.contactRole ==='Admin'">
                 <h4>All Reminders By Contact: </h4>
+                <button class="excelexport-btn1" (click)="allexportexcel()"><fa-icon class="excel-icon" [icon]="faFileExcel" size='1x'></fa-icon> Export</button>
                 <div class="allreminder-contactlist-search-container">
                     <h4 class="contact-filterd-number">({{(contacts | filter:AllContacts)?.length}})</h4>
                     <input type="text" class="all-reminder-contact-search" placeholder="Search Contacts"
@@ -844,6 +845,59 @@
                                 </td>
                                 <td
                                     *ngIf="allreminders.contactID == contact.contactID && allreminders.isDeleted == false">
+                                    {{allreminders.startDate}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Hidden table -->
+                    <table class="reminder-table" hidden="true" id="all-excel-table">
+                        <tr class="reminder-thead">
+                            <th>
+                                Contact Name
+                            </th>
+                            <th>
+                                Reminder Type
+                            </th>
+                            <th>
+                                Object's ID
+                            </th>
+                            <th>
+                                Message
+                            </th>
+                            <th>
+                                Frequency
+                            </th>
+                            <th>
+                                Reminder Start Date
+                            </th>
+                        </tr>
+                        <tbody>
+                            <tr class="reminder-schedule-table-row"
+                                *ngFor="let allreminders of allreminders| filter: Allterm">
+                                <td
+                                    *ngIf=" allreminders.isDeleted == false">
+                                    {{allreminders.contactName}}
+                                </td>
+                                <td
+                                    *ngIf="allreminders.isDeleted == false">
+                                    {{allreminders.tickleDescription}}
+                                </td>
+                                <td
+                                    *ngIf="allreminders.isDeleted == false">
+                                    {{allreminders.objectID}}
+                                </td>
+                                <td class="all-reminder-message"
+                                    *ngIf="allreminders.isDeleted == false">
+                                    {{allreminders.ticklerMessage}}
+                                </td>
+                                <td
+                                    *ngIf="allreminders.isDeleted == false">
+                                    every {{allreminders.ticklerFreq}} days
+                                </td>
+                                <td
+                                    *ngIf="allreminders.isDeleted == false">
                                     {{allreminders.startDate}}
                                 </td>
                             </tr>
@@ -1502,56 +1556,3 @@
         </form>
     </div>
 </ng-template>
-
-
-<table class="reminder-table">
-    <tr class="reminder-thead">
-        <th>
-            Contact Name
-        </th>
-        <th>
-            Reminder Type
-        </th>
-        <th>
-            Object's ID
-        </th>
-        <th>
-            Message
-        </th>
-        <th>
-            Frequency
-        </th>
-        <th>
-            Reminder Start Date
-        </th>
-    </tr>
-    <tbody>
-        <tr class="reminder-schedule-table-row"
-            *ngFor="let allreminders of allreminders| filter: Allterm">
-            <td
-                *ngIf="allreminders.contactID == contact.contactID && allreminders.isDeleted == false">
-                {{allreminders.contactName}}
-            </td>
-            <td
-                *ngIf="allreminders.contactID == contact.contactID && allreminders.isDeleted == false">
-                {{allreminders.tickleDescription}}
-            </td>
-            <td
-                *ngIf="allreminders.contactID == contact.contactID && allreminders.isDeleted == false">
-                {{allreminders.objectID}}
-            </td>
-            <td class="all-reminder-message"
-                *ngIf="allreminders.contactID == contact.contactID && allreminders.isDeleted == false">
-                {{allreminders.ticklerMessage}}
-            </td>
-            <td
-                *ngIf="allreminders.contactID == contact.contactID && allreminders.isDeleted == false">
-                every {{allreminders.ticklerFreq}} days
-            </td>
-            <td
-                *ngIf="allreminders.contactID == contact.contactID && allreminders.isDeleted == false">
-                {{allreminders.startDate}}
-            </td>
-        </tr>
-    </tbody>
-</table>
