@@ -28,6 +28,17 @@ import { ToastrModule } from 'ngx-toastr';
 import {MatDialogModule} from '@angular/material/dialog';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChildComponentComponent } from './Components/child-component/child-component.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { TooltipModule } from 'ng2-tooltip-directive';
+import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
+
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin,
+  interactionPlugin
+]);
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +70,9 @@ import { ChildComponentComponent } from './Components/child-component/child-comp
     Ng2SearchPipeModule,
     ToastrModule.forRoot(),
     MatDialogModule,
+    MatTooltipModule,
+    TooltipModule,
+    FullCalendarModule,
     NgbModule
   ],
   providers: [],

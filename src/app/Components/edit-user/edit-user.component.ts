@@ -1,22 +1,27 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/Services/shared.service';
-import { faBuilding, faUser, faFingerprint, faPeopleGroup, faFolderTree, faEnvelopeCircleCheck, faXmark, faFileExcel, faBell, faCalendarPlus, faTrashCan, faPencil, faCheck, faX } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faUser, faFingerprint, faPeopleGroup, faFolderTree, faCalendar, faQuestion,faEnvelopeCircleCheck, faXmark, faFileExcel, faBell, faCalendarPlus, faTrashCan, faPencil, faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { ChildComponentComponent } from '../child-component/child-component.component';
+import { CalendarOptions } from '@fullcalendar/angular'; // useful for typechecking
 import * as XLSX from 'xlsx';
 declare var $: any;
+
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
+
 export class EditUserComponent implements OnInit {
+  @Input('matTooltip')
+  message: string='hello' ;
   //Icons
   faBuilding = faBuilding;
   faUser = faUser;
@@ -30,8 +35,10 @@ export class EditUserComponent implements OnInit {
   faTrashCan = faTrashCan;
   faPencil = faPencil;
   faCheck = faCheck;
+  faCalendar = faCalendar;
   faX = faX;
   faFileExcel=faFileExcel;
+  faQuestion = faQuestion;
   //arrays
   hierarchy: any;
   optiontype: any;
@@ -109,7 +116,27 @@ export class EditUserComponent implements OnInit {
   lastModifiedBy: any;
   contacteditR: any;
   acronym:any;
+  calendarareminders:any;
+  ccalendararemindersd:any;
+  ccalendarareminderse:any;
+  model:any = []
+  models: any;
+  //Calendar
   
+  calendarOptions: CalendarOptions = {
+    initialView: 'dayGridMonth',
+    dateClick: this.handleDateClick.bind(this), // bind is important!
+    events: this.model
+  };
+
+
+
+  
+
+  handleDateClick(arg:any) {
+    alert('date click! ' + arg.dateStr)
+  }
+
 
     allexportexcel(): void {
     var Title = "All Reminders";
@@ -552,6 +579,7 @@ export class EditUserComponent implements OnInit {
         this.ngOnInit
       }
     })
+    
 
 
 
@@ -649,8 +677,21 @@ export class EditUserComponent implements OnInit {
 
       this.service.getAllReminders().subscribe(datar => {
         this.allreminders = datar;
+        this.calendarareminders = this.allreminders.filter((obj:any) => obj.contactID === this.userObj.contactID)
+        this.ccalendarareminderse = this.calendarareminders.map((obj:any)=> obj.tickleDescription)
+        this.ccalendararemindersd = this.calendarareminders.map((obj:any)=> obj.startDate)
+        
+        
         this.allreminderscid = datar.map((obj: any) => obj.contactID)
         for (let i = 0; i < this.allreminders.length; i++) {
+          // this.model =[
+            
+            this.model.push({title: this.allreminders[i].tickleDescription, date: this.allreminders[i].startDate});
+            
+            
+            // ]
+          
+            
           this.allreminders[i].startDate = new Date(this.allreminders[i].startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
           for (let j = 0; j < this.contacts.length; j++) {
             if (this.contacts[j].contactID === this.allreminders[i].contactID)
@@ -658,7 +699,10 @@ export class EditUserComponent implements OnInit {
             this.allreminderlist = this.allreminders
 
           }
+          
         }
+        
+        console.log('model',this.model)
       })
     })
     this.service.getCompanyList().subscribe(data => {

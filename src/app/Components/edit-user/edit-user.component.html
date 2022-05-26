@@ -3,21 +3,12 @@
         <h3 class="edit-user-heading"> Edit User </h3>
         <div class="row1-edit-user">
             <div class="row1-left">
-                <div class="container">
-                    <h4>Upload a profile image
-                    </h4>
-                    <div class="avatar-upload">
-                        <div class="avatar-edit">
-                            <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg">
-                            <label for="imageUpload"></label>
-                        </div>
-                        <div class="avatar-preview">
-                            <div id="imagePreview"
-                                style="background-image: url('https://toppng.com/uploads/preview/user-account-management-logo-user-icon-11562867145a56rus2zwu.png');">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                    <button type="button" class='myReminder-btn' (click)="openVerticallyCentered(content2)">
+                        <fa-icon [icon]="faCalendar" size='8x' style="color: #033871; transform: rotate(17deg);"></fa-icon>
+                        <br />
+                        <h4>Reminder Calendar</h4>
+                    </button>
             </div>
             <!-- row contains user picture and the contact reminders -->
             <div class="row1-right">
@@ -906,7 +897,7 @@
             <ng-select aria-required="true" *ngIf="optiontype" (change)="changeOT(selectedOptionType)"
                 [(ngModel)]="selectedOptionType" name="selectedOptionType" [items]="optiontype"
                 bindLabel="tickleDescription" placeholder="Select an Option Type" appendTo="body" [multiple]="true"
-                [closeOnSelect]="false">
+                [closeOnSelect]="false" tooltip="Tooltip on top" placement="top">
                 <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                     <input id="item-{{index}}" type="checkbox" name="item-{{index}}" [ngModel]="item$.selected" />
                     {{item}}
@@ -921,7 +912,7 @@
                 *ngIf="hierarchy  && showCompanyDrop !== true " [items]="hierarchy" name="selectedHierarchy"
                 bindLabel="companyHierarchyLabelDesc" placeholder="Select a Hierarchy" appendTo="body" [multiple]="true"
                 [closeOnSelect]="false">
-                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                <ng-template ng-option-tmp tooltip="Tooltip on top" placement="top" let-item="item" let-item$="item$" let-index="index">
                     <input id="item-{{index}}" type="checkbox" name="item-{{index}}" [ngModel]="item$.selected" />
                     {{item}}
                 </ng-template>
@@ -980,4 +971,24 @@
             </button>
         </form>
     </div>
+</ng-template>
+
+<ng-template #content2 let-modal style="z-index: 1000;">
+    <div class="modal-header">
+        <div class="modal-header-left">
+            <button type="button" class="btn btn-dark"
+                (click)="modal.close('Close click'); cancelBuilding(); cancelLease();cancelProjects(); cancelCompany()">
+                <fa-icon [icon]="faXmark" size='sm'></fa-icon>
+            </button>
+        </div>
+        <div class="modal-header-right">
+            <img class="modal-header-logo" src="assets/Images/homelogocopy.png" />
+            <h1 class="header-logo-text">| Real Estate Manager</h1>
+        </div>
+    </div>
+
+    <div>
+        <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+    </div>
+    
 </ng-template>

@@ -614,3 +614,6 @@ input.user-info-input {
     margin-bottom: 0px;
     width: 90%;
 }
+.fc-view-harness.fc-view-harness-active {
+    height: 600px !important;
+}
