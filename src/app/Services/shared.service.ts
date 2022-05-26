@@ -75,5 +75,8 @@ export class SharedService {
   updateBuildingR(val:any):Observable<any[]>{
     return this.http.put<any>(this.APIUrl + 'updatebuildingreminder/update',val)
   }
+  updateUser(val:any):Observable<any[]>{
+    return this.http.put<any>(this.APIUrl + 'updatecontacts/update',val)
+  }
 
 }

@@ -72,6 +72,7 @@ export class EditUserComponent implements OnInit {
   leaseName: any;
   projectName: any;
   reportName: any;
+  contactdata:any;
   buildingHierearchy: any;
   //For Deleting Reminde
   isDeleted: boolean | undefined;
@@ -107,6 +108,8 @@ export class EditUserComponent implements OnInit {
   contactReminderDate: any;
   lastModifiedBy: any;
   contacteditR: any;
+  acronym:any;
+  
 
     allexportexcel(): void {
     var Title = "All Reminders";
@@ -240,6 +243,8 @@ export class EditUserComponent implements OnInit {
       });
   }
 
+  //Resets the form
+
   //Switching between Contactinfo views edit and read
   isEditingContactinfo: boolean = false;
   enableEditIndexContactinfo = null;
@@ -358,6 +363,10 @@ export class EditUserComponent implements OnInit {
     this.enableEditIndexProjects = null;
   }
 
+  //Scrollstotopofdiv
+  scrollToTop(el:any) {
+    el.scrollTop = 0;
+  }
      
   //Refreshed the contactmodule
   refreshContactReminder$ = new BehaviorSubject<boolean>(true);
@@ -448,6 +457,54 @@ export class EditUserComponent implements OnInit {
     console.log(lrval)
   }
 
+  updateUser(value: any, userID: any, fn: any,ln:any, mn: any,suff:any,title:any,email:any,allow:any,active:any, hl:any) {
+    console.log()
+    var urval = {
+      contactID: value,
+      contactUserID: userID,
+      contactFirstName: fn,
+      contactLastName: ln,
+      contactMiddleName: mn,
+      contactSuffix: suff,
+      contactTitle: title,
+      contactEmailAddress: email,
+      allowLogon: allow,
+      contactactive: active,
+      hideLogin: hl
+
+    }
+    this.service.updateUser(urval).subscribe(
+      (res: any) => {
+        this.contacteditR = res;
+        this.ngOnInit();
+        this.toastr.success('Updated your user!');
+        this.service.getContacts().subscribe(data => {
+          this.contactdata = data;
+          for (let i = 0; i < this.contactdata.length; i++) {
+            if (this.contactdata[i].contactID === this.userObj.contactID) {
+              localStorage.setItem('User', JSON.stringify(this.contactdata[i]))
+          this.getUser = localStorage.getItem('User');
+          this.userObj = JSON.parse(this.getUser)
+          var str = this.userObj.contactFirstName + ' ' + this.userObj.contactLastName
+          var matches: any = str.match(/\b(\w)/g); // ['J','S','O','N']
+          this.acronym = matches.join(''); // JSON
+          localStorage.setItem('acronym', this.acronym)
+            }
+        
+          }
+        })
+        
+      },
+      err => {
+        if (err.status == 400)
+          this.toastr.error('Failed to update lease reminder.', 'Time update failed.')
+        else
+          console.log(err);
+      });
+
+    console.log(urval)
+  }
+
   updateProjectReminder(value: any, byVal: any, freqval: any,mval:any, dateval: any) {
     console.log()
     var prval = {
@@ -531,6 +588,7 @@ export class EditUserComponent implements OnInit {
 
     this.service.getLH().subscribe(data => {
       this.allleases = data;
+      
       this.allleases = this.allleases.filter((obj: any) => obj.companyID === this.userObj.companyID)
       this.leaseName = this.allleases.map((obj: any) => obj.leaseName)
       console.log("leasename", this.leaseName)
@@ -540,15 +598,15 @@ export class EditUserComponent implements OnInit {
             // console.log("building hierarchy", this.buildingHierearchy)
             if (this.selectedHierarchy[j] === this.allleases[i].hierarchy) {
               this.leaseName[i] = this.allleases[i].leaseName;
+              
               this.listoleases.push(this.leaseName[i]);
               let leasesetOfValue: any = new Set(this.listoleases)
               //   //distinct building name values from array
               let uniqueleaseValues = [...leasesetOfValue]
               this.leaseName = uniqueleaseValues;
+              console.log('lh',this.leaseName)
             }
-            else {
-              this.leaseName = []
-            }
+           
 
           }
         }
@@ -582,19 +640,6 @@ export class EditUserComponent implements OnInit {
     //   }
     // })
 
-    this.service.getContactReminders().subscribe(data => {
-      this.contactReminders = data;
-      this.contactReminders = this.contactReminders.filter((obj: any) => obj.isDeleted === false && obj.contactID === this.userObj.contactID)
-      for (let i = 0; i < this.contactReminders.length; i++) {
-        // this.contactReminders[i].userDefinedDate = new Date(this.contactReminders[i].userDefinedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' },);
-        const index = this.contactReminders.indexOf(this.contactReminders[i].isDeleted, 0);
-        if (this.contactReminders[i].isDeleted !== false) {
-          this.contactReminders = this.contactReminders.filter((obj: any) => obj.isDeleted === false && obj.contactID === this.userObj.contactID)
-        }
-      }
-
-      console.log("contact reminder:", this.contactReminders)
-    })
 
 
     this.service.getContacts().subscribe(data => {
@@ -650,6 +695,7 @@ export class EditUserComponent implements OnInit {
     })
     this.service.getLeaseReminders().subscribe(data => {
       this.leasereminders = data;
+      console.log("leasesss",this.leasereminders)
 
       this.leaserowtotal = this.leasereminders.length;
       this.leasereminders = this.leasereminders.filter((obj: any) => { return obj.isDeleted == false && obj.contactID == this.userObj.contactID })
@@ -723,6 +769,7 @@ export class EditUserComponent implements OnInit {
       this.showBuildingDrop = false;
       this.showLeaseDrop = false;
       this.selectedHierarchy = [];
+      this.listoleases =[]
       this.listobuildings = []
       this.buildingName = []
       this.selectedBuilding = []
@@ -905,7 +952,8 @@ if (this.selectedOptionType == "Company - Reminder") {
                   (res: any) => {
                     this.AddReminderVal = res;
                     this.ngOnInit();
-                    this.toastr.success('Added Reminder for Project ID: ' + this.allprojects[j].projectID)
+                    this.toastr.success( 'Project ' + this.allprojects[j].projectID + 'has been successfully created and first reminder will be delivered on' + moment(this.allprojects[j].userDefinedDate).format('MMM, DD YYYY  HH:mm:ss aa'))
+
                   },
                   err => {
                     if (err.status == 400)
@@ -984,7 +1032,7 @@ if (this.selectedOptionType == "Company - Reminder") {
                   (res: any) => {
                     this.AddReminderVal = res;
                     this.ngOnInit();
-                    this.toastr.success('Added Reminder for Building ID: ' + this.allbuildings[j].buildingID)
+                    this.toastr.success( 'Building ' + this.allbuildings[j].BuildingName + 'has been successfully created and first reminder will be delivered on' + moment(this.userdefineddate).format('MMM, DD YYYY  HH:mm:ss aa'))
                   },
                   err => {
                     if (err.status == 400)
@@ -1022,7 +1070,7 @@ if (this.selectedOptionType == "Company - Reminder") {
                   (res: any) => {
                     this.AddReminderVal = res;
                     this.ngOnInit();
-                    this.toastr.success('Added Reminder for Lease ID: ' + this.allleases[j].leaseID)
+                    this.toastr.success( 'Lease ' + this.allleases[j].clientLeaseID + 'has been successfully created and first reminder will be delivered on' + moment(this.userdefineddate).format('MMM, DD YYYY  HH:mm:ss aa'))
                   },
                   err => {
                     if (err.status == 400)
@@ -1071,7 +1119,7 @@ if (this.selectedOptionType == "Company - Reminder") {
                       (res: any) => {
                         this.AddReminderVal = res;
                         this.ngOnInit();
-                        this.toastr.success('Added Reminder for Building ID: ' + this.allbuildings[j].buildingName)
+                        this.toastr.success( 'Building ' + this.allbuildings[j].BuildingName + 'has been successfully created and first reminder will be delivered on' + moment(this.userdefineddate).format('MMM, DD YYYY  HH:mm:ss aa'))                       
                       },
                       err => {
                         if (err.status == 400)
@@ -1109,7 +1157,7 @@ if (this.selectedOptionType == "Company - Reminder") {
                       (res: any) => {
                         this.AddReminderVal = res;
                         this.ngOnInit();
-                        this.toastr.success('Added Reminder for Lease ID: ' + this.allleases[j].leaseName)
+                        this.toastr.success( 'Lease ' + this.allleases[j].clientLeaseID + 'has been successfully created and first reminder will be delivered on' + moment(this.userdefineddate).format('MMM, DD YYYY  HH:mm:ss aa'))
                       },
                       err => {
                         if (err.status == 400)
@@ -1231,7 +1279,7 @@ if (this.selectedOptionType == "Company - Reminder") {
                     (res: any) => {
                       this.AddReminderVal = res;
                       this.ngOnInit();
-                      this.toastr.success('Added Reminder for Building ID: ' + this.allbuildings[j].buildingName)
+                      this.toastr.success( 'Building ' + this.allbuildings[j].BuildingName + 'has been successfully created and first reminder will be delivered on' + moment(this.userdefineddate).format('MMM, DD YYYY  HH:mm:ss aa'))
                     },
                     err => {
                       if (err.status == 400)
@@ -1271,7 +1319,7 @@ if (this.selectedOptionType == "Company - Reminder") {
                     (res: any) => {
                       this.AddReminderVal = res;
                       this.ngOnInit();
-                      this.toastr.success('Added Reminder for Lease ID: ' + this.allleases[j].leaseName)
+                      this.toastr.success( 'Lease ' + this.allleases[j].clientLeaseID + 'has been successfully created and first reminder will be delivered on' + moment(this.userdefineddate).format('MMM, DD YYYY  HH:mm:ss aa'))
                     },
                     err => {
                       if (err.status == 400)

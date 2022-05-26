@@ -246,6 +246,7 @@ input.all-reminder-schedule-search {
 .user-info-input-container {
     height: 60%;
     overflow-y: scroll;
+    padding: 10px;
 }
 
 .form-check-inline .form-check-input {
@@ -552,6 +553,64 @@ button.excelexport-btn1:not(:hover) {
     transition: all 200ms ease-in-out;
 }
 
+button.edit-my-contact {
+    background: #07407b;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    width: 90px;
+    float: left;
+    margin-bottom: 30px;
+    margin-left: 12%;
+    height: 40px;
+    margin-right: 20px;
+    box-shadow: 0.5px 10px 15px 0 rgb(0 0 0 / 39%);
+}
+
+button.edit-my-contact:hover {
+    transform: translateY(5px);
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+    cursor:pointer;
+}
+button.edit-my-contact:not(:hover) {
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+}
+
+button.save-user-info-btn {
+    background: #09ad34;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    width: 90px;
+    text-align: center;
+    margin-bottom: 30px;
+    margin-left: 12%;
+    height: 40px;
+    margin-right: 20px;
+    box-shadow: 0.5px 10px 15px 0 rgb(0 0 0 / 39%);
+}
+
+button.save-user-info-btn:hover {
+    transform: translateY(5px);
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+    cursor:pointer;
+}
+button.save-user-info-btn:not(:hover) {
+    -webkit-transition: all 1s ease;
+    transition: all 200ms ease-in-out;
+}
+
 .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
     height: 45px;
+}
+label.edit-user-label.ng-star-inserted {
+    margin-left: 12%;
+}
+input.user-info-input {
+    height: 38px;
+    margin-bottom: 0px;
+    width: 90%;
 }
